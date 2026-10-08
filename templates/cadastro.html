@@ -1,50 +1,156 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Lucrafy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Crie sua conta gratuita na Lucrafy.">
 
+  <title>Lucrafy - Cadastre-se</title>
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
 
-    <div class="cadastro">
+<body class="pagina-acesso pagina-cadastro">
 
-        <h2>Criar conta</h2>
+  <!-- CABEÇALHO -->
+  <div class="cabecalho">
+    <div class="largura cabecalho-conteudo">
 
+      <!-- LOGO -->
+      <a class="marca" href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+      </a>
+
+      <!-- NAVEGAÇÃO -->
+      <div class="navegacao">
+        <a href="{{ url_for('index') }}#funcionalidades">Funcionalidades</a>
+        <a href="{{ url_for('index') }}#beneficios">Benefícios</a>
+      </div>
+
+      <!-- ACESSO -->
+      <div class="acesso">
+
+        <a class="entrar" href="{{ url_for('login') }}">Entrar</a>
+
+        <a class="botao botao-cabecalho" href="{{ url_for('cadastro') }}">
+          <span class="texto-desktop">Criar Conta Gratuita</span>
+          <span class="texto-mobile">Criar Conta</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÁREA DE CADASTRO -->
+  <div class="area-acesso">
+    <!-- ILUSTRAÇÃO -->
+    <div class="ilustracao-acesso">
+      <img src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}" alt="Calculadora, gráficos e moedas verdes">
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="area-formulario">
+      <div class="caixa-formulario">
+
+        <h1>Cadastre-se</h1>
+
+        <!-- MENSAGENS DO FLASK -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                  {{ message }}
                 </div>
-            {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('cadastro') }}" method="POST" class="form-cadastro">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+        <!-- FORMULÁRIO DE CADASTRO -->
+        <form id="formulario-cadastro" action="{{ url_for('cadastro') }}" method="POST" class="formulario-cadastro">
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="E-mail" required>
+          <!-- NOME -->
+          <div class="campo">
+            <label for="nome">Nome<span class="obrigatorio">*</span></label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: Larissa Santos" required>
+          </div>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+          <!-- EMAIL -->
+          <div class="campo">
+            <label for="email">Email<span class="obrigatorio">*</span></label>
+            <input type="email" id="email" name="email" placeholder="Ex: larissa.santos@gmail.com" required>
+          </div>
 
-            <label for="mao_de_obra">Valor da mão de obra (R$)</label>
-            <input type="number" id="mao_de_obra" name="mao_de_obra" placeholder="Ex: 25,00" min="0" step="0.01" required>
+          <!-- SENHA -->
+          <div class="campo campo-senha">
+            <label for="senha">Senha<span class="obrigatorio">*</span></label>
+            <input type="password" id="senha" name="senha" placeholder="********" required>
+          </div>
 
-            <button type="submit">Cadastrar</button>
+          <!-- CONFIRMAR SENHA -->
+          <div class="campo campo-confirmacao">
+            <label for="confirmar_senha">Confirmar Senha</label>
+            <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="********" required>
+          </div>
 
-            <p>Já possui uma uma conta?
-            <a href="{{ url_for('login') }}">Login</a>
+          <!-- VALOR POR HORA -->
+          <div class="campo campo-valor">
+            <label for="mao_de_obra">Valor por hora trabalhada<span class="obrigatorio">*</span></label>
+            <input type="text" id="mao_de_obra" name="mao_de_obra" placeholder="Ex: 120.00" required>
+          </div>
+
+          <!-- BOTÃO -->
+          <button type="submit" class="botao botao-confirmar">CONFIRMAR</button>
+
+          <!-- LINK PARA LOGIN -->
+          <p class="alternativa-conta">Já possui uma conta?<a href="{{ url_for('login') }}">Fazer Login!</a></p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="rodape">
+
+    <div class="largura rodape-conteudo">
+
+      <!-- LOGO E DESCRIÇÃO -->
+      <div>
+        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <p class="descricao-rodape">
+          O gerenciador financeiro simples, prático e 100%<br>
+          gratuito para quem quer controlar gastos sem<br>
+          burocracia nem complicação.
+        </p>
+      </div>
+
+      <!-- RODAPÉ INFERIOR -->
+      <div class="rodape-base">
+        <p class="direitos">
+          © 2026 Lucrafy.
+          Todos os direitos reservados.
+          CNPJ: 00.000.000/0001-00
         </p>
 
-        </form>
+        <div class="textos-legais">
+          <span>Termos de Uso</span>
+          <span>Privacidade</span>
+          <span>Políticas de Segurança</span>
+        </div>
+
+      </div>
 
     </div>
 
+  </div>
+
 </body>
+
 </html>

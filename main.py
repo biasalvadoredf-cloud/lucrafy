@@ -5,12 +5,13 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 
 bcrypt = Bcrypt(app)
+
 app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 
 host = 'localhost'
-database = r'E:\SENAI 2026\BANCO\BANCO.FDB'
+database = r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB'
 user = 'sysdba'
-password = 'masterkey'
+password = 'sysdba'
 
 con = fdb.connect(host=host,
                   database=database,
@@ -18,7 +19,6 @@ con = fdb.connect(host=host,
                   password=password)
 
 # VERIFICAR SENHA FORTE
-
 def senha_forte(senha):
 
     if len(senha) < 8:
@@ -54,7 +54,7 @@ def senha_forte(senha):
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return render_template('index.html')
 
 # HOME
 @app.route('/home')
@@ -82,6 +82,7 @@ def cadastro():
         nome = request.form['nome']
         email = request.form['email'].strip().lower()
         senha = request.form['senha']
+        confirmar_senha = request.form['confirmar_senha']
         mao_de_obra = request.form['mao_de_obra']
 
         # Verifica se os campos foram preenchidos
@@ -91,10 +92,14 @@ def cadastro():
             return redirect(url_for('cadastro'))
 
         # Verifica se a senha é forte
-
         if not senha_forte(senha):
             flash('A senha deve ter pelo menos 8 caracteres, letra maiúscula, minúscula, número, símbolo e não conter espaços.')
             return redirect(url_for('cadastro'))
+
+        if confirmar_senha != senha:
+            flash('As senhas precisam ser iguais!')
+            return redirect(url_for('cadastro'))
+
 
         cursor = con.cursor()
 
@@ -111,9 +116,7 @@ def cadastro():
                 return redirect(url_for('cadastro'))
 
             # Cria o hash da senha
-            senha_hash = bcrypt.generate_password_hash(
-                senha
-            ).decode('utf-8')
+            senha_hash = bcrypt.generate_password_hash(senha).decode('utf-8')
 
             # Insere o usuário
             cursor.execute("""
@@ -136,7 +139,6 @@ def cadastro():
             cursor.close()
 
     return render_template('cadastro.html')
-
 
 
 # LOGIN
@@ -166,7 +168,7 @@ def login():
             usuario = cursor.fetchone()
 
             if not usuario:
-                flash('E-mail ou senha incorretos!')
+                flash('Email ou senha incorretos!')
                 return redirect(url_for('login'))
 
             if usuario[3] == 0:
@@ -389,9 +391,7 @@ def alterar_senha():
                     return redirect(url_for('alterar_senha'))
 
             # CRIPTOGRAFAR NOVA SENHA
-            senha_hash = bcrypt.generate_password_hash(
-                nova_senha
-            ).decode('utf-8')
+            senha_hash = bcrypt.generate_password_hash(nova_senha).decode('utf-8')
 
             # GUARDAR SENHA ANTERIOR
             cursor.execute("""
@@ -423,8 +423,6 @@ def alterar_senha():
     finally:
 
         cursor.close()
-
-
 
 
 if __name__ == '__main__':

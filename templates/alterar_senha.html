@@ -6,8 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Senha</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+
 </head>
 <body>
+
+<!-- CABEÇALHO -->
+  <div class="cabecalho">
+    <div class="largura cabecalho-conteudo">
+
+      <!-- LOGO -->
+      <a class="marca" href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+      </a>
+
+      <!-- NAVEGAÇÃO -->
+      <div class="navegacao">
+        <a href="{{ url_for('index') }}#funcionalidades">Funcionalidades</a>
+        <a href="{{ url_for('index') }}#beneficios">Benefícios</a>
+      </div>
+    </div>
+  </div>
 
     <div class="cadastro">
 
@@ -41,6 +60,38 @@
         <a href="{{ url_for('home') }}">Voltar</a>
 
     </div>
+
+<!-- RODAPÉ -->
+  <div class="rodape">
+    <div class="largura rodape-conteudo">
+
+      <!-- LOGO E DESCRIÇÃO -->
+      <div>
+        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <p class="descricao-rodape">
+          O gerenciador financeiro simples, prático e 100%<br>
+          gratuito para quem quer controlar gastos sem<br>
+          burocracia nem complicação.
+        </p>
+      </div>
+
+      <!-- RODAPÉ INFERIOR -->
+      <div class="rodape-base">
+        <p class="direitos">
+          © 2026 Lucrafy.
+          Todos os direitos reservados.
+          CNPJ: 00.000.000/0001-00
+        </p>
+
+        <div class="textos-legais">
+          <span>Termos de Uso</span>
+          <span>Privacidade</span>
+          <span>Políticas de Segurança</span>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

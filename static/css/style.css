@@ -1,0 +1,1281 @@
+/* Regras gerais da página. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--fundo);
+  color: var(--texto);
+  font-family: Poppins, Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+.largura {
+  width: 92.5%;
+  max-width: 1184px;
+  margin: 0 auto;
+}
+
+/* Topo com logo e links. */
+.cabecalho {
+  height: 64px;
+  background-color: var(--fundo);
+  box-shadow: 0 1px 4px #0000000a;
+}
+
+.cabecalho-conteudo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.marca {
+  display: block;
+  width: 91px;
+}
+
+.marca img, .logo-rodape {
+  display: block;
+  width: 91px;
+  height: 37px;
+}
+
+.navegacao {
+  display: flex;
+  gap: 30px;
+  margin-left: 38px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.navegacao a:hover, .alternativa-conta a:hover {
+  text-decoration: underline;
+}
+
+.acesso {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+}
+
+.entrar {
+  color: var(--texto-claro);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--verde);
+}
+
+.botao-cabecalho {
+  height: 39px;
+  padding: 0 16px;
+  border-radius: 8px;
+  color: var(--branco);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.texto-mobile, .so-mobile, .icone-cartao {
+  display: none;
+}
+
+.botao:hover {
+  background-color: var(--verde-hover);
+}
+
+/* Primeira parte da página. */
+.apresentacao {
+  position: relative;
+  height: 705px;
+  overflow: hidden;
+  background-color: #eff3ed;
+}
+
+.imagem-apresentacao {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 1222px;
+  max-width: none;
+  height: 691px;
+  object-fit: cover; /* Preenche o espaço sem esticar a imagem. */
+}
+
+.apresentacao-conteudo {
+  position: relative;
+  z-index: 1;
+  padding-top: 114px;
+}
+
+.apresentacao h1 {
+  margin-bottom: 25px;
+  font-size: 52px;
+  line-height: 1.15;
+  letter-spacing: -1.3px;
+}
+
+.apresentacao h1 span {
+  color: var(--verde-titulo);
+}
+
+.apresentacao p {
+  width: 530px;
+  max-width: 100%;
+  margin-left: 6px;
+  margin-bottom: 28px;
+  color: var(--texto-claro);
+  font-size: 18px;
+  line-height: 1.63;
+  font-weight: 500;
+}
+
+.botao-principal {
+  width: 310px;
+  height: 53px;
+  margin-left: 11px;
+  border-radius: 27px;
+  color: var(--branco);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Título e cartões dos benefícios. */
+.beneficios {
+  min-height: 956px;
+  padding-top: 96px;
+}
+
+.introducao-beneficios {
+  max-width: 768px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+
+.etiqueta {
+  margin-bottom: 17px;
+  color: var(--verde-titulo);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.introducao-beneficios h2, .texto-funcionalidade h2 {
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.8px;
+}
+
+.introducao-beneficios h2 {
+  margin-bottom: 13px;
+}
+
+.descricao-beneficios {
+  color: var(--texto-claro);
+  font-size: 15px;
+  line-height: 22.5px;
+}
+
+.cartoes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartao {
+  width: 31.5%;
+  min-height: 524px;
+  padding: 65px 32px 30px;
+  border-radius: 16px;
+  background-color: var(--branco);
+  box-shadow: 0 4px 6px #00000012;
+}
+
+.imagem-cartao {
+  display: block;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto 48px;
+}
+
+.cartao h3 {
+  min-height: 60px;
+  margin-bottom: 11px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.36px;
+  font-weight: 600;
+}
+
+.cartao p {
+  min-height: 98px;
+  margin-bottom: 8px;
+  color: var(--texto-claro);
+  font-size: 15px;
+  line-height: 24.38px;
+}
+
+.rodape-cartao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 43px;
+  border-top: 1px solid var(--borda);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.rodape-cartao img {
+  width: 17px;
+  height: 17px;
+}
+
+/* Partes com texto e imagem. */
+.funcionalidade {
+  overflow: hidden;
+}
+
+.funcionalidade-branca {
+  height: 456px;
+  background-color: var(--branco);
+}
+
+.funcionalidade-cinza {
+  height: 474px;
+  background-color: var(--fundo);
+}
+
+.duas-colunas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.texto-funcionalidade {
+  width: 48%;
+}
+
+.etiqueta-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  letter-spacing: 0.55px;
+}
+
+.etiqueta-com-icone img {
+  width: 15px;
+  height: 15px;
+}
+
+.texto-funcionalidade h2 {
+  margin-bottom: 17px;
+}
+
+.descricao-funcionalidade {
+  margin-bottom: 18px;
+  color: var(--texto-claro);
+  font-size: 15px;
+  line-height: 24.38px;
+}
+
+.vantagens {
+  padding: 0;
+  margin: 0;
+}
+
+.vantagens li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 500;
+}
+
+.vantagens img {
+  width: 20px;
+  height: 20px;
+}
+
+.imagem-entradas {
+  display: block;
+  width: 505px;
+}
+
+/* Parte da imagem que fica visível. */
+.recorte-resumo {
+  width: 480px;
+  height: 360px;
+  overflow: hidden;
+}
+
+.recorte-resumo img {
+  display: block;
+  width: 800px;
+  max-width: none;
+  margin-top: -90px;
+  margin-left: -390px;
+}
+
+/* Convite para criar uma conta. */
+.chamada {
+  height: 652px;
+  padding-top: 120px;
+  background-color: var(--branco);
+}
+
+.caixa-chamada {
+  width: 82.5%;
+  max-width: 1056px;
+  height: 491px;
+  margin: 0 auto;
+  padding: 110px 64px;
+  border-radius: 24px;
+  background-color: var(--verde-escuro);
+  color: var(--fundo);
+}
+
+.caixa-chamada h2 {
+  margin-bottom: 22px;
+  font-size: 44px;
+  line-height: 55px;
+  letter-spacing: -1.1px;
+}
+
+.caixa-chamada p {
+  max-width: 760px;
+  margin-bottom: 30px;
+  font-size: 15px;
+  line-height: 24.38px;
+  font-weight: 500;
+}
+
+.botao-final {
+  height: 46px;
+  padding: 0 33px;
+  border-radius: 12px;
+  color: var(--verde-escuro);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Parte final da página. */
+.rodape {
+  height: 245px;
+  background-color: var(--branco);
+}
+
+.rodape-conteudo {
+  padding-top: 23px;
+}
+
+.descricao-rodape {
+  margin-top: 10px;
+  color: var(--texto-claro);
+  font-size: 15px;
+  line-height: 22.5px;
+}
+
+.rodape-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 38px;
+  color: var(--texto-claro);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.44px;
+}
+
+.rodape-base .direitos {
+  margin-bottom: 0;
+}
+
+.textos-legais {
+  display: flex;
+  gap: 24px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .largura {
+    width: 90%;
+    max-width: 700px;
+  }
+
+  .navegacao {
+    display: none;
+  }
+
+  .acesso {
+    gap: 16px;
+  }
+
+  .apresentacao {
+    height: 680px;
+  }
+
+  .imagem-apresentacao {
+    left: 22%;
+    top: 110px;
+    width: 950px;
+    height: auto;
+  }
+
+  .apresentacao-conteudo {
+    padding-top: 55px;
+  }
+
+  .apresentacao h1 {
+    font-size: 42px;
+  }
+
+  .apresentacao p {
+    width: 470px;
+    font-size: 15px;
+  }
+
+  .beneficios {
+    padding: 72px 0 90px;
+  }
+
+  .cartoes {
+    display: block;
+  }
+
+  .cartao {
+    width: 100%;
+    max-width: 500px;
+    min-height: auto;
+    margin: 0 auto 20px;
+    padding: 36px 32px 28px;
+  }
+
+  .imagem-cartao {
+    margin-bottom: 28px;
+  }
+
+  .cartao h3,
+  .cartao p {
+    min-height: 0;
+  }
+
+  .funcionalidade-branca, .funcionalidade-cinza, .chamada {
+    height: auto;
+    padding: 64px 0;
+  }
+
+  .duas-colunas {
+    display: block;
+  }
+
+  .texto-funcionalidade {
+    width: 100%;
+  }
+
+  .imagem-entradas {
+    width: 100%;
+    max-width: 505px;
+    margin: 30px auto 0;
+  }
+
+  .resumo-colunas {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .recorte-resumo {
+    margin: 30px auto 0;
+  }
+
+  .caixa-chamada {
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    padding: 60px 40px;
+  }
+
+  .caixa-chamada h2 {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+
+  .rodape {
+    height: auto;
+    padding-bottom: 30px;
+  }
+
+  .rodape-base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  body {
+    background-color: #fbfbfc;
+  }
+
+  .cabecalho {
+    background-color: #fbfbfc;
+    box-shadow: none;
+  }
+
+  .largura {
+    width: calc(100% - 32px);
+  }
+
+  .marca,
+  .marca img {
+    width: 94px;
+  }
+
+  .marca img {
+    height: 38px;
+  }
+
+  .so-desktop, .texto-desktop, .imagem-apresentacao {
+    display: none;
+  }
+
+  .so-mobile,
+  .texto-mobile {
+    display: inline;
+  }
+
+  .acesso {
+    gap: 18px;
+  }
+
+  .botao-cabecalho {
+    width: 100.75px;
+    height: 30px;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .apresentacao {
+    height: 600px;
+  }
+
+  .apresentacao-conteudo {
+    padding-top: 90px;
+  }
+
+  .apresentacao h1 {
+    margin-bottom: 37px;
+    font-size: 30px;
+    line-height: 35px;
+    letter-spacing: -0.8px;
+  }
+
+  .apresentacao p {
+    width: 100%;
+    margin: 0 0 32.5px;
+    line-height: 25px;
+    font-weight: 400;
+  }
+
+  .botao-principal {
+    width: 100%;
+    height: 78px;
+    margin-left: 0;
+    border-radius: 12px;
+  }
+
+  .beneficios {
+    min-height: 0;
+    padding: 53px 0 32px;
+  }
+
+  .introducao-beneficios {
+    margin-bottom: 44px;
+  }
+
+  .introducao-beneficios h2 {
+    margin-bottom: 18px;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0;
+  }
+
+  .introducao-beneficios .etiqueta, .texto-funcionalidade .etiqueta {
+    display: none;
+  }
+
+  .descricao-beneficios {
+    margin-bottom: 0;
+    line-height: 21px;
+  }
+
+  .cartao {
+    position: relative;
+    max-width: none;
+    min-height: 495.5px;
+    margin-bottom: 24.6px;
+    padding: 24px 24px 80px;
+  }
+
+  .cartao-sobra {
+    min-height: 471.9px;
+    margin-bottom: 24px;
+  }
+
+  .cartao-contas {
+    min-height: 466.1px;
+    margin-bottom: 0;
+  }
+
+  .imagem-cartao {
+    margin: 0 auto 82px;
+  }
+
+  .cartao-com-icone .imagem-cartao {
+    margin-bottom: 16px;
+  }
+
+  .icone-cartao {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+  }
+
+  .cartao h3 {
+    margin: 0 0 7px;
+    text-align: left;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0;
+  }
+
+  .cartao p {
+    margin-bottom: 0;
+  }
+
+  .rodape-cartao {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    height: 60px;
+    padding-top: 16px;
+    border-top-width: 2px;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 19.5px;
+  }
+
+  .rodape-cartao img {
+    margin-top: 1px;
+  }
+
+  .funcionalidade-branca {
+    padding: 86px 0 64px;
+  }
+
+  .texto-funcionalidade h2 {
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+
+  .funcionalidade-branca h2 {
+    width: 100%;
+    margin-left: -4px;
+    margin-bottom: 14px;
+    line-height: 30px;
+  }
+
+  .funcionalidade-branca .descricao-funcionalidade {
+    margin-bottom: 20.5px;
+    line-height: 22.5px;
+  }
+
+  .vantagens li {
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    gap: 10px;
+  }
+
+  .vantagem-final {
+    margin-bottom: 0;
+  }
+
+  .imagem-entradas {
+    width: 324px;
+    margin-top: 48.5px;
+    margin-left: 7.5px;
+  }
+
+  .funcionalidade-cinza {
+    min-height: 542px;
+    height: auto;
+    padding: 72px 0 0;
+    background-color: #fbfbfc;
+  }
+
+  .funcionalidade-cinza .largura {
+    width: calc(100% - 14px);
+  }
+
+  .funcionalidade-cinza h2 {
+    margin-bottom: 18px;
+    line-height: 38px;
+    letter-spacing: -0.8px;
+  }
+
+  .funcionalidade-cinza .descricao-funcionalidade {
+    margin-bottom: 0;
+  }
+
+  .recorte-resumo {
+    width: 100%;
+    height: 250px;
+    margin-top: 28.5px;
+  }
+
+  .recorte-resumo img {
+    width: 600px;
+    margin-left: -295px;
+  }
+
+  .chamada {
+    height: 589px;
+    padding: 120px 0 0;
+  }
+
+  .caixa-chamada {
+    width: calc(100% - 32px);
+    height: 410px;
+    padding: 60px 24px;
+  }
+
+  .caixa-chamada h2 {
+    margin-bottom: 24.9px;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0;
+  }
+
+  .caixa-chamada p {
+    margin-bottom: 36.2px;
+  }
+
+  .botao-final {
+    width: 100%;
+  }
+
+  .rodape {
+    height: 330px;
+    padding-bottom: 0;
+  }
+
+  .rodape .largura {
+    width: calc(100% - 48px);
+  }
+
+  .rodape-conteudo {
+    padding-top: 24px;
+  }
+
+  .logo-rodape {
+    width: 94px;
+    height: 38px;
+  }
+
+  .descricao-rodape {
+    margin: 22px 0 0;
+    font-size: 13px;
+    line-height: 20.5px;
+  }
+
+  .rodape-base {
+    margin-top: 34.5px;
+    gap: 37px;
+  }
+
+  .rodape-base .direitos {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .textos-legais {
+    display: block;
+  }
+
+  .textos-legais span {
+    display: block;
+    line-height: 22px;
+  }
+}
+
+/* Estilos do login e do cadastro. */
+.pagina-acesso .largura {
+  width: calc(100% - 96px);
+  max-width: none;
+}
+
+.pagina-acesso .rodape-base {
+  margin-top: 55px;
+}
+
+/* Imagem e formulário. */
+.area-acesso {
+  display: flex;
+  min-height: 715px;
+  background-color: var(--fundo);
+}
+
+.ilustracao-acesso {
+  width: 50%;
+  height: 715px;
+  overflow: hidden;
+}
+
+.ilustracao-acesso img {
+  display: block;
+  width: 701px;
+  height: 755px;
+  max-width: none;
+  object-fit: cover;
+}
+
+.pagina-login .area-acesso {
+  background-color: #f1f3ee;
+}
+
+.pagina-login .ilustracao-acesso img {
+  margin-top: -50px;
+}
+
+.area-formulario {
+  width: 50%;
+  padding-left: 31px;
+}
+
+.caixa-formulario {
+  width: 476px;
+  max-width: calc(100% - 31px);
+  padding: 52px 36px 76px;
+  margin-top: 80px;
+  border-radius: 20px;
+  background-color: var(--branco);
+}
+
+.caixa-formulario h1 {
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.pagina-cadastro .caixa-formulario {
+  margin-top: 78px;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: transparent;
+}
+
+.pagina-cadastro .caixa-formulario h1 {
+  margin-bottom: 29px;
+}
+
+/* Campos para preencher. */
+.campo {
+  margin-bottom: 18px;
+}
+
+.campo label {
+  display: block;
+  color: #000;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.obrigatorio {
+  color: #f00000;
+}
+
+.campo input {
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-top: 16px;
+  padding: 6px 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+  font-size: 12px;
+}
+
+.campo input::placeholder {
+  color: #929892;
+  opacity: 1;
+}
+
+.campo input:focus-visible {
+  outline: 2px solid var(--verde-titulo);
+  outline-offset: 4px;
+}
+
+.campo-confirmacao {
+  margin-bottom: 9px;
+}
+
+.campo-valor {
+  margin-bottom: 0;
+}
+
+/* Link de confirmação. */
+.botao-confirmar {
+  display: flex;
+  width: 225px;
+  height: 40px;
+  margin: 52px auto 0;
+  border-radius: 6px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.pagina-login .campo-senha {
+  margin-bottom: 0;
+}
+
+.pagina-cadastro .botao-confirmar {
+  margin-top: 12px;
+}
+
+.alternativa-conta {
+  margin: 12px 0 0;
+  text-align: center;
+  color: #000;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.pagina-cadastro .alternativa-conta {
+  margin-top: 6px;
+}
+
+.alternativa-conta a {
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+/* Alterar senha */
+.cadastro {
+    width: 476px;
+    max-width: calc(100% - 40px);
+    min-height: 550px;
+    margin: 80px 12% 0 auto;
+    padding: 52px 36px 76px;
+    border-radius: 20px;
+    background-color: var(--branco);
+}
+
+.cadastro h2 {
+    margin: 0 0 40px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+/* Formulário */
+.form-cadastro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-cadastro label {
+    display: block;
+    margin-bottom: 8px;
+    color: #000;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.form-cadastro input {
+    display: block;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 18px;
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--fundo);
+    color: var(--texto);
+    font: inherit;
+    font-size: 12px;
+}
+
+.form-cadastro input::placeholder {
+    color: #929892;
+    opacity: 1;
+}
+
+.form-cadastro input:focus-visible {
+    outline: 2px solid var(--verde-titulo);
+    outline-offset: 4px;
+}
+
+/* Botão */
+.form-cadastro button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 225px;
+    height: 40px;
+    margin: 52px auto 0;
+    border: 0;
+    border-radius: 6px;
+    background-color: var(--verde);
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-cadastro button:hover {
+    background-color: var(--verde-hover);
+}
+
+/* Voltar */
+.cadastro > a {
+    display: block;
+    margin: 12px 0 0;
+    text-align: center;
+    color: var(--texto-claro);
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.cadastro > a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagens */
+.flash-messages {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.flash {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: var(--fundo);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .cadastro {
+        margin: 80px auto;
+    }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+    .cadastro {
+        width: calc(100% - 40px);
+        max-width: 476px;
+        min-height: auto;
+        margin: 48px auto;
+        padding: 52px 24px 76px;
+        background-color: transparent;
+    }
+
+    .cadastro h2 {
+        font-size: 25px;
+    }
+
+    .form-cadastro input {
+        height: 58px;
+        margin-bottom: 16px;
+        padding: 0 6px;
+    }
+
+    .form-cadastro button {
+        width: 100%;
+        margin-top: 50px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .ilustracao-acesso {
+    width: 44%;
+  }
+
+  .ilustracao-acesso img {
+    width: 100%;
+    height: 715px;
+    object-fit: cover;
+  }
+
+  .area-formulario {
+    width: 56%;
+    padding-left: 16px;
+  }
+
+  .caixa-formulario {
+    max-width: calc(100% - 24px);
+  }
+}
+
+/* Formulários no celular. */
+@media (max-width: 700px) {
+  .pagina-acesso {
+    background-color: #f9f9fa;
+  }
+
+  .pagina-acesso .cabecalho, .pagina-acesso .cabecalho-conteudo {
+    height: 72px;
+  }
+
+  .pagina-acesso .cabecalho {
+    background-color: #f9f9fa;
+    box-shadow: none;
+  }
+
+  .pagina-acesso .largura {
+    width: calc(100% - 40px);
+  }
+
+  .pagina-acesso .marca, .pagina-acesso .marca img {
+    width: 94px;
+  }
+
+  .pagina-acesso .marca img {
+    height: 38px;
+  }
+
+  .pagina-cadastro .botao-cabecalho, .pagina-login .entrar {
+    display: none;
+  }
+
+  .pagina-cadastro .acesso {
+    margin-right: 20px;
+  }
+
+  .pagina-login .botao-cabecalho {
+    width: 186.25px;
+    height: 39px;
+    padding: 0;
+    font-size: 15px;
+  }
+
+  .pagina-login .texto-desktop {
+    display: inline;
+  }
+
+  .pagina-login .texto-mobile {
+    display: none;
+  }
+
+  .pagina-acesso .rodape, .ilustracao-acesso {
+    display: none;
+  }
+
+  .area-acesso, .pagina-login .area-acesso {
+    display: block;
+    min-height: 849px;
+    padding: 48px 0 0;
+    background: transparent;
+  }
+
+  .area-formulario {
+    width: 100%;
+    padding: 0;
+  }
+
+  .caixa-formulario, .pagina-cadastro .caixa-formulario {
+    width: calc(100% - 40px);
+    max-width: 476px;
+    margin: 0 auto;
+    padding: 52px 24px 76px;
+    background: transparent;
+  }
+
+  .caixa-formulario h1 {
+    font-size: 25px;
+  }
+
+  .pagina-cadastro .caixa-formulario {
+    padding: 33px 24px 13px;
+  }
+
+  .campo {
+    margin-bottom: 16px;
+  }
+
+  .campo input {
+    height: 58px;
+    margin-top: 2px;
+    padding: 0 6px;
+  }
+
+  .pagina-cadastro .campo-senha {
+    margin-bottom: 8px;
+  }
+
+  .campo-confirmacao {
+    margin-bottom: 2px;
+  }
+
+  .campo-valor {
+    margin-bottom: 0;
+  }
+
+  .campo-valor input {
+    margin-top: 0;
+    padding-left: 9px;
+  }
+
+  .botao-confirmar {
+    margin-top: 50px;
+  }
+
+  .pagina-cadastro .botao-confirmar {
+    margin-top: 13px;
+  }
+
+  .pagina-cadastro .alternativa-conta {
+    margin-top: 4px;
+  }
+
+  .alternativa-conta a {
+    margin-left: 8px;
+  }
+}

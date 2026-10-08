@@ -1,10 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucrafy</title>
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
 
+  <!-- CABEÇALHO -->
+  <div class="cabecalho">
+    <div class="largura cabecalho-conteudo">
+
+      <a class="marca" href="#inicio">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+      </a>
+
+      <div class="navegacao">
+        <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#beneficios">Benefícios</a>
+      </div>
+
+      <div class="acesso">
+        <a class="entrar" href="{{ url_for('login') }}">Entrar</a>
+
+        <a class="botao botao-cabecalho" href="{{ url_for('cadastro') }}">
+          <span class="texto-desktop">Criar Conta Gratuita</span>
+          <span class="texto-mobile">Criar Conta</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INÍCIO -->
+  <div id="inicio">
+
+    <!-- APRESENTAÇÃO -->
+    <div class="apresentacao">
+
+      <img class="imagem-apresentacao" src="{{ url_for('static', filename='img/destaque.png') }}"
+           alt="Gráficos financeiros, calculadora e moedas">
+
+      <div class="largura apresentacao-conteudo">
+
+        <h1 id="titulo-principal">
+          Veja para onde vai<br>
+          cada centavo do seu<br>
+          negócio,<br>
+          <span>sem complicação.</span>
+        </h1>
+
+        <p>
+          Chega de planilhas confusas e fórmulas difíceis.
+          Saiba exatamente o que entra, o que sai e quanto sobra
+          no final do mês com um clique.
+        </p>
+
+        <a class="botao botao-principal" href="{{ url_for('cadastro') }}">Começar agora</a>
+
+      </div>
+    </div>
+
+    <!-- BENEFÍCIOS -->
+    <div class="beneficios" id="beneficios">
+
+      <div class="largura">
+        <div class="introducao-beneficios">
+          <p class="etiqueta">Simples, rápido e direto</p>
+          <h2 id="titulo-beneficios">O jeito mais leve de enxergar suas finanças</h2>
+
+          <p class="descricao-beneficios">
+            Sem relatórios intermináveis ou termos difíceis.
+            Veja apenas o que realmente importa para tomar boas decisões
+
+            <span class="so-desktop">no dia a dia.</span>
+            <span class="so-mobile">todo santo dia.</span>
+          </p>
+
+        </div>
+
+        <!-- CARTÕES -->
+        <div class="cartoes">
+
+          <!-- CARTÃO 1 -->
+          <div class="cartao cartao-com-icone">
+
+            <img
+              class="imagem-cartao" src="{{ url_for('static', filename='img/controle-gastos.png') }}"
+              alt="Gráficos de gastos organizados por categoria">
+
+            <!-- Ícone do cartão no celular -->
+            <img class="icone-cartao" src="{{ url_for('static', filename='img/icone-gastos.svg') }}" alt="">
+            <h3>Controle seus gastos sem dor de cabeça</h3>
+            <p>
+              Anote e veja onde você está gastando mais,
+              tudo organizado por categoria e fácil de entender,
+              sem fórmulas quebrando.
+            </p>
+
+            <div class="rodape-cartao">
+              <img src="{{ url_for('static', filename='img/categoria.svg') }}" alt="">Categorização limpa e visual
+            </div>
+
+          </div>
+
+          <!-- CARTÃO 2 -->
+          <div class="cartao cartao-sobra">
+
+            <img class="imagem-cartao" src="{{ url_for('static', filename='img/quanto-sobra.png') }}"
+              alt="Moedas e gráfico do valor que sobra">
+
+            <h3>Saiba exatamente quanto sobra</h3>
+
+            <p>
+              O cálculo do que você faturou menos o que gastou
+              é feito na hora, sem segredo nem pegadinha contábil.
+            </p>
+
+            <div class="rodape-cartao">
+              <img src="{{ url_for('static', filename='img/categoria.svg') }}" alt="">
+              Sobra real calculada na hora
+            </div>
+
+          </div>
+
+          <!-- CARTÃO 3 -->
+          <div class="cartao cartao-contas cartao-com-icone">
+
+            <img class="imagem-cartao" src="{{ url_for('static', filename='img/contas-mes.png') }}"
+              alt="Calculadora e contas do mês">
+
+            <!-- Ícone do cartão no celular -->
+            <img class="icone-cartao" src="{{ url_for('static', filename='img/icone-contas.svg') }}" alt="">
+            <h3>Preveja as contas do mês</h3>
+            <p>
+              Acompanhe os vencimentos dos próximos dias
+              para nunca tomar susto com dinheiro faltando
+              na hora de pagar boletos.
+            </p>
+
+            <div class="rodape-cartao">
+
+              <img src="{{ url_for('static', filename='img/categoria.svg') }}" alt="">
+              Alertas de vencimentos fáceis
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUNCIONALIDADE 1 -->
+    <div class="funcionalidade funcionalidade-branca" id="funcionalidades">
+      <div class="largura duas-colunas">
+        <div class="texto-funcionalidade">
+
+          <p class="etiqueta etiqueta-com-icone">
+            <img src="{{ url_for('static', filename='img/pratico.svg') }}" alt="">
+            Prático e descomplicado
+          </p>
+
+          <h2 id="titulo-entradas">Controle diário de entradas e saídas
+            <span class="so-desktop"><br>sem dor de cabeça</span>
+          </h2>
+
+          <p class="descricao-funcionalidade">
+            Sem precisar conectar banco ou configurar APIs complexas.
+            Você digita ou carrega os gastos do seu dia a dia em segundos
+
+            <span class="so-desktop">e visualiza tudo de forma limpa e organizada</span>.
+          </p>
+
+          <ul class="vantagens">
+            <li>
+              <img src="{{ url_for('static', filename='img/marcador.svg') }}" alt="">
+
+              <span class="so-desktop">Lançamento rápido de despesas e vendas do dia</span>
+              <span class="so-mobile">Lançamento rápido de despesas e vendas</span>
+            </li>
+
+            <li>
+              <img src="{{ url_for('static', filename='img/marcador.svg') }}" alt="">
+              <span class="so-desktop">Organização automática por categorias amigáveis</span>
+              <span class="so-mobile">Organização automática por categorias</span>
+            </li>
+
+            <li class="vantagem-final">
+              <img src="{{ url_for('static', filename='img/marcador.svg') }}" alt="">
+              <span class="so-desktop">Visão clara de quanto você tem disponível agora</span>
+              <span class="so-mobile">Visão clara de quanto tem disponível</span>
+            </li>
+          </ul>
+        </div>
+
+        <img class="imagem-entradas" src="{{ url_for('static', filename='img/entradas-saidas.png') }}"
+             alt="Calculadora, gráficos e moedas">
+
+      </div>
+    </div>
+
+    <!-- FUNCIONALIDADE 2 -->
+    <div class="funcionalidade funcionalidade-cinza" id="titulo-resumo">
+
+      <div class="largura duas-colunas resumo-colunas">
+        <div class="recorte-resumo">
+          <img src="{{ url_for('static', filename='img/resumo-mensal.png') }}"
+            alt="Resumo financeiro, gráfico de crescimento e moedas">
+        </div>
+
+        <div class="texto-funcionalidade">
+          <p class="etiqueta etiqueta-com-icone">
+            <img src="{{ url_for('static', filename='img/visao-transparente.svg') }}" alt="">
+            Visão transparente
+          </p>
+
+          <h2 id="titulo-resumo">Resumo simples do mês pronto para você entender</h2>
+          <p class="descricao-funcionalidade">
+            Sem termos técnicos de contabilidade que ninguém entende.
+            Apenas o que interessa: quanto entrou, quanto saiu
+            e o dinheiro limpo que ficou no bolso.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAMADA FINAL -->
+    <div class="chamada" id="conta">
+      <div class="caixa-chamada">
+        <h2 id="titulo-chamada">Pronto para assumir o controle<br class="so-desktop">total do seu lucro?</h2>
+
+        <p>Junte-se a centenas de empresas que trocaram
+          o caos das planilhas pela governança cirúrgica da Lucrafy.
+          <span class="so-desktop">Crie seu ambiente em menos de 5 minutos.</span>
+        </p>
+
+        <a class="botao botao-final" href="{{ url_for('cadastro') }}">Criar conta grátis</a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="rodape">
+    <div class="largura rodape-conteudo">
+
+      <div>
+        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <p class="descricao-rodape">
+          O gerenciador financeiro simples, prático e 100%<br>
+          gratuito para quem quer controlar gastos sem<br>
+          burocracia nem complicação.
+        </p>
+
+      </div>
+
+      <div class="rodape-base">
+
+        <p class="direitos">
+          © 2026 Lucrafy. Todos os direitos reservados.
+          CNPJ: 00.000.000/0001-00
+        </p>
+
+        <div class="textos-legais">
+
+          <span>Termos de Uso</span>
+          <span>Privacidade</span>
+          <span>Políticas de Segurança</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </body>
+
 </html>
