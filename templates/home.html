@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>Olá {{ usuario }}!</h1>
+    <p>Bem-vindo ao Lucrafy!</p>
+
+    <a href="{{ url_for('logout') }}">Sair</a>
+    <a href="{{ url_for('editar', id=session['id_usuario']) }}">Editar meus dados</a>
+    <a href="{{ url_for('alterar_senha') }}">Alterar senha</a>
+
+</body>
+</html>

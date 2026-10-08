@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Senha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="cadastro">
+
+        <h2>Alterar senha</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('alterar_senha') }}" method="POST" class="form-cadastro">
+
+            <label for="senha_atual">Senha atual</label>
+            <input type="password" id="senha_atual" name="senha_atual" placeholder="Digite sua senha atual" required>
+
+            <label for="nova_senha">Nova senha</label>
+            <input type="password" id="nova_senha" name="nova_senha" placeholder="Digite sua nova senha" required>
+
+            <label for="confirmar_senha">Confirmar nova senha</label>
+            <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua nova senha" required>
+
+            <button type="submit">Alterar senha</button>
+
+        </form>
+
+        <a href="{{ url_for('home') }}">Voltar</a>
+
+    </div>
+
+</body>
+</html>
