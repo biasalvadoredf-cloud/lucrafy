@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Home - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="pagina-home">
 
-    <h1>Olá {{ usuario }}!</h1>
-    <p>Bem-vindo ao Lucrafy!</p>
+    <main class="cartao-home">
+        <h1 class="titulo-home">Olá {{ usuario }}!</h1>
+        <p class="texto-home">Bem-vindo ao Lucrafy!</p>
 
-    <a href="{{ url_for('logout') }}">Sair</a>
-    <a href="{{ url_for('editar', id=session['id_usuario']) }}">Editar meus dados</a>
-    <a href="{{ url_for('alterar_senha') }}">Alterar senha</a>
+        <div class="botoes-home">
+            <a class="botao-home" href="{{ url_for('editar', id=session['id_usuario']) }}">Editar meus dados</a>
+            <a class="botao-home" href="{{ url_for('alterar_senha') }}">Alterar senha</a>
+            <a class="botao-home botao-sair-home" href="{{ url_for('logout') }}">Sair</a>
+        </div>
+    </main>
 
 </body>
 </html>

@@ -1,44 +1,233 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário</title>
+
+    <title>Editar Usuário - Lucrafy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
 
-    <div class="cadastro">
+<body class="pagina-acesso pagina-editar">
 
-        <h2>Editar usuário</h2>
+    <!-- CABEÇALHO -->
+    <div class="cabecalho">
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
+        <div class="largura cabecalho-conteudo">
+
+            <a class="marca" href="{{ url_for('home') }}">
+                <img
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
+            </a>
+
+            <div class="navegacao">
+
+                <a href="{{ url_for('home') }}#funcionalidades">
+                    Funcionalidades
+                </a>
+
+                <a href="{{ url_for('home') }}#beneficios">
+                    Benefícios
+                </a>
+
+            </div>
+
+            <div class="acesso">
+
+                <a
+                    class="botao botao-cabecalho"
+                    href="{{ url_for('logout') }}"
+                >
+                    Sair
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="area-acesso">
+
+        <!-- IMAGEM -->
+        <div class="ilustracao-acesso">
+
+            <img
+                src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}"
+                alt="Ilustração financeira Lucrafy"
+            >
+
+        </div>
+
+
+        <!-- ÁREA DO FORMULÁRIO -->
+        <div class="area-formulario">
+
+            <div class="cadastro caixa-formulario">
+
+                <h2>Editar usuário</h2>
+
+                <!-- MENSAGENS FLASK -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+
+                    {% if messages %}
+
+                        <div class="flash-messages">
+
+                            {% for category, message in messages %}
+
+                                <div class="flash {{ category }}">
+                                    {{ message }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <!-- FORMULÁRIO -->
+                <form
+                    action="{{ url_for('editar', id=usuario[0]) }}"
+                    method="POST"
+                    class="form-cadastro"
+                >
+
+                    <!-- NOME -->
+                    <div class="campo">
+
+                        <label for="nome">Nome</label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            value="{{ usuario[1] }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="campo">
+
+                        <label for="email">Email</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ usuario[2] }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MÃO DE OBRA -->
+                    <div class="campo">
+
+                        <label for="mao_de_obra">
+                            Valor da mão de obra (R$)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="mao_de_obra"
+                            name="mao_de_obra"
+                            value="{{ usuario[3] }}"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- BOTÃO SALVAR -->
+                    <button
+                        type="submit"
+                        class="botao botao-confirmar"
+                    >
+                        Salvar alterações
+                    </button>
+
+                </form>
+
+
+                <!-- VOLTAR -->
+                <p class="alternativa-conta">
+
+                    <a href="{{ url_for('home') }}">
+                        Voltar
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RODAPÉ -->
+    <div class="rodape">
+
+        <div class="largura rodape-conteudo">
+
+            <div>
+
+                <img
+                    class="logo-rodape"
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
+
+                <p class="descricao-rodape">
+                    O gerenciador financeiro simples, prático e 100%
+                    <br>
+                    gratuito para quem quer controlar gastos sem
+                    <br>
+                    burocracia nem complicação.
+                </p>
+
+            </div>
+
+
+            <div class="rodape-base">
+
+                <p class="direitos">
+                    © 2026 Lucrafy. Todos os direitos reservados.
+                    CNPJ: 00.000.000/0001-01
+                </p>
+
+                <div class="textos-legais">
+
+                    <span>Termos de Uso</span>
+
+                    <span>Privacidade</span>
+
+                    <span>Políticas de Segurança</span>
+
                 </div>
-            {% endif %}
-        {% endwith %}
 
-        <form action="{{ url_for('editar', id=usuario[0]) }}" method="POST" class="form-cadastro">
+            </div>
 
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" value="{{ usuario[1] }}" required>
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="{{ usuario[2] }}" required>
-
-            <label for="mao_de_obra">Valor da mão de obra (R$)</label>
-            <input type="number" id="mao_de_obra" name="mao_de_obra" value="{{ usuario[3] }}" min="0" step="0.01" required>
-
-            <button type="submit">Salvar alterações</button>
-
-        </form>
-
-        <a href="{{ url_for('home') }}">Voltar</a>
+        </div>
 
     </div>
 

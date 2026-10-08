@@ -1,97 +1,175 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Senha</title>
+    <title>Alterar Senha - Lucrafy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
-
 </head>
-<body>
 
-<!-- CABEÇALHO -->
-  <div class="cabecalho">
-    <div class="largura cabecalho-conteudo">
+<body class="pagina-acesso pagina-alterar-senha">
 
-      <!-- LOGO -->
-      <a class="marca" href="{{ url_for('index') }}">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
-      </a>
+    <!-- CABEÇALHO -->
+    <div class="cabecalho">
+        <div class="largura cabecalho-conteudo">
 
-      <!-- NAVEGAÇÃO -->
-      <div class="navegacao">
-        <a href="{{ url_for('index') }}#funcionalidades">Funcionalidades</a>
-        <a href="{{ url_for('index') }}#beneficios">Benefícios</a>
-      </div>
-    </div>
-  </div>
+            <a class="marca" href="{{ url_for('home') }}">
+                <img
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
+            </a>
 
-    <div class="cadastro">
+            <div class="navegacao">
+                <a href="{{ url_for('home') }}#funcionalidades">
+                    Funcionalidades
+                </a>
 
-        <h2>Alterar senha</h2>
+                <a href="{{ url_for('home') }}#beneficios">
+                    Benefícios
+                </a>
+            </div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        <form action="{{ url_for('alterar_senha') }}" method="POST" class="form-cadastro">
-
-            <label for="senha_atual">Senha atual</label>
-            <input type="password" id="senha_atual" name="senha_atual" placeholder="Digite sua senha atual" required>
-
-            <label for="nova_senha">Nova senha</label>
-            <input type="password" id="nova_senha" name="nova_senha" placeholder="Digite sua nova senha" required>
-
-            <label for="confirmar_senha">Confirmar nova senha</label>
-            <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua nova senha" required>
-
-            <button type="submit">Alterar senha</button>
-
-        </form>
-
-        <a href="{{ url_for('home') }}">Voltar</a>
-
-    </div>
-
-<!-- RODAPÉ -->
-  <div class="rodape">
-    <div class="largura rodape-conteudo">
-
-      <!-- LOGO E DESCRIÇÃO -->
-      <div>
-        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
-        <p class="descricao-rodape">
-          O gerenciador financeiro simples, prático e 100%<br>
-          gratuito para quem quer controlar gastos sem<br>
-          burocracia nem complicação.
-        </p>
-      </div>
-
-      <!-- RODAPÉ INFERIOR -->
-      <div class="rodape-base">
-        <p class="direitos">
-          © 2026 Lucrafy.
-          Todos os direitos reservados.
-          CNPJ: 00.000.000/0001-00
-        </p>
-
-        <div class="textos-legais">
-          <span>Termos de Uso</span>
-          <span>Privacidade</span>
-          <span>Políticas de Segurança</span>
+            <div class="acesso">
+                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">
+                    Sair
+                </a>
+            </div>
 
         </div>
-      </div>
     </div>
-  </div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="area-acesso">
+
+        <!-- IMAGEM ESQUERDA -->
+        <div class="ilustracao-acesso">
+            <img
+                src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}"
+                alt="Ilustração financeira Lucrafy"
+            >
+        </div>
+
+        <!-- FORMULÁRIO DIREITA -->
+        <div class="area-formulario">
+
+            <div class="cadastro">
+
+                <h2>Alterar Senha</h2>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash {{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form
+                    action="{{ url_for('alterar_senha') }}"
+                    method="POST"
+                    class="form-cadastro"
+                >
+
+                    <label for="senha_atual">
+                        Senha atual
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senha_atual"
+                        name="senha_atual"
+                        placeholder="Digite sua senha atual"
+                        required
+                    >
+
+                    <label for="nova_senha">
+                        Nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="nova_senha"
+                        name="nova_senha"
+                        placeholder="Digite sua nova senha"
+                        required
+                    >
+
+                    <label for="confirmar_senha">
+                        Confirmar nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmar_senha"
+                        name="confirmar_senha"
+                        placeholder="Confirme sua nova senha"
+                        required
+                    >
+
+                    <button type="submit">
+                        Salvar
+                    </button>
+
+                </form>
+
+                <a href="{{ url_for('home') }}">
+                    Voltar
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="rodape">
+
+        <div class="largura rodape-conteudo">
+
+            <div>
+                <img
+                    class="logo-rodape"
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
+
+                <p class="descricao-rodape">
+                    O gerenciador financeiro simples, prático e 100%
+                    <br>
+                    gratuito para quem quer controlar gastos sem
+                    <br>
+                    burocracia nem complicação.
+                </p>
+            </div>
+
+            <div class="rodape-base">
+
+                <p class="direitos">
+                    © 2026 Lucrafy. Todos os direitos reservados.
+                    CNPJ: 00.000.000/0001-01
+                </p>
+
+                <div class="textos-legais">
+                    <span>Termos de Uso</span>
+                    <span>Privacidade</span>
+                    <span>Políticas de Segurança</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 </html>

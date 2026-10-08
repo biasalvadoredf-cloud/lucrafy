@@ -1,3 +1,16 @@
+/* Cores usadas nas três páginas. */
+:root {
+  --fundo: #f9f9f9;
+  --texto: #282e27;
+  --texto-claro: #64748b;
+  --verde: #a3c65e;
+  --verde-hover: #91b44c;
+  --verde-titulo: #4d7007;
+  --verde-escuro: #303b31;
+  --branco: #ffffff;
+  --borda: #f1f1f1;
+}
+
 /* Regras gerais da página. */
 * {
   box-sizing: border-box;
@@ -113,7 +126,7 @@ h1, h2, h3, p {
 .imagem-apresentacao {
   position: absolute;
   top: 0;
-  left: 10%;
+  left: 20%;
   width: 1222px;
   max-width: none;
   height: 691px;
@@ -1190,7 +1203,7 @@ h1, h2, h3, p {
   }
 
   .pagina-login .botao-cabecalho {
-    width: 186.25px;
+    width: 164.25px;
     height: 39px;
     padding: 0;
     font-size: 15px;
@@ -1278,4 +1291,375 @@ h1, h2, h3, p {
   .alternativa-conta a {
     margin-left: 8px;
   }
+}
+
+/* Estilos da página inicial depois do login. */
+.pagina-home {
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Caixa central com a mensagem e os botões. */
+.pagina-home .cartao-home {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 32px;
+    border-radius: 20px;
+    background-color: var(--branco);
+    text-align: center;
+    box-shadow: 0 4px 20px #00000010;
+}
+
+.pagina-home .titulo-home {
+    margin: 0 0 8px;
+    font-size: 26px;
+}
+
+.pagina-home .texto-home {
+    margin: 0 0 28px;
+    color: var(--texto-claro);
+}
+
+.pagina-home .botoes-home {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Botões de editar, alterar senha e sair. */
+.pagina-home .botao-home {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: var(--verde);
+    color: var(--branco);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pagina-home .botao-home:hover {
+    background-color: var(--verde-hover);
+}
+
+.pagina-home .botao-sair-home {
+    background-color: var(--verde-escuro);
+}
+
+.pagina-home .botao-sair-home:hover {
+    background-color: #252e26;
+}
+
+/* Página de alterar senha */
+
+.pagina-alterar-senha .area-acesso {
+    min-height: 715px;
+    background-color: #f1f3ee;
+}
+
+/* Imagem */
+.pagina-alterar-senha .ilustracao-acesso {
+    width: 50%;
+    height: 715px;
+}
+
+.pagina-alterar-senha .ilustracao-acesso img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Área do formulário */
+.pagina-alterar-senha .area-formulario {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* Caixa do formulário */
+.pagina-alterar-senha .cadastro {
+    width: 476px;
+    max-width: 100%;
+    min-height: 550px;
+    margin: 0;
+    padding: 40px 36px 30px;
+    border-radius: 8px;
+    background-color: var(--branco);
+}
+
+/* Título */
+.pagina-alterar-senha .cadastro h2 {
+    margin: 0 0 40px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+/* Formulário */
+.pagina-alterar-senha .form-cadastro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Labels */
+.pagina-alterar-senha .form-cadastro label {
+    display: block;
+    margin-bottom: 8px;
+    color: #000;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+/* Campos */
+.pagina-alterar-senha .form-cadastro input {
+    display: block;
+    width: 100%;
+    height: 52px;
+    margin-bottom: 18px;
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #eaf2dc;
+    color: var(--texto);
+    font: inherit;
+    font-size: 12px;
+}
+
+.pagina-alterar-senha .form-cadastro input::placeholder {
+    color: #929892;
+    opacity: 1;
+}
+
+.pagina-alterar-senha .form-cadastro input:focus-visible {
+    outline: 2px solid var(--verde-titulo);
+    outline-offset: 4px;
+}
+
+/* Botão salvar */
+.pagina-alterar-senha .form-cadastro button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 225px;
+    height: 40px;
+    margin: 65px auto 0;
+    border: 0;
+    border-radius: 6px;
+    background-color: var(--verde);
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pagina-alterar-senha .form-cadastro button:hover {
+    background-color: var(--verde-hover);
+}
+
+/* Voltar */
+.pagina-alterar-senha .cadastro > a {
+    display: block;
+    margin: 15px 0 0;
+    text-align: center;
+    color: var(--texto-claro);
+    font-size: 12px;
+}
+
+.pagina-alterar-senha .cadastro > a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagens */
+.pagina-alterar-senha .flash-messages {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.pagina-alterar-senha .flash {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: var(--fundo);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .pagina-alterar-senha .ilustracao-acesso {
+        width: 44%;
+    }
+
+    .pagina-alterar-senha .area-formulario {
+        width: 56%;
+        padding: 16px;
+    }
+
+    .pagina-alterar-senha .cadastro {
+        padding: 40px 24px 30px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .pagina-alterar-senha .area-acesso {
+        display: block;
+        min-height: auto;
+        padding: 48px 0 70px;
+        background-color: transparent;
+    }
+
+    .pagina-alterar-senha .ilustracao-acesso {
+        display: none;
+    }
+
+    .pagina-alterar-senha .area-formulario {
+        width: 100%;
+        padding: 0;
+    }
+
+    .pagina-alterar-senha .cadastro {
+        width: calc(100% - 40px);
+        max-width: 476px;
+        min-height: auto;
+        margin: 0 auto;
+        padding: 40px 24px 50px;
+        background-color: transparent;
+    }
+
+    .pagina-alterar-senha .cadastro h2 {
+        font-size: 25px;
+    }
+
+    .pagina-alterar-senha .form-cadastro input {
+        height: 58px;
+        margin-bottom: 16px;
+    }
+
+    .pagina-alterar-senha .form-cadastro button {
+        width: 100%;
+        margin-top: 50px;
+    }
+}
+
+/* Página editar usuário */
+
+.pagina-editar .area-acesso {
+    background-color: #f1f3ee;
+}
+
+/* Imagem */
+.pagina-editar .ilustracao-acesso img {
+    width: 100%;
+    height: 715px;
+    object-fit: cover;
+}
+
+/* Área do formulário */
+.pagina-editar .area-formulario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* Caixa do formulário */
+.pagina-editar .cadastro {
+    width: 476px;
+    max-width: 100%;
+    min-height: 550px;
+    margin: 0;
+    padding: 52px 36px 45px;
+    background-color: var(--branco);
+    border-radius: 20px;
+}
+
+/* Título */
+.pagina-editar .cadastro h2 {
+    margin: 0 0 40px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+/* Campos */
+.pagina-editar .campo input {
+    width: 100%;
+    height: 52px;
+    margin-top: 8px;
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #eaf2dc;
+    color: var(--texto);
+    font: inherit;
+    font-size: 12px;
+}
+
+/* Botão */
+.pagina-editar .botao-confirmar {
+    margin-top: 52px;
+    cursor: pointer;
+    border: 0;
+}
+
+/* Voltar */
+.pagina-editar .alternativa-conta {
+    margin-top: 15px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .pagina-editar .area-formulario {
+        padding: 16px;
+    }
+
+    .pagina-editar .cadastro {
+        padding: 40px 24px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .pagina-editar .area-acesso {
+        min-height: auto;
+        padding: 48px 0 70px;
+        background-color: #f9f9fa;
+    }
+
+    .pagina-editar .area-formulario {
+        width: 100%;
+        padding: 0;
+    }
+
+    .pagina-editar .cadastro {
+        width: calc(100% - 40px);
+        max-width: 476px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        background-color: transparent;
+    }
+
+    .pagina-editar .campo input {
+        height: 58px;
+    }
+
+    .pagina-editar .botao-confirmar {
+        width: 100%;
+        margin-top: 50px;
+    }
+
+    .pagina-editar .rodape {
+        display: block;
+        height: auto;
+        padding-bottom: 30px;
+    }
 }
