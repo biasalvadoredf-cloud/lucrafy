@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
 </head>
 
 <body class="pagina-acesso pagina-alterar-senha">
@@ -73,57 +74,22 @@
                     {% endif %}
                 {% endwith %}
 
-                <form
-                    action="{{ url_for('alterar_senha') }}"
-                    method="POST"
-                    class="form-cadastro"
-                >
+                <form action="{{ url_for('alterar_senha') }}" method="POST" class="form-alterar_senha">
 
-                    <label for="senha_atual">
-                        Senha atual
-                    </label>
+                    <label for="senha_atual">Senha atual</label>
+                    <input type="password" id="senha_atual" name="senha_atual" placeholder="Digite sua senha atual" required>
 
-                    <input
-                        type="password"
-                        id="senha_atual"
-                        name="senha_atual"
-                        placeholder="Digite sua senha atual"
-                        required
-                    >
+                    <label for="nova_senha">Nova senha</label>
+                    <input type="password" id="nova_senha" name="nova_senha" placeholder="Digite sua nova senha" required>
 
-                    <label for="nova_senha">
-                        Nova senha
-                    </label>
+                    <label for="confirmar_senha">Confirmar nova senha</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua nova senha" required>
 
-                    <input
-                        type="password"
-                        id="nova_senha"
-                        name="nova_senha"
-                        placeholder="Digite sua nova senha"
-                        required
-                    >
-
-                    <label for="confirmar_senha">
-                        Confirmar nova senha
-                    </label>
-
-                    <input
-                        type="password"
-                        id="confirmar_senha"
-                        name="confirmar_senha"
-                        placeholder="Confirme sua nova senha"
-                        required
-                    >
-
-                    <button type="submit">
-                        Salvar
-                    </button>
+                    <button type="submit">Salvar</button>
 
                 </form>
 
-                <a href="{{ url_for('home') }}">
-                    Voltar
-                </a>
+                <a href="{{ url_for('home') }}">Voltar</a>
 
             </div>
 

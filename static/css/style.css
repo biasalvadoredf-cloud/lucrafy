@@ -54,6 +54,7 @@ h1, h2, h3, p {
 }
 
 .cabecalho-conteudo {
+  margin: 50px;
   height: 64px;
   display: flex;
   align-items: center;
@@ -1724,7 +1725,6 @@ h1, h2, h3, p {
 
 /*                        MENU             */
 .menu{
-    height: 697px;
     width: 15%;
     background-color: var(--fundo-pagina-3);
 }
@@ -1754,10 +1754,7 @@ h1, h2, h3, p {
     margin-left: 15px;
 }
 
-.opcoes a:hover{
-    color: var(--texto-de-destaque);
-    font-size: 15px;
-}
+
 
 /*                      GERAL                    */
 
@@ -1864,6 +1861,7 @@ h1, h2, h3, p {
     display: flex;
     justify-content: space-around;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .cartao-produto-destaque{
@@ -1906,9 +1904,9 @@ h1, h2, h3, p {
 /*  resumo margem */
 
 .resumo-margem{
-    margin-top: 60px;
-    margin-left: 67px;
     border-radius: 18px;
+    display: block;
+    margin: 0 auto;
     width: 956px;
     height: 86px;
     background-color: var(--botao-principal-4);
@@ -1939,14 +1937,13 @@ h1, h2, h3, p {
     width: 350px;
     padding-top: 12px;
     padding-bottom: 12px;
-
     background-color: var(--fundo-pagina-3);
     border-radius: 12px;
-
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: 353px;
+    display: block;
+    margin: 0 auto;
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
 
 }
 
@@ -2019,3 +2016,276 @@ h1, h2, h3, p {
   display: flex;
   gap: 24px; /* Cria espaço entre os itens do grupo. */
 }
+
+/* Configs */
+
+/* Botão Sair do cabeçalho. */
+.pagina-configuracoes .sair {
+  width: 88px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: var(--verde);
+  color: var(--branco);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.pagina-configuracoes .sair:hover {
+  background-color: var(--verde-hover);
+}
+
+/* Caixa de Configurações. */
+.pagina-configuracoes .caixa-formulario {
+  position: relative;
+  min-height: 597px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 46px;
+  padding: 34px 36px 39px;
+  border-radius: 20px;
+  background-color: var(--branco);
+  box-shadow: 0 4px 18px #00000008;
+}
+
+.pagina-configuracoes .caixa-formulario h1 {
+  margin: 0 0 42px;
+  font-size: 27px;
+  line-height: 36px;
+}
+
+/* Mensagens do Flask. */
+.pagina-configuracoes .mensagens-configuracoes {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.pagina-configuracoes .mensagem-configuracao {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.pagina-configuracoes .mensagem-configuracao.success {
+  background-color: #edf4df;
+  color: var(--verde-titulo);
+}
+
+.pagina-configuracoes .mensagem-configuracao.error,
+.pagina-configuracoes .mensagem-configuracao.danger {
+  background-color: #ffdedb;
+  color: #d93025;
+}
+
+/* Opções da conta. */
+.pagina-configuracoes .opcoes-configuracoes {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.pagina-configuracoes .opcoes-configuracoes a {
+  width: 100%;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background-color: #edf4df;
+  color: var(--verde-titulo);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pagina-configuracoes .opcoes-configuracoes a:hover {
+  background-color: #e3edcf;
+}
+
+/* Botão Sair dentro da caixa. */
+.pagina-configuracoes .botao-sair-configuracoes {
+  width: 105px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 27px;
+  border-radius: 18px;
+  background-color: #ffdedb;
+  color: #ed2525;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.pagina-configuracoes .botao-sair-configuracoes:hover {
+  background-color: #ffd1cd;
+}
+
+/* Botão Voltar. */
+.pagina-configuracoes .botao-voltar-configuracoes {
+  width: 225px;
+  min-height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  border-radius: 6px;
+  background-color: var(--verde);
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.pagina-configuracoes .botao-voltar-configuracoes:hover {
+  background-color: var(--verde-hover);
+}
+
+/* Menu mobile escondido em telas maiores. */
+.navegacao-mobile {
+  display: none;
+}
+
+/* Ajustes para celular. */
+@media (max-width: 700px) {
+  .pagina-configuracoes .cabecalho,
+  .pagina-configuracoes .cabecalho-conteudo {
+    height: 72px;
+  }
+
+  .pagina-configuracoes .cabecalho {
+    background-color: var(--branco);
+    box-shadow: none;
+  }
+
+  .pagina-configuracoes .navegacao {
+    display: none;
+  }
+
+  .pagina-configuracoes .acesso {
+    margin-left: auto;
+  }
+
+  .pagina-configuracoes .sair {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background-color: #f5f5f5;
+    font-size: 0;
+  }
+
+  .pagina-configuracoes .sair::before {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--texto);
+    content: "";
+  }
+
+  .pagina-configuracoes .sair::after {
+    position: absolute;
+    bottom: 9px;
+    left: 9px;
+    width: 26px;
+    height: 14px;
+    border-radius: 14px 14px 4px 4px;
+    background-color: var(--texto);
+    content: "";
+  }
+
+  .pagina-configuracoes .area-acesso {
+    min-height: calc(100vh - 148px);
+    display: block;
+    padding: 48px 0 0;
+    background: #f7f6f7;
+  }
+
+  .pagina-configuracoes .ilustracao-acesso {
+    display: none;
+  }
+
+  .pagina-configuracoes .area-formulario {
+    width: 100%;
+    padding: 0;
+  }
+
+  .pagina-configuracoes .caixa-formulario {
+    width: calc(100% - 40px);
+    max-width: 476px;
+    height: 360px;
+    min-height: 360px;
+    margin: 0 auto;
+    padding: 28px 24px 51px;
+    background-color: var(--branco);
+    box-shadow: none;
+  }
+
+  .pagina-configuracoes .caixa-formulario h1 {
+    margin-bottom: 30px;
+    font-size: 27px;
+    line-height: 36px;
+  }
+
+  .pagina-configuracoes .opcoes-configuracoes {
+    gap: 26px;
+  }
+
+  .pagina-configuracoes .botao-sair-configuracoes {
+    position: absolute;
+    top: calc(100% + 48px);
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%);
+  }
+
+  .pagina-configuracoes .botao-voltar-configuracoes {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .navegacao-mobile {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    height: 76px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    background-color: var(--branco);
+  }
+
+  .navegacao-mobile a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--texto);
+    font-size: 11px;
+    text-decoration: none;
+  }
+
+  .navegacao-mobile svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }

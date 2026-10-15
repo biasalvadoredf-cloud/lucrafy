@@ -812,6 +812,11 @@ def visao_geral():
     return render_template('visao-geral.html')
 
 
+@app.route('/configuracao', methods=['GET'])
+def configuracao():
+    return render_template('configuracao.html')
+
+
 # --------------------------------------------------
 #  INICIALIZAÇÃO DO SISTEMA
 # --------------------------------------------------
