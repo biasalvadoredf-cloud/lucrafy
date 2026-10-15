@@ -48,6 +48,7 @@
 
   <!-- ÁREA DE CADASTRO -->
   <div class="area-acesso">
+
     <!-- ILUSTRAÇÃO -->
     <div class="ilustracao-acesso">
       <img src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}" alt="Calculadora, gráficos e moedas verdes">
@@ -102,7 +103,7 @@
           <!-- VALOR POR HORA -->
           <div class="campo campo-valor">
             <label for="mao_de_obra">Valor por hora trabalhada<span class="obrigatorio">*</span></label>
-            <input type="text" id="mao_de_obra" name="mao_de_obra" placeholder="Ex: 120.00" required>
+            <input type="number" min="0" step="0.01" id="mao_de_obra" name="mao_de_obra" placeholder="Ex: 120.00" required>
           </div>
 
           <!-- BOTÃO -->

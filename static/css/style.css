@@ -1,4 +1,6 @@
-/* Cores usadas nas três páginas. */
+/* --------------------------------------------------
+   TODAS AS PÁGINAS — Cores e regras gerais
+   -------------------------------------------------- */
 :root {
   --fundo: #f9f9f9;
   --texto: #282e27;
@@ -11,7 +13,6 @@
   --borda: #f1f1f1;
 }
 
-/* Regras gerais da página. */
 * {
   box-sizing: border-box;
 }
@@ -42,7 +43,10 @@ h1, h2, h3, p {
   margin: 0 auto;
 }
 
-/* Topo com logo e links. */
+/* --------------------------------------------------
+   PÁGINAS COM CABEÇALHO — index, cadastro, login,
+   editar_usuario e alterar_senha
+   -------------------------------------------------- */
 .cabecalho {
   height: 64px;
   background-color: var(--fundo);
@@ -115,7 +119,9 @@ h1, h2, h3, p {
   background-color: var(--verde-hover);
 }
 
-/* Primeira parte da página. */
+/* --------------------------------------------------
+   INDEX.HTML — Apresentação, benefícios e funcionalidades
+   -------------------------------------------------- */
 .apresentacao {
   position: relative;
   height: 705px;
@@ -130,7 +136,7 @@ h1, h2, h3, p {
   width: 1222px;
   max-width: none;
   height: 691px;
-  object-fit: cover; /* Preenche o espaço sem esticar a imagem. */
+  object-fit: cover;
 }
 
 .apresentacao-conteudo {
@@ -171,7 +177,6 @@ h1, h2, h3, p {
   font-weight: 600;
 }
 
-/* Título e cartões dos benefícios. */
 .beneficios {
   min-height: 956px;
   padding-top: 96px;
@@ -263,7 +268,6 @@ h1, h2, h3, p {
   height: 17px;
 }
 
-/* Partes com texto e imagem. */
 .funcionalidade {
   overflow: hidden;
 }
@@ -338,7 +342,6 @@ h1, h2, h3, p {
   width: 505px;
 }
 
-/* Parte da imagem que fica visível. */
 .recorte-resumo {
   width: 480px;
   height: 360px;
@@ -353,7 +356,6 @@ h1, h2, h3, p {
   margin-left: -390px;
 }
 
-/* Convite para criar uma conta. */
 .chamada {
   height: 652px;
   padding-top: 120px;
@@ -395,7 +397,10 @@ h1, h2, h3, p {
   font-weight: 700;
 }
 
-/* Parte final da página. */
+/* --------------------------------------------------
+   RODAPÉ — index, cadastro, login, editar_usuario,
+   alterar_senha
+   -------------------------------------------------- */
 .rodape {
   height: 245px;
   background-color: var(--branco);
@@ -432,7 +437,9 @@ h1, h2, h3, p {
   gap: 24px;
 }
 
-/* Tablet */
+/* --------------------------------------------------
+   INDEX.HTML E ELEMENTOS COMPARTILHADOS — Tablet
+   -------------------------------------------------- */
 @media (max-width: 900px) {
   .largura {
     width: 90%;
@@ -548,7 +555,9 @@ h1, h2, h3, p {
   }
 }
 
-/* Mobile */
+/* --------------------------------------------------
+   INDEX.HTML E ELEMENTOS COMPARTILHADOS — Celular
+   -------------------------------------------------- */
 @media (max-width: 560px) {
   body {
     background-color: #fbfbfc;
@@ -848,7 +857,10 @@ h1, h2, h3, p {
   }
 }
 
-/* Estilos do login e do cadastro. */
+/* --------------------------------------------------
+   CADASTRO, LOGIN, EDITAR_USUARIO E ALTERAR_SENHA
+   Estrutura compartilhada
+   -------------------------------------------------- */
 .pagina-acesso .largura {
   width: calc(100% - 96px);
   max-width: none;
@@ -858,7 +870,6 @@ h1, h2, h3, p {
   margin-top: 55px;
 }
 
-/* Imagem e formulário. */
 .area-acesso {
   display: flex;
   min-height: 715px;
@@ -879,6 +890,9 @@ h1, h2, h3, p {
   object-fit: cover;
 }
 
+/* --------------------------------------------------
+   LOGIN.HTML — Fundo e ilustração
+   -------------------------------------------------- */
 .pagina-login .area-acesso {
   background-color: #f1f3ee;
 }
@@ -887,6 +901,9 @@ h1, h2, h3, p {
   margin-top: -50px;
 }
 
+/* --------------------------------------------------
+   FORMULÁRIOS — Caixas e campos compartilhados
+   -------------------------------------------------- */
 .area-formulario {
   width: 50%;
   padding-left: 31px;
@@ -908,6 +925,9 @@ h1, h2, h3, p {
   line-height: 36px;
 }
 
+/* --------------------------------------------------
+   CADASTRO.HTML — Ajustes do formulário
+   -------------------------------------------------- */
 .pagina-cadastro .caixa-formulario {
   margin-top: 78px;
   padding-top: 0;
@@ -919,7 +939,9 @@ h1, h2, h3, p {
   margin-bottom: 29px;
 }
 
-/* Campos para preencher. */
+/* --------------------------------------------------
+   CADASTRO, LOGIN E EDITAR_USUARIO — Campos e botões
+   -------------------------------------------------- */
 .campo {
   margin-bottom: 18px;
 }
@@ -967,7 +989,6 @@ h1, h2, h3, p {
   margin-bottom: 0;
 }
 
-/* Link de confirmação. */
 .botao-confirmar {
   display: flex;
   width: 225px;
@@ -1004,148 +1025,180 @@ h1, h2, h3, p {
   font-weight: 500;
 }
 
-/* Alterar senha */
+/* --------------------------------------------------
+   EDITAR_USUARIO E ALTERAR_SENHA
+   Formulários compartilhados
+   -------------------------------------------------- */
 .cadastro {
-    width: 476px;
-    max-width: calc(100% - 40px);
-    min-height: 550px;
-    margin: 80px 12% 0 auto;
-    padding: 52px 36px 76px;
-    border-radius: 20px;
-    background-color: var(--branco);
+  width: 476px;
+  max-width: calc(100% - 40px);
+  min-height: 550px;
+  margin: 80px 12% 0 auto;
+  padding: 52px 36px 76px;
+  border-radius: 20px;
+  background-color: var(--branco);
 }
 
 .cadastro h2 {
-    margin: 0 0 40px;
-    text-align: center;
-    font-size: 24px;
-    line-height: 36px;
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 36px;
 }
 
-/* Formulário */
 .form-cadastro {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .form-cadastro label {
-    display: block;
-    margin-bottom: 8px;
-    color: #000;
-    font-size: 12px;
-    line-height: 18px;
+  display: block;
+  margin-bottom: 8px;
+  color: #000;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .form-cadastro input {
-    display: block;
-    width: 100%;
-    height: 42px;
-    margin-bottom: 18px;
-    padding: 6px 12px;
-    border: 0;
-    border-radius: 4px;
-    background-color: var(--fundo);
-    color: var(--texto);
-    font: inherit;
-    font-size: 12px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 18px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--fundo);
+  color: var(--texto);
+  font: inherit;
+  font-size: 12px;
 }
 
 .form-cadastro input::placeholder {
-    color: #929892;
-    opacity: 1;
+  color: #929892;
+  opacity: 1;
 }
 
 .form-cadastro input:focus-visible {
-    outline: 2px solid var(--verde-titulo);
-    outline-offset: 4px;
+  outline: 2px solid var(--verde-titulo);
+  outline-offset: 4px;
 }
 
-/* Botão */
 .form-cadastro button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 225px;
-    height: 40px;
-    margin: 52px auto 0;
-    border: 0;
-    border-radius: 6px;
-    background-color: var(--verde);
-    color: #000;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 225px;
+  height: 40px;
+  margin: 52px auto 0;
+  border: 0;
+  border-radius: 6px;
+  background-color: var(--verde);
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .form-cadastro button:hover {
-    background-color: var(--verde-hover);
+  background-color: var(--verde-hover);
 }
 
-/* Voltar */
 .cadastro > a {
-    display: block;
-    margin: 12px 0 0;
-    text-align: center;
-    color: var(--texto-claro);
-    font-size: 12px;
-    line-height: 18px;
+  display: block;
+  margin: 12px 0 0;
+  text-align: center;
+  color: var(--texto-claro);
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .cadastro > a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* Mensagens */
+/* --------------------------------------------------
+   MENSAGENS FLASH — cadastro, login, editar_usuario,
+   alterar_senha e home
+   -------------------------------------------------- */
 .flash-messages {
-    width: 100%;
-    margin-bottom: 18px;
+  width: 100%;
+  margin-bottom: 18px;
 }
 
 .flash {
-    margin-bottom: 12px;
-    padding: 12px;
-    border-radius: 4px;
-    background-color: var(--fundo);
-    font-size: 12px;
-    text-align: center;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background-color: var(--fundo);
+  color: var(--texto);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
-/* Tablet */
+.flash.error {
+  background-color: #713b3e;
+  border-color: #713b3e;
+  color: #fff7f7;
+}
+
+.flash.success {
+  background-color: #eaf2dc;
+  border-color: #d5e3be;
+  color: var(--verde-escuro);
+}
+
+.flash.info {
+  background-color: #eef1eb;
+  color: var(--verde-escuro);
+}
+
+/* --------------------------------------------------
+   EDITAR_USUARIO E ALTERAR_SENHA
+   Formulários compartilhados — Tablet
+   -------------------------------------------------- */
 @media (max-width: 900px) {
-    .cadastro {
-        margin: 80px auto;
-    }
+  .cadastro {
+    margin: 80px auto;
+  }
 }
 
-/* Mobile */
+/* --------------------------------------------------
+   EDITAR_USUARIO E ALTERAR_SENHA
+   Formulários compartilhados — Celular
+   -------------------------------------------------- */
 @media (max-width: 560px) {
-    .cadastro {
-        width: calc(100% - 40px);
-        max-width: 476px;
-        min-height: auto;
-        margin: 48px auto;
-        padding: 52px 24px 76px;
-        background-color: transparent;
-    }
+  .cadastro {
+    width: calc(100% - 40px);
+    max-width: 476px;
+    min-height: auto;
+    margin: 48px auto;
+    padding: 52px 24px 76px;
+    background-color: transparent;
+  }
 
-    .cadastro h2 {
-        font-size: 25px;
-    }
+  .cadastro h2 {
+    font-size: 25px;
+  }
 
-    .form-cadastro input {
-        height: 58px;
-        margin-bottom: 16px;
-        padding: 0 6px;
-    }
+  .form-cadastro input {
+    height: 58px;
+    margin-bottom: 16px;
+    padding: 0 6px;
+  }
 
-    .form-cadastro button {
-        width: 100%;
-        margin-top: 50px;
-    }
+  .form-cadastro button {
+    width: 100%;
+    margin-top: 50px;
+  }
 }
 
-/* Tablet */
+/* --------------------------------------------------
+   FORMULÁRIOS COMPARTILHADOS — Tablet
+   -------------------------------------------------- */
 @media (max-width: 1100px) {
   .ilustracao-acesso {
     width: 44%;
@@ -1167,7 +1220,9 @@ h1, h2, h3, p {
   }
 }
 
-/* Formulários no celular. */
+/* --------------------------------------------------
+   FORMULÁRIOS COMPARTILHADOS — Celular
+   -------------------------------------------------- */
 @media (max-width: 700px) {
   .pagina-acesso {
     background-color: #f9f9fa;
@@ -1293,373 +1348,674 @@ h1, h2, h3, p {
   }
 }
 
-/* Estilos da página inicial depois do login. */
+/* --------------------------------------------------
+   HOME.HTML
+   -------------------------------------------------- */
 .pagina-home {
-    min-height: 100vh;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Caixa central com a mensagem e os botões. */
 .pagina-home .cartao-home {
-    width: 100%;
-    max-width: 420px;
-    padding: 40px 32px;
-    border-radius: 20px;
-    background-color: var(--branco);
-    text-align: center;
-    box-shadow: 0 4px 20px #00000010;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  background-color: var(--branco);
+  text-align: center;
+  box-shadow: 0 4px 20px #00000010;
 }
 
 .pagina-home .titulo-home {
-    margin: 0 0 8px;
-    font-size: 26px;
+  margin: 0 0 8px;
+  font-size: 26px;
 }
 
 .pagina-home .texto-home {
-    margin: 0 0 28px;
-    color: var(--texto-claro);
+  margin: 0 0 28px;
+  color: var(--texto-claro);
 }
 
 .pagina-home .botoes-home {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Botões de editar, alterar senha e sair. */
 .pagina-home .botao-home {
-    padding: 12px 16px;
-    border-radius: 8px;
-    background-color: var(--verde);
-    color: var(--branco);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.2s;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--verde);
+  color: var(--branco);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
 }
 
 .pagina-home .botao-home:hover {
-    background-color: var(--verde-hover);
+  background-color: var(--verde-hover);
 }
 
 .pagina-home .botao-sair-home {
-    background-color: var(--verde-escuro);
+  background-color: var(--verde-escuro);
 }
 
 .pagina-home .botao-sair-home:hover {
-    background-color: #252e26;
+  background-color: #252e26;
 }
 
-/* Página de alterar senha */
-
+/* --------------------------------------------------
+   ALTERAR_SENHA.HTML — Desktop, tablet e celular
+   -------------------------------------------------- */
 .pagina-alterar-senha .area-acesso {
-    min-height: 715px;
-    background-color: #f1f3ee;
+  min-height: 715px;
+  background-color: #f1f3ee;
 }
 
-/* Imagem */
 .pagina-alterar-senha .ilustracao-acesso {
-    width: 50%;
-    height: 715px;
+  width: 50%;
+  height: 715px;
 }
 
 .pagina-alterar-senha .ilustracao-acesso img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 
-/* Área do formulário */
 .pagina-alterar-senha .area-formulario {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
-/* Caixa do formulário */
 .pagina-alterar-senha .cadastro {
-    width: 476px;
-    max-width: 100%;
-    min-height: 550px;
-    margin: 0;
-    padding: 40px 36px 30px;
-    border-radius: 8px;
-    background-color: var(--branco);
+  width: 476px;
+  max-width: 100%;
+  min-height: 550px;
+  margin: 0;
+  padding: 40px 36px 30px;
+  border-radius: 8px;
+  background-color: var(--branco);
 }
 
-/* Título */
 .pagina-alterar-senha .cadastro h2 {
-    margin: 0 0 40px;
-    text-align: center;
-    font-size: 24px;
-    line-height: 36px;
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 36px;
 }
 
-/* Formulário */
-.pagina-alterar-senha .form-cadastro {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-/* Labels */
-.pagina-alterar-senha .form-cadastro label {
-    display: block;
-    margin-bottom: 8px;
-    color: #000;
-    font-size: 12px;
-    line-height: 18px;
-}
-
-/* Campos */
 .pagina-alterar-senha .form-cadastro input {
-    display: block;
-    width: 100%;
-    height: 52px;
-    margin-bottom: 18px;
-    padding: 6px 12px;
-    border: 0;
-    border-radius: 8px;
-    background-color: #eaf2dc;
-    color: var(--texto);
-    font: inherit;
-    font-size: 12px;
+  display: block;
+  width: 100%;
+  height: 52px;
+  margin-bottom: 18px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 8px;
+  background-color: #eaf2dc;
+  color: var(--texto);
+  font: inherit;
+  font-size: 12px;
 }
 
-.pagina-alterar-senha .form-cadastro input::placeholder {
-    color: #929892;
-    opacity: 1;
-}
-
-.pagina-alterar-senha .form-cadastro input:focus-visible {
-    outline: 2px solid var(--verde-titulo);
-    outline-offset: 4px;
-}
-
-/* Botão salvar */
 .pagina-alterar-senha .form-cadastro button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 225px;
-    height: 40px;
-    margin: 65px auto 0;
-    border: 0;
-    border-radius: 6px;
-    background-color: var(--verde);
-    color: #000;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 225px;
+  height: 40px;
+  margin: 65px auto 0;
+  border: 0;
+  border-radius: 6px;
+  background-color: var(--verde);
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.pagina-alterar-senha .form-cadastro button:hover {
-    background-color: var(--verde-hover);
-}
-
-/* Voltar */
 .pagina-alterar-senha .cadastro > a {
-    display: block;
-    margin: 15px 0 0;
-    text-align: center;
-    color: var(--texto-claro);
-    font-size: 12px;
+  display: block;
+  margin: 15px 0 0;
+  text-align: center;
+  color: var(--texto-claro);
+  font-size: 12px;
 }
 
-.pagina-alterar-senha .cadastro > a:hover {
-    text-decoration: underline;
-}
-
-/* Mensagens */
-.pagina-alterar-senha .flash-messages {
-    width: 100%;
-    margin-bottom: 18px;
-}
-
-.pagina-alterar-senha .flash {
-    margin-bottom: 12px;
-    padding: 12px;
-    border-radius: 4px;
-    background-color: var(--fundo);
-    font-size: 12px;
-    text-align: center;
-}
-
-/* Tablet */
 @media (max-width: 900px) {
-    .pagina-alterar-senha .ilustracao-acesso {
-        width: 44%;
-    }
+  .pagina-alterar-senha .ilustracao-acesso {
+    width: 44%;
+  }
 
-    .pagina-alterar-senha .area-formulario {
-        width: 56%;
-        padding: 16px;
-    }
+  .pagina-alterar-senha .area-formulario {
+    width: 56%;
+    padding: 16px;
+  }
 
-    .pagina-alterar-senha .cadastro {
-        padding: 40px 24px 30px;
-    }
+  .pagina-alterar-senha .cadastro {
+    padding: 40px 24px 30px;
+  }
 }
 
-/* Mobile */
 @media (max-width: 700px) {
-    .pagina-alterar-senha .area-acesso {
-        display: block;
-        min-height: auto;
-        padding: 48px 0 70px;
-        background-color: transparent;
-    }
+  .pagina-alterar-senha .area-acesso {
+    display: block;
+    min-height: auto;
+    padding: 48px 0 70px;
+    background-color: transparent;
+  }
 
-    .pagina-alterar-senha .ilustracao-acesso {
-        display: none;
-    }
+  .pagina-alterar-senha .ilustracao-acesso {
+    display: none;
+  }
 
-    .pagina-alterar-senha .area-formulario {
-        width: 100%;
-        padding: 0;
-    }
-
-    .pagina-alterar-senha .cadastro {
-        width: calc(100% - 40px);
-        max-width: 476px;
-        min-height: auto;
-        margin: 0 auto;
-        padding: 40px 24px 50px;
-        background-color: transparent;
-    }
-
-    .pagina-alterar-senha .cadastro h2 {
-        font-size: 25px;
-    }
-
-    .pagina-alterar-senha .form-cadastro input {
-        height: 58px;
-        margin-bottom: 16px;
-    }
-
-    .pagina-alterar-senha .form-cadastro button {
-        width: 100%;
-        margin-top: 50px;
-    }
-}
-
-/* Página editar usuário */
-
-.pagina-editar .area-acesso {
-    background-color: #f1f3ee;
-}
-
-/* Imagem */
-.pagina-editar .ilustracao-acesso img {
+  .pagina-alterar-senha .area-formulario {
     width: 100%;
-    height: 715px;
-    object-fit: cover;
+    padding: 0;
+  }
+
+  .pagina-alterar-senha .cadastro {
+    width: calc(100% - 40px);
+    max-width: 476px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 40px 24px 50px;
+    background-color: transparent;
+  }
+
+  .pagina-alterar-senha .cadastro h2 {
+    font-size: 25px;
+  }
+
+  .pagina-alterar-senha .form-cadastro input {
+    height: 58px;
+    margin-bottom: 16px;
+  }
+
+  .pagina-alterar-senha .form-cadastro button {
+    width: 100%;
+    margin-top: 50px;
+  }
 }
 
-/* Área do formulário */
+/* --------------------------------------------------
+   EDITAR_USUARIO.HTML — Desktop, tablet e celular
+   -------------------------------------------------- */
+.pagina-editar .area-acesso {
+  background-color: #f1f3ee;
+}
+
+.pagina-editar .ilustracao-acesso img {
+  width: 100%;
+  height: 715px;
+  object-fit: cover;
+}
+
 .pagina-editar .area-formulario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.pagina-editar .cadastro {
+  width: 476px;
+  max-width: 100%;
+  min-height: 550px;
+  margin: 0;
+  padding: 52px 36px 45px;
+  background-color: var(--branco);
+  border-radius: 20px;
+}
+
+.pagina-editar .cadastro h2 {
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.pagina-editar .campo input {
+  width: 100%;
+  height: 52px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 8px;
+  background-color: #eaf2dc;
+  color: var(--texto);
+  font: inherit;
+  font-size: 12px;
+}
+
+.pagina-editar .botao-confirmar {
+  margin-top: 52px;
+  cursor: pointer;
+  border: 0;
+}
+
+.pagina-editar .alternativa-conta {
+  margin-top: 15px;
+}
+
+@media (max-width: 900px) {
+  .pagina-editar .area-formulario {
+    padding: 16px;
+  }
+
+  .pagina-editar .cadastro {
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  .pagina-editar .area-acesso {
+    min-height: auto;
+    padding: 48px 0 70px;
+    background-color: #f9f9fa;
+  }
+
+  .pagina-editar .area-formulario {
+    width: 100%;
+    padding: 0;
+  }
+
+  .pagina-editar .cadastro {
+    width: calc(100% - 40px);
+    max-width: 476px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    background-color: transparent;
+  }
+
+  .pagina-editar .campo input {
+    height: 58px;
+  }
+
+  .pagina-editar .botao-confirmar {
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .pagina-editar .rodape {
+    display: block;
+    height: auto;
+    padding-bottom: 30px;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+
+}
+
+/* BIBLIOTECA DE CORES */
+:root{
+
+    /* fundo pagina */
+    --fundo-pagina-1:#F7F6F7;
+    --fundo-pagina-2:#F9F9F9;
+    --fundo-pagina-3:#FFFFFF;
+
+    /* textos */
+    --texto-secundario:#303B31;
+    --texto-de-destaque: #496801;
+    --texto-principal: #242B25;
+    --texto-auxiliar: #64748B;
+
+    /* botões */
+    --botao-principal: #A4C95F;
+    --botao-principal-4:#a4c95f59;
+
+    /* cores */
+
+    --branco:#FFFFFF;
+    --verde-alternativo:#D9E6D8;
+
+}
+ /*                   CABEÇLHO  */
+.cabecalho{
+    display: flex;
+    height: 64px;
+    background-color: var(--fundo-pagina-2);
+    align-items: center;
+}
+
+.opcao-cabecalho{
+    margin-left: 32px;
+}
+
+.cabecalho a{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 13px;
+
+}
+
+.cabecalho a:hover{
+    color: var(--texto-de-destaque);
+    font-size: 14px;
+
+}
+.logo{
+    margin-left: 10px;
+}
+
+
+/* estrutura */
+.lados{
+    display: flex;
+}
+
+/*                        MENU             */
+.menu{
+    height: 697px;
+    width: 15%;
+    background-color: var(--fundo-pagina-3);
+}
+
+.menu h4{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    margin-top: 25px;
+    margin-left: 28px;
+}
+
+.opcoes{
+    margin-left: 28px;
+    margin-top: 12px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 30px;
 }
 
-/* Caixa do formulário */
-.pagina-editar .cadastro {
-    width: 476px;
-    max-width: 100%;
-    min-height: 550px;
-    margin: 0;
-    padding: 52px 36px 45px;
-    background-color: var(--branco);
-    border-radius: 20px;
+
+
+.opcoes a{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    margin-left: 15px;
 }
 
-/* Título */
-.pagina-editar .cadastro h2 {
-    margin: 0 0 40px;
+.opcoes a:hover{
+    color: var(--texto-de-destaque);
+    font-size: 15px;
+}
+
+/*                      GERAL                    */
+
+.geral{
+    background-color: var(--fundo-pagina-2);
+    width: 85%;
+
+
+}
+
+
+/* cabeçalho geral */
+.cabecalho-visao-geral{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cabecalho-visao-geral h1{
+    font-family: 'Poppins', Courier, monospace;
+    font-weight: bold;
+    font-size: 32px;
+    color: var(--texto-principal) ;
+    margin-left: 50px;
+}
+
+.cabecalho-visao-geral a{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 14px;
+    font-weight: bolder;
+    color: var(--texto-de-destaque);
+
+
+    background-color: var(--botao-principal) ;
+    margin-right: 50px;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.cabecalho-visao-geral a:hover{
+    font-size: 15px;
+}
+
+/* cartões indicadores */
+
+.cartoes-indicadores{
+    display: flex;
+    justify-content: space-around;
     text-align: center;
-    font-size: 24px;
-    line-height: 36px;
 }
 
-/* Campos */
-.pagina-editar .campo input {
-    width: 100%;
-    height: 52px;
-    margin-top: 8px;
-    padding: 6px 12px;
-    border: 0;
-    border-radius: 8px;
-    background-color: #eaf2dc;
-    color: var(--texto);
-    font: inherit;
+.cartao-indicador{
+    width: 230px;
+    height: 92px;
+    border-radius: 16px;
+    border-left: #D9E6D8 solid ;
+    background-color: var(--fundo-pagina-3);
+    text-align: center;
+    margin-top: 50px;
+}
+
+.cartao-indicador h3{
+    font-family: 'Poppins', Courier, monospace;
     font-size: 12px;
+    color: var(--texto-auxiliar);
+    margin-top: 20px;
 }
 
-/* Botão */
-.pagina-editar .botao-confirmar {
-    margin-top: 52px;
-    cursor: pointer;
-    border: 0;
+.cartao-indicador p{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--texto-principal);
+
+
 }
 
-/* Voltar */
-.pagina-editar .alternativa-conta {
-    margin-top: 15px;
+/*       produtos em destaque */
+
+/* produtos em destaque texto */
+
+.produtos-destaque-textos{
+    margin-left: 50px;
+    margin-top: 50px;
 }
 
-/* Tablet */
-@media (max-width: 900px) {
-    .pagina-editar .area-formulario {
-        padding: 16px;
-    }
-
-    .pagina-editar .cadastro {
-        padding: 40px 24px;
-    }
+.produtos-destaque-textos h2{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 20px;
+    font-weight: bolder;
+    color: var(--texto-principal);
 }
 
-/* Mobile */
-@media (max-width: 700px) {
-    .pagina-editar .area-acesso {
-        min-height: auto;
-        padding: 48px 0 70px;
-        background-color: #f9f9fa;
-    }
+.produtos-destaque-textos p{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 12px;
+    color: var(--texto-principal);
+}
 
-    .pagina-editar .area-formulario {
-        width: 100%;
-        padding: 0;
-    }
+/* cartões produtos em destaque */
 
-    .pagina-editar .cadastro {
-        width: calc(100% - 40px);
-        max-width: 476px;
-        margin: 0 auto;
-        padding: 40px 24px;
-        background-color: transparent;
-    }
+.cartoes-produto-destaque{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
 
-    .pagina-editar .campo input {
-        height: 58px;
-    }
+.cartao-produto-destaque{
+    background-color: var(--fundo-pagina-3);
+    width: 300px;
+    height: 130px;
+    border-radius: 18px;
+}
 
-    .pagina-editar .botao-confirmar {
-        width: 100%;
-        margin-top: 50px;
-    }
+.cartao-produto-destaque h3{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 15px;
+    font-weight: bolder;
+    color: var(--texto-principal);
 
-    .pagina-editar .rodape {
-        display: block;
-        height: auto;
-        padding-bottom: 30px;
-    }
+    margin-top: 14px;
+    margin-left: 16px;
+
+}
+
+.infos-cartao-produto{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.info h4{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 10px;
+    color: var(--texto-auxiliar);
+}
+
+.info p{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 14px;
+    font-weight: bolder;
+    color: var(--texto-principal);
+}
+
+/*  resumo margem */
+
+.resumo-margem{
+    margin-top: 60px;
+    margin-left: 67px;
+    border-radius: 18px;
+    width: 956px;
+    height: 86px;
+    background-color: var(--botao-principal-4);
+}
+
+.resumo-margem h4{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 16px;
+    font-weight: bolder;
+    color: var(--texto-de-destaque);
+    padding-top: 20px;
+    margin-left: 30px;
+
+}
+
+.resumo-margem p{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 11px;
+    color: var(--texto-de-destaque);
+    margin-left: 30px;
+
+}
+
+/* botão ver todos */
+
+.botao-ver-todos{
+
+    width: 350px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    background-color: var(--fundo-pagina-3);
+    border-radius: 12px;
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 353px;
+    text-align: center;
+
+}
+
+.botao-ver-todos a{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 15px;
+    font-weight: bolder;
+    color: var(--texto-de-destaque);
+    margin-bottom: 24px;
+
+
+}
+
+.botao-ver-todos a:hover{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 16px;
+    font-weight: bolder;
+    color: var(--texto-principal);
+    margin-bottom: 24px;
+
+
+}
+
+/* ------------ */
+
+/* RODAPÉ */
+
+
+
+.rodape {
+  height: 245px;
+  background-color: var(--branco);
+}
+
+
+.largura-rodape-conteudo {
+  padding-top: 23px;
+     margin-left: 48px;
+
+}
+
+/* Aqui ficam os estilos para o texto sobre a Lucrafy no rodapé. */
+.descricao-rodape {
+    font-family: 'Poppins', Courier, monospace;
+    margin-top: 10px;
+    color: var(--texto-auxiliar);
+    font-size: 15px;
+    line-height: 22.5px; /* Define o espaço que cada linha de texto ocupa. */
+}
+
+
+.rodape-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Deixa espaço entre os itens, com um em cada ponta. */
+  margin-top: 38px;
+  color: var(--texto-auxiliar);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.44px; /* Ajusta o espaço entre as letras. */
+}
+
+
+.rodape-base .direitos {
+  margin-bottom: 0;
+}
+
+
+.textos-rodape{
+  display: flex;
+  gap: 24px; /* Cria espaço entre os itens do grupo. */
 }

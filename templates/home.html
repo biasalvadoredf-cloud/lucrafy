@@ -11,6 +11,16 @@
 <body class="pagina-home">
 
     <main class="cartao-home">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
         <h1 class="titulo-home">Olá {{ usuario }}!</h1>
         <p class="texto-home">Bem-vindo ao Lucrafy!</p>
 
