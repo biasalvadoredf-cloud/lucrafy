@@ -128,7 +128,7 @@ def cadastro():
         email = request.form['email'].strip().lower()
         senha = request.form['senha']
         confirmar_senha = request.form['confirmar_senha']
-        mao_de_obra = request.form['mao_de_obra']
+        mao_de_obra = float(request.form['mao_de_obra'])
 
         # --------------------------------------------------
         # VERIFICAR CAMPOS OBRIGATÓRIOS
@@ -153,12 +153,6 @@ def cadastro():
         # --------------------------------------------------
         # Verificar se a mão de obra é positiva
         # --------------------------------------------------
-
-        try:
-            mao_de_obra = float(mao_de_obra)
-        except ValueError:
-            flash('Digite um valor válido para a mão de obra!', 'error')
-            return redirect(url_for('cadastro'))
 
         if mao_de_obra < 0:
             flash('O valor da mão de obra não pode ser negativo!', 'error')
@@ -450,7 +444,7 @@ def editar(id):
 
             nome = request.form['nome'].strip()
             email = request.form['email'].strip().lower()
-            mao_de_obra = request.form['mao_de_obra']
+            mao_de_obra = float(request.form['mao_de_obra'])
 
             # --------------------------------------------------
             # Verificar nome em branco e mào de obra negativa
@@ -462,12 +456,6 @@ def editar(id):
 
             if not email:
                 flash('O e-mail não pode estar vazio!', 'error')
-                return redirect(url_for('editar', id=id))
-
-            try:
-                mao_de_obra = float(mao_de_obra)
-            except ValueError:
-                flash('Digite um valor válido para a mão de obra!', 'error')
                 return redirect(url_for('editar', id=id))
 
             if mao_de_obra < 0:
@@ -739,7 +727,7 @@ def cadastro_insumo():
         if request.method == 'POST':
 
             nome = request.form['nome'].strip()
-            custo = request.form['custo']
+            custo = float(request.form['custo'])
             unidade_medida = request.form['unidade_medida']
             categoria = request.form['categoria']
             id_usuario = session.get('id_usuario')
@@ -752,9 +740,7 @@ def cadastro_insumo():
                 flash('Faça login para cadastrar um insumo!', 'error')
                 return redirect(url_for('login'))
 
-            custo_unitario = float(custo)
-
-            if custo_unitario <= 0:
+            if custo <= 0:
                 flash('O custo precisa ser maior que zero!', 'error')
                 return redirect(url_for('cadastro_insumo'))
 
@@ -772,7 +758,7 @@ def cadastro_insumo():
                 INSERT INTO INSUMO
                 (NOME, CUSTO, ID_USUARIO, ID_UNIDADE, ID_CATEGORIA)
                 VALUES (?, ?, ?, ?, ?)
-            """, (nome,custo_unitario,id_usuario,unidade_medida,categoria))
+            """, (nome,custo,id_usuario,unidade_medida,categoria))
 
             con.commit()
 
@@ -792,8 +778,7 @@ def cadastro_insumo():
         cursor.execute("""
             SELECT ID_CATEGORIA, NOME
             FROM CATEGORIA
-            ORDER BY NOME
-        """)
+            ORDER BY NOME""")
 
         categorias = cursor.fetchall()
 
@@ -812,9 +797,15 @@ def visao_geral():
     return render_template('visao-geral.html')
 
 
+
+
 @app.route('/configuracao', methods=['GET'])
 def configuracao():
     return render_template('configuracao.html')
+
+
+
+
 
 
 # --------------------------------------------------

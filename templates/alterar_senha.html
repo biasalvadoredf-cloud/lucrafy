@@ -19,26 +19,16 @@
         <div class="largura cabecalho-conteudo">
 
             <a class="marca" href="{{ url_for('home') }}">
-                <img
-                    src="{{ url_for('static', filename='img/logo.png') }}"
-                    alt="Lucrafy"
-                >
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
             </a>
 
             <div class="navegacao">
-                <a href="{{ url_for('home') }}#funcionalidades">
-                    Funcionalidades
-                </a>
-
-                <a href="{{ url_for('home') }}#beneficios">
-                    Benefícios
-                </a>
+                <a href="{{ url_for('home') }}#funcionalidades">Funcionalidades</a>
+                <a href="{{ url_for('home') }}#beneficios">Benefícios</a>
             </div>
 
             <div class="acesso">
-                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">
-                    Sair
-                </a>
+                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">Sair</a>
             </div>
 
         </div>
@@ -49,10 +39,7 @@
 
         <!-- IMAGEM ESQUERDA -->
         <div class="ilustracao-acesso">
-            <img
-                src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}"
-                alt="Ilustração financeira Lucrafy"
-            >
+            <img src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}" alt="Ilustração financeira Lucrafy">
         </div>
 
         <!-- FORMULÁRIO DIREITA -->
@@ -103,11 +90,7 @@
         <div class="largura rodape-conteudo">
 
             <div>
-                <img
-                    class="logo-rodape"
-                    src="{{ url_for('static', filename='img/logo.png') }}"
-                    alt="Lucrafy"
-                >
+                <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
                 <p class="descricao-rodape">
                     O gerenciador financeiro simples, prático e 100%
