@@ -48,7 +48,7 @@ p {
 }
 
 .cabecalho-conteudo {
-  margin: 50px;
+  margin: 0 auto;
   height: 64px;
   display: flex;
   align-items: center;
@@ -59,8 +59,7 @@ p {
   width: 91px;
 }
 
-.marca img,
-.logo-rodape {
+.marca img {
   display: block;
   width: 91px;
   height: 37px;
@@ -72,10 +71,6 @@ p {
   margin-left: 38px;
   font-size: 13px;
   font-weight: 500;
-}
-
-.navegacao a:hover {
-  text-decoration: underline;
 }
 
 .acesso {
@@ -101,46 +96,6 @@ p {
   font-weight: 500;
 }
 
-.botao:hover {
-  background-color: var(--verde-hover);
-}
-
-.rodape {
-  height: 245px;
-  background-color: var(--branco);
-}
-
-.rodape-conteudo {
-  padding-top: 23px;
-}
-
-.descricao-rodape {
-  margin-top: 10px;
-  color: var(--texto-claro);
-  font-size: 15px;
-  line-height: 22.5px;
-}
-
-.rodape-base {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 38px;
-  color: var(--texto-claro);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.44px;
-}
-
-.rodape-base .direitos {
-  margin-bottom: 0px;
-}
-
-.textos-legais {
-  display: flex;
-  gap: 24px;
-}
-
 @media (max-width: 900px) {
   .largura {
     width: 90%;
@@ -153,17 +108,6 @@ p {
 
   .acesso {
     gap: 16px;
-  }
-
-  .rodape {
-    height: auto;
-    padding-bottom: 30px;
-  }
-
-  .rodape-base {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
   }
 }
 
@@ -200,58 +144,11 @@ p {
     padding: 0px;
     font-size: 13px;
   }
-
-  .rodape {
-    height: 330px;
-    padding-bottom: 0px;
-  }
-
-  .rodape .largura {
-    width: calc(100% - 48px);
-  }
-
-  .rodape-conteudo {
-    padding-top: 24px;
-  }
-
-  .logo-rodape {
-    width: 94px;
-    height: 38px;
-  }
-
-  .descricao-rodape {
-    margin: 22px 0px 0px;
-    font-size: 13px;
-    line-height: 20.5px;
-  }
-
-  .rodape-base {
-    margin-top: 34.5px;
-    gap: 37px;
-  }
-
-  .rodape-base .direitos {
-    font-size: 10px;
-    line-height: 16px;
-  }
-
-  .textos-legais {
-    display: block;
-  }
-
-  .textos-legais span {
-    display: block;
-    line-height: 22px;
-  }
 }
 
 .pagina-acesso .largura {
   width: calc(100% - 96px);
   max-width: none;
-}
-
-.pagina-acesso .rodape-base {
-  margin-top: 55px;
 }
 
 .area-acesso {
@@ -296,17 +193,13 @@ p {
   line-height: 36px;
 }
 
-.cadastro > a {
+.cadastro>a {
   display: block;
   margin: 12px 0px 0px;
   text-align: center;
   color: var(--texto-claro);
   font-size: 12px;
   line-height: 18px;
-}
-
-.cadastro > a:hover {
-  text-decoration: underline;
 }
 
 .flash-messages {
@@ -410,8 +303,11 @@ p {
     height: 38px;
   }
 
-  .pagina-acesso .rodape,
   .ilustracao-acesso {
+    display: none;
+  }
+
+  .pagina-acesso .rodape {
     display: none;
   }
 
@@ -471,7 +367,7 @@ p {
   line-height: 36px;
 }
 
-.pagina-alterar-senha .cadastro > a {
+.pagina-alterar-senha .cadastro>a {
   display: block;
   margin: 15px 0px 0px;
   text-align: center;
@@ -525,13 +421,6 @@ p {
   }
 }
 
-* {
-  margin: 0px;
-  padding: 0px;
-  text-decoration: none;
-  box-sizing: border-box;
-}
-
 :root {
   --fundo-pagina-1: #F7F6F7;
   --fundo-pagina-2: #F9F9F9;
@@ -554,40 +443,346 @@ p {
 }
 
 .cabecalho a {
-  font-family: Poppins, Courier, monospace;
+  font-family: Poppins, Arial, sans-serif;
   color: var(--texto-secundario);
   font-size: 13px;
 }
 
-.cabecalho a:hover {
-  color: var(--texto-de-destaque);
-  font-size: 14px;
-}
-
 .rodape {
-  height: 245px;
+  min-height: 245px;
+  height: auto;
   background-color: var(--branco);
 }
 
+.rodape .rodape-conteudo {
+  width: calc(100% - 96px);
+  max-width: 1184px;
+  margin: 0 auto;
+  padding: 24px 0 32px;
+}
+
+.logo-rodape {
+  display: block;
+  width: 91px;
+  height: 37px;
+}
+
 .descricao-rodape {
-  font-family: Poppins, Courier, monospace;
-  margin-top: 10px;
-  color: var(--texto-auxiliar);
+  margin: 10px 0 0;
+  color: var(--texto-claro);
   font-size: 15px;
-  line-height: 22.5px;
+  line-height: 1.5;
 }
 
 .rodape-base {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-top: 38px;
-  color: var(--texto-auxiliar);
+  gap: 20px;
+  margin-top: 32px;
+  color: var(--texto-claro);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.44px;
 }
 
+.rodape-base>* {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .rodape-base .direitos {
-  margin-bottom: 0px;
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.textos-legais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .rodape {
+    min-height: 0;
+    height: auto;
+    padding: 0;
+  }
+
+  .rodape .rodape-conteudo {
+    width: calc(100% - 40px);
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 28px 0;
+  }
+
+  .logo-rodape {
+    width: 94px;
+    height: 38px;
+  }
+
+  .descricao-rodape {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .descricao-rodape br {
+    display: none;
+  }
+
+  .rodape-base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .rodape-base .direitos {
+    font-size: 10px;
+  }
+
+  .textos-legais {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.cabecalho-conteudo {
+  margin: 0 auto;
+  min-width: 0;
+}
+
+.cabecalho {
+  box-shadow: none;
+}
+
+.marca,
+.marca img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.area-formulario {
+  min-width: 0;
+}
+
+.campo input,
+.campo select {
+  background-color: #f7f6f7;
+  padding-inline: 10px;
+  border-radius: 8px;
+}
+
+.caixa-formulario {
+  background-color: #fff;
+}
+
+@media (max-width: 700px) {
+  .cabecalho-conteudo {
+    margin: 0 auto;
+  }
+
+  .cabecalho {
+    flex-shrink: 0;
+  }
+
+  .pagina-acesso .area-acesso {
+    min-height: calc(100svh - 72px);
+    padding-bottom: 48px;
+  }
+
+  .pagina-acesso .caixa-formulario {
+    background-color: #fff;
+    max-width: 476px;
+  }
+
+  .campo input,
+  .campo select {
+    font-size: 16px;
+  }
+
+  .botao-confirmar {
+    max-width: 100%;
+  }
+
+  .rodape,
+  .rodape-conteudo,
+  .rodape-base {
+    height: auto;
+    min-width: 0;
+  }
+
+  .descricao-rodape br {
+    display: none;
+  }
+}
+
+.form-alterar_senha {
+  display: flex;
+  flex-direction: column;
+  min-height: 410px;
+}
+
+.form-alterar_senha label {
+  font-size: 13px;
+  margin: 0 0 6px;
+}
+
+.form-alterar_senha input {
+  width: 100%;
+  height: 50px;
+  background: #edf4dd;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px;
+  margin-bottom: 18px;
+}
+
+.form-alterar_senha button {
+  width: 225px;
+  max-width: 100%;
+  min-height: 40px;
+  background: var(--verde);
+  border-radius: 6px;
+  margin: auto auto 0;
+}
+
+@media (max-width: 700px) {
+  .pagina-alterar-senha .cadastro {
+    background: #fff;
+    min-height: 592px;
+    border-radius: 20px;
+    padding: 34px 24px 24px;
+  }
+
+  .form-alterar_senha {
+    min-height: 455px;
+  }
+
+  .form-alterar_senha input {
+    height: 58px;
+    font-size: 16px;
+  }
+}
+
+body {
+  color: #303b31;
+  background-color: #f7f6f7;
+}
+
+.cabecalho {
+  background-color: #fff;
+}
+
+.cabecalho-conteudo {
+  gap: 18px;
+}
+
+.rodape {
+  background-color: #fff;
+}
+
+.rodape-base {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.descricao-rodape {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.caixa-formulario {
+  border-radius: 16px;
+}
+
+.campo input,
+.campo select {
+  background: #f7f6f7;
+  color: #303b31;
+  border: 1px solid transparent;
+  margin-top: 5px;
+  padding: 10px 12px;
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible {
+  outline: 2px solid #829f49;
+  outline-offset: 2px;
+}
+
+.botao-confirmar {
+  color: #303b31;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.botao-cabecalho {
+  color: #303b31;
+}
+
+.flash.error {
+  color: #8a332d;
+  background: #ffe8e4;
+  border-color: #f4ccc5;
+}
+
+@media (max-width: 700px) {
+  .pagina-acesso {
+    background: #f7f6f7;
+  }
+
+  .pagina-acesso .cabecalho {
+    background: #fff;
+  }
+
+  .pagina-acesso .area-acesso {
+    background: #f7f6f7;
+    padding-top: 48px;
+  }
+
+  .pagina-acesso .caixa-formulario {
+    border-radius: 18px;
+  }
+
+  .campo input,
+  .campo select {
+    height: 58px;
+    margin-top: 4px;
+    padding: 12px 10px;
+  }
+
+  .descricao-rodape {
+    font-size: 12px;
+  }
+}
+
+.pagina-alterar-senha .cadastro {
+  border-radius: 16px;
+}
+
+.form-alterar_senha input {
+  background: #edf4dd;
+}
+
+@media (max-width: 700px) {
+  .pagina-alterar-senha .cadastro {
+    border-radius: 18px;
+  }
 }

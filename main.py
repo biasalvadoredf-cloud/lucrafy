@@ -711,7 +711,18 @@ def alterar_senha():
         cursor.close()
 
 # --------------------------------------------------
-# 12 - CADASTRO DE INSUMO
+# INSUMO
+# --------------------------------------------------
+
+@app.route('/insumo', methods=['POST', 'GET'])
+def insumo():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    return render_template('insumo.html',usuario=session['nome'])
+
+
+# --------------------------------------------------
+# CADASTRO DE INSUMO
 # --------------------------------------------------
 
 @app.route('/cadastro_insumo', methods=['GET', 'POST'])
@@ -833,7 +844,7 @@ def editar_insumo(id):
         if request.method == 'POST':
 
             nome = request.form['nome'].strip()
-            custo = request.form['custo']
+            custo = float(request.form['custo'])
             unidade_medida = request.form['unidade_medida']
             categoria = request.form['categoria']
 
@@ -946,14 +957,35 @@ def excluir_insumo(id):
         cursor.close()
 
 
+#===================================================
+# CADASTRAR PRODUTO
+#===================================================
+
+
+#===================================================
+# EDITAR PRODUTO
+#===================================================
+
+
+#===================================================
+# EXCLUIR PRODUTO
+#===================================================
+
+
+
+
+
+# ===================================================
+# CONFIGURAÇÃO
+# ===================================================
 @app.route('/configuracao', methods=['GET'])
 def configuracao():
 
     if 'id_usuario' not in session:
-
         return redirect(url_for('login'))
-
     return render_template('configuracao.html',usuario=session['nome'])
+
+
 
 
 

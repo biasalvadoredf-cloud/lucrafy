@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucrafy - Alterar Senha</title>
+    <title>Alterar Senha - Lucrafy</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alterar_senha.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
 </head>
 
@@ -18,17 +18,27 @@
     <div class="cabecalho">
         <div class="largura cabecalho-conteudo">
 
-            <a class="marca" href="{{ url_for('index') }}">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+            <a class="marca" href="{{ url_for('visao_geral') }}">
+                <img
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
             </a>
 
             <div class="navegacao">
-                <a href="{{ url_for('visao_geral') }}#funcionalidades">Funcionalidades</a>
-                <a href="{{ url_for('visao_geral') }}#beneficios">Benefícios</a>
+                <a href="{{ url_for('index') }}#funcionalidades">
+                    Funcionalidades
+                </a>
+
+                <a href="{{ url_for('index') }}#beneficios">
+                    Benefícios
+                </a>
             </div>
 
             <div class="acesso">
-                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">Sair</a>
+                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">
+                    Sair
+                </a>
             </div>
 
         </div>
@@ -39,7 +49,10 @@
 
         <!-- IMAGEM ESQUERDA -->
         <div class="ilustracao-acesso">
-            <img src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}" alt="Ilustração financeira Lucrafy">
+            <img
+                src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}"
+                alt="Ilustração financeira Lucrafy"
+            >
         </div>
 
         <!-- FORMULÁRIO DIREITA -->
@@ -90,7 +103,11 @@
         <div class="largura rodape-conteudo">
 
             <div>
-                <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+                <img
+                    class="logo-rodape"
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
 
                 <p class="descricao-rodape">
                     O gerenciador financeiro simples, prático e 100%

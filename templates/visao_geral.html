@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/visao-geral.css') }}">
 </head>
 
 <body>
@@ -24,8 +24,8 @@
             </a>
 
             <div class="navegacao">
-                <a href="#">Funcionalidades</a>
-                <a href="#">Benefícios</a>
+                <a href="index.html">Funcionalidades</a>
+                <a href="index.html">Benefícios</a>
             </div>
 
         </div>
@@ -45,7 +45,7 @@
 
             <div class="opcoes">
                 <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="Elemento Insumos">
-                <a href="#">Insumos</a>
+                <a href="{{ url_for('insumo') }}">Insumos</a>
             </div>
 
             <div class="opcoes">

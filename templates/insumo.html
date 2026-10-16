@@ -1,112 +1,285 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insumos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
+    <title>Insumos</title>
 </head>
-
-<body class="pagina-acesso pagina-cadastro">
-
+<body>
     <div class="cabecalho">
-        <div class="largura cabecalho-conteudo">
-            <a class="marca" href="{{ url_for('index') }}">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
-            </a>
-            <div class="navegacao">
-                <a href="{{ url_for('index') }}#funcionalidades">Funcionalidades</a>
-                <a href="{{ url_for('index') }}#beneficios">Benefícios</a>
-            </div>
-            <div class="acesso">
-                <a class="entrar" href="{{ url_for('login') }}">Entrar</a>
-                <a class="botao botao-cabecalho" href="{{ url_for('cadastro') }}">Criar Conta</a>
-            </div>
+
+        <div class="logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo LucraFy" width="91px" height="37px">
         </div>
+
+        <div class="opcao-cabecalho">
+            <a href="#">Funcionalidades</a>
+        </div>
+
+        <div class="opcao-cabecalho">
+            <a href="#">Benefícios</a>
+        </div>
+
     </div>
 
-    <div class="area-acesso">
-        <div class="ilustracao-acesso">
-            <img src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}" alt="Ilustração Lucrafy">
+    <div class="lados">
+        <div class="menu">
+            <h4>MENU PRINCIPAL</h4>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="elemento Visão Geral">
+                <a href="{{ url_for('visao_geral') }}">Visão Geral</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="elemento Insumos">
+                <a href="{{ url_for('insumo') }}">Insumos</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="elemento Produtos">
+                <a href="#">Produtos</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="elemento Relatorios">
+                <a href="#">Relatorios</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="elemento Configurações">
+                <a href="{{ url_for('configuracao') }}">Configurações</a>
+            </div>
+
         </div>
 
-        <div class="area-formulario">
-            <div class="caixa-formulario">
-                <h1>Cadastrar Insumo</h1>
+        <div class="geral">
 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% for category, message in messages %}
-                <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-                {% endwith %}
+            <div class="cabecalho-geral">
+            <h1>Insumos</h1>
+            <p>Organize os custos de cada ingrediente ou material.</p>
+            </div>
 
-                <form action="{{ url_for('cadastro_insumo') }}" method="POST" class="formulario-cadastro-insumo">
+            <div class="cadastrar-insumo">
+                <form>
 
-                    <div class="campo">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" placeholder="Ex: Farinha" maxlength="100" required>
+                    <h3>Cadastrar Insumo</h3>
+
+                    <!-- form cima -->
+                    <div class="form-cima">
+
+                        <div class="display">
+                            <label class="titulos-cadastro-insumo" for="nome-insumo">Nome dos insumos</label>
+                            <div class="input-insumo-nome">
+                                <input type="text" placeholder="Ex: Farinha de trigo" required name="nome-insumo" id="nome-insumo">
+                            </div>
+                        </div>
+
+                        <div class="display">
+                            <div class="display-label">
+                                <label class="titulos-cadastro-insumo-select" for="categoria-insumo">Categorias</label>
+                                <a class="cadastro-informacoes" href="#">+</a>
+                            </div>
+
+                            <div class="input-insumo-categoria">
+                                <select name="categoria-insumo" required id="categoria-insumo">
+                                    <option value="" >Selecione...</option>
+                                    <option value="Fritura">Fritura</option>
+                                    <option value="Assado">Assado</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Salgado">Salgado</option>
+                                    <option value="Doce">Doce</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                     </div>
 
-                    <div class="campo">
-                        <label for="unidade_medida">Unidade de Medida</label>
-                        <select id="unidade_medida" name="unidade_medida" required>
-                            <option value="">Selecione</option>
-                            {% for unidade in unidades %}
-                            <option value="{{ unidade[0] }}">{{ unidade[1] }} ({{ unidade[2] }})</option>
-                            {% endfor %}
-                        </select>
+                    <!-- form baixo -->
+                    <div class="form-baixo">
+                        <div class="display">
 
-                        <button type="button" class="botao">+</button>
+                            <label class="titulos-cadastro-insumo" for="custo-unitario">Custo unitário</label>
+                            <div class="input-insumo-custo">
+                                <h4>R$</h4>
+                                <input class="custo-insumo-input" type="number" required name="custo-unitario" id="custo-unitario">
+                            </div>
+                        </div>
+
+
+                        <div class="display">
+
+                            <div class="display-label">
+                                <label class="titulos-cadastro-insumo-select" for="unidade-medida">Unidade de medida</label>
+                                <a class="cadastro-informacoes" href="#">+</a>
+                            </div>
+
+                            <div class="input-insumo-unidade-medida">
+                                <select name="unidade-medida" required  id="unidade-medida">
+                                    <option value="" >Selecione...</option>
+                                    <option value="Fritura">Quilograma - Kg</option>
+                                    <option value="Assado">Miligrama - Mg</option>
+                                    <option value="Bebidas">Litro - L</option>
+                                    <option value="Salgado">Mililitro - Ml</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="botao-cadastrar">
+                            <button class="botao-cadastrar-insumo" type="submit">Salvar Insumo</button>
+                        </div>
 
                     </div>
 
-                    <div class="campo">
-                        <label for="categoria">Categoria</label>
-
-                        <select id="categoria" name="categoria" required>
-                            <option value="">Selecione uma categoria</option>
-
-                            {% for categoria in categorias %}
-                            <option value="{{ categoria[0] }}">
-                                {{ categoria[1] }}
-                            </option>
-                            {% endfor %}
-                        </select>
-
-                        <button type="button" class="botao">+</button>
-                    </div>
-
-                    <div class="campo">
-                        <label for="custo">Custo (R$)</label>
-                        <input type="number" id="custo" name="custo" placeholder="Ex: 5.00" min="0.01" required>
-                    </div>
-
-                    <button type="submit" class="botao botao-confirmar">CONFIRMAR</button>
                 </form>
             </div>
-        </div>
-    </div>
 
-    <div class="rodape">
-        <div class="largura rodape-conteudo">
-            <div>
-                <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
-                <p class="descricao-rodape">Gerencie seus gastos de forma simples e prática.</p>
+            <div class="form-escolhas">
+                <form>
+                            <div class="todas-escolhas">
+                                <select class="select-todas-escolhas" name="categoria-insumo" required id="categoria-insumo">
+                                    <option value="" >Todas as categorias</option>
+                                    <option value="Fritura">Fritura</option>
+                                    <option value="Assado">Assado</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Salgado">Salgado</option>
+                                    <option value="Doce">Doce</option>
+                                </select>
+                            </div>
+
+                            <div class="todas-escolhas">
+                                <select class="select-todas-escolhas" name="unidade-medida" required  id="unidade-medida">
+                                    <option value="" >Todas as unidades.</option>
+                                    <option value="Fritura">Quilograma - Kg</option>
+                                    <option value="Assado">Miligrama - Mg</option>
+                                    <option value="Bebidas">Litro - L</option>
+                                    <option value="Salgado">Mililitro - Ml</option>
+
+                                </select>
+                            </div>
+
+                </form>
+
             </div>
-            <div class="rodape-base">
-                <p class="direitos">© 2026 Lucrafy. Todos os direitos reservados.</p>
-                <div class="textos-legais">
-                    <span>Termos de Uso</span>
-                    <span>Privacidade</span>
+
+            <div class="linha-categorias">
+                    <span>Categorias:</span>
+
+                    <button class="ativo">Todos</button>
+                    <button>Ingredientes</button>
+                    <button>Embalagens</button>
+                    <button>Outros</button>
+
+            </div>
+
+
+            <div class="dados-insumos">
+                <table>
+                    <thead>
+                        <tr class="cabecalho-insumos">
+                            <th>Insumo</th>
+                            <th>Categoria</th>
+                            <th>Unidade</th>
+                            <th>Custo Unitário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Farinha de Trigo</td>
+                            <td>
+                                <span class="categorias-tabela ingredientes">
+                                    Ingredientes
+                                </span>
+                            </td>
+                            <td>kg</td>
+                            <td class="custo">R$ 5,80</td>
+                            <td class="acoes">
+                                <button class="btn-editar" title="Editar">
+                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                </button>
+
+                                <button class="btn-excluir" title="Excluir">
+                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Chocolate em Pó</td>
+                            <td>
+                                <span class="categorias-tabela ingredientes">
+                                    Ingredientes
+                                </span>
+                            </td>
+                            <td>kg</td>
+                            <td class="custo">R$ 24,90</td>
+                            <td class="acoes">
+                                <button class="btn-editar" title="Editar">
+                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                </button>
+
+                                <button class="btn-excluir" title="Excluir">
+                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Embalagem Kraft</td>
+                            <td>
+                                <span class="categorias-tabela embalagens">
+                                    Embalagens
+                                </span>
+                            </td>
+                            <td>un</td>
+                            <td class="custo">R$ 1,40</td>
+                            <td class="acoes">
+                                <button class="btn-editar" title="Editar">
+                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                </button>
+
+                                <button class="btn-excluir" title="Excluir">
+                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rodape">
+                <div class="largura-rodape-conteudo">
+                    <div class="rodape-conteudo">
+                        <img class="logo-rodape" src="assets/img/Logo.png" alt="Lucrafy">
+                        <p class="descricao-rodape">O gerenciador financeiro simples, prático e 100% <br>gratuito para quem quer
+                        controlar gastos sem <br>burocracia nem complicação.</p>
+                    </div>
+
+                    <div class="rodape-base">
+                        <p class="direitos">© 2026 Lucrafy. Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
+                        <div class="textos-rodape">
+                        <span>Termos de Uso</span>
+                        <span>Privacidade</span>
+                        <span>Políticas de Segurança</span>
+                    </div>
+
                 </div>
             </div>
+
+
+
         </div>
+
+
+
     </div>
 
-</body>
 
+</body>
 </html>
