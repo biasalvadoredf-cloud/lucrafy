@@ -1,0 +1,12 @@
+/* Cores usadas nas três páginas. */
+:root {
+  --fundo: #f9f9f9;
+  --texto: #282e27;
+  --texto-claro: #64748b;
+  --verde: #a3c65e;
+  --verde-hover: #91b44c;
+  --verde-titulo: #4d7007;
+  --verde-escuro: #303b31;
+  --branco: #ffffff;
+  --borda: #f1f1f1;
+}
