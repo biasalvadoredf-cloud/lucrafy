@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 import fdb
 from flask_bcrypt import Bcrypt
-from websockets.sync.router import route
 
 # --------------------------------------------------
 # 2 - CONFIGURAÇÃO DO FLASK
@@ -85,17 +84,14 @@ def index():
 # 6 - HOME
 # --------------------------------------------------
 
-@app.route('/home')
-def home():
+@app.route('/visao_geral')
+def visao_geral():
 
     if 'id_usuario' not in session:
 
         return redirect(url_for('login'))
 
-    return render_template(
-        'home.html',
-        usuario=session['nome']
-    )
+    return render_template('visao_geral.html',usuario=session['nome'])
 
 
 # --------------------------------------------------
@@ -311,7 +307,7 @@ def login():
                 session['id_usuario'] = usuario[0]
                 session['nome'] = usuario[1]
 
-                return redirect(url_for('home'))
+                return redirect(url_for('visao_geral'))
 
             # --------------------------------------------------
             # LOGIN INCORRETO
@@ -400,7 +396,7 @@ def editar(id):
 
         flash('Você não pode editar outro usuário', 'error')
 
-        return redirect(url_for('home'))
+        return redirect(url_for('visao_geral'))
 
     cursor = con.cursor()
 
@@ -434,7 +430,7 @@ def editar(id):
 
             flash("Usuário não encontrado", 'error')
 
-            return redirect(url_for('home'))
+            return redirect(url_for('visao_geral'))
 
         # --------------------------------------------------
         # RECEBER ALTERAÇÕES
@@ -530,7 +526,7 @@ def editar(id):
 
         con.rollback()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('visao_geral'))
 
     finally:
 
@@ -708,7 +704,7 @@ def alterar_senha():
 
         flash(f'Ocorreu um erro -> {e}', 'error')
 
-        return redirect(url_for('home'))
+        return redirect(url_for('visao_geral'))
 
     finally:
 
@@ -721,6 +717,10 @@ def alterar_senha():
 @app.route('/cadastro_insumo', methods=['GET', 'POST'])
 def cadastro_insumo():
 
+    if 'id_usuario' not in session:
+        flash('Faça login para cadastrar um insumo!', 'error')
+        return redirect(url_for('login'))
+
     cursor = con.cursor()
 
     try:
@@ -730,61 +730,66 @@ def cadastro_insumo():
             custo = float(request.form['custo'])
             unidade_medida = request.form['unidade_medida']
             categoria = request.form['categoria']
-            id_usuario = session.get('id_usuario')
+            id_usuario = session['id_usuario']
 
+            # Verificar campos obrigatórios
             if not nome or not custo or not unidade_medida or not categoria:
                 flash('Preencha todos os campos!', 'error')
                 return redirect(url_for('cadastro_insumo'))
 
-            if not id_usuario:
-                flash('Faça login para cadastrar um insumo!', 'error')
-                return redirect(url_for('login'))
 
+            # Verificar se o custo é maior que zero
             if custo <= 0:
                 flash('O custo precisa ser maior que zero!', 'error')
                 return redirect(url_for('cadastro_insumo'))
 
+            # Verificar se já existe um insumo com esse nome
             cursor.execute("""
                 SELECT ID_INSUMO
                 FROM INSUMO
-                WHERE NOME = ? AND ID_USUARIO = ?
+                WHERE LOWER(NOME) = LOWER(?)
+                  AND ID_USUARIO = ?
             """, (nome, id_usuario))
 
             if cursor.fetchone():
                 flash('Este insumo já está cadastrado!', 'error')
                 return redirect(url_for('cadastro_insumo'))
 
+            # Cadastrar o insumo
             cursor.execute("""
                 INSERT INTO INSUMO
-                (NOME, CUSTO, ID_USUARIO, ID_UNIDADE, ID_CATEGORIA)
+                    (NOME, CUSTO, ID_USUARIO, ID_UNIDADE, ID_CATEGORIA)
                 VALUES (?, ?, ?, ?, ?)
-            """, (nome,custo,id_usuario,unidade_medida,categoria))
+            """, (nome, custo, id_usuario, unidade_medida, categoria))
 
             con.commit()
 
             flash('Insumo cadastrado com sucesso!', 'success')
             return redirect(url_for('cadastro_insumo'))
 
-        # Busca as unidades de medida cadastradas
+        # Buscar unidades de medida
         cursor.execute("""
             SELECT ID_UNIDADE, NOME, SIGLA
             FROM UNIDADE_MEDIDA
             ORDER BY NOME
         """)
-
         unidades = cursor.fetchall()
 
-        # Busca as categorias do usuário logado
+        # Buscar categorias
         cursor.execute("""
             SELECT ID_CATEGORIA, NOME
             FROM CATEGORIA
-            ORDER BY NOME""")
-
+            ORDER BY NOME
+        """)
         categorias = cursor.fetchall()
 
-        return render_template('insumo.html',unidades=unidades,categorias=categorias)
+        return render_template(
+            'insumo.html',
+            unidades=unidades,
+            categorias=categorias
+        )
 
-    except Exception as erro:
+    except Exception:
         con.rollback()
         flash('Erro ao processar o cadastro do insumo!', 'error')
         return redirect(url_for('cadastro_insumo'))
@@ -792,16 +797,164 @@ def cadastro_insumo():
     finally:
         cursor.close()
 
-@app.route('/visao-geral', methods=['GET'])
-def visao_geral():
-    return render_template('visao-geral.html')
+
+# --------------------------------------------------
+# EDITAR INSUMO
+# --------------------------------------------------
+
+@app.route('/editar_insumo/<int:id>', methods=['GET', 'POST'])
+def editar_insumo(id):
+
+    # Verificar se o usuário está logado
+    if 'id_usuario' not in session:
+        flash('Precisa estar logado', 'error')
+        return redirect(url_for('login'))
+
+    id_usuario = session['id_usuario']
+    cursor = con.cursor()
+
+    try:
+
+        # Buscar o insumo do usuário logado
+        cursor.execute("""
+            SELECT ID_INSUMO, NOME, CUSTO, ID_UNIDADE, ID_CATEGORIA
+            FROM INSUMO
+            WHERE ID_INSUMO = ? AND ID_USUARIO = ?
+        """, (id, id_usuario))
+
+        insumo = cursor.fetchone()
+
+        # Verificar se o insumo existe
+        if not insumo:
+            flash('Insumo não encontrado', 'error')
+            return redirect(url_for('cadastro_insumo'))
+
+        # Receber as alterações do formulário
+        if request.method == 'POST':
+
+            nome = request.form['nome'].strip()
+            custo = request.form['custo']
+            unidade_medida = request.form['unidade_medida']
+            categoria = request.form['categoria']
+
+            # Verificar campos obrigatórios
+            if not nome or not custo or not unidade_medida or not categoria:
+                flash('Preencha todos os campos!', 'error')
+                return redirect(url_for('editar_insumo', id=id))
 
 
+            # Verificar se o custo é maior que zero
+            if custo <= 0:
+                flash('O custo precisa ser maior que zero!', 'error')
+                return redirect(url_for('editar_insumo', id=id))
+
+            # Verificar se existe outro insumo com o mesmo nome
+            cursor.execute("""
+                SELECT ID_INSUMO
+                FROM INSUMO
+                WHERE LOWER(NOME) = LOWER(?)
+                  AND ID_USUARIO = ?
+                  AND ID_INSUMO <> ?
+            """, (nome, id_usuario, id))
+
+            if cursor.fetchone():
+                flash('Este insumo já está cadastrado!', 'error')
+                return redirect(url_for('editar_insumo', id=id))
+
+            # Atualizar o insumo
+            cursor.execute("""
+                UPDATE INSUMO
+                SET NOME = ?,
+                    CUSTO = ?,
+                    ID_UNIDADE = ?,
+                    ID_CATEGORIA = ?
+                WHERE ID_INSUMO = ?
+                  AND ID_USUARIO = ?
+            """, (
+                nome,
+                custo,
+                unidade_medida,
+                categoria,
+                id,
+                id_usuario
+            ))
+
+            con.commit()
+
+            flash('Insumo editado com sucesso!', 'success')
+            return redirect(url_for('cadastro_insumo'))
+
+        # Abrir o formulário de edição
+        return render_template('editar_insumo.html', insumo=insumo)
+
+    except Exception:
+        con.rollback()
+        flash('Erro ao editar o insumo!', 'error')
+        return redirect(url_for('cadastro_insumo'))
+
+    finally:
+        cursor.close()
+
+#===================================================
+# EXCLUIR INSUMO
+#===================================================
+
+@app.route('/excluir_insumo/<int:id>', methods=['POST'])
+def excluir_insumo(id):
+
+    # Verifica se o usuário está logado
+    if 'id_usuario' not in session:
+        flash('Precisa estar logado', 'error')
+        return redirect(url_for('login'))
+
+    # Recupera o ID do usuário logado
+    id_usuario = session['id_usuario']
+
+    cursor = con.cursor()
+
+    try:
+        # Verifica se o insumo pertence ao usuário logado
+        cursor.execute("""
+            SELECT ID_INSUMO
+            FROM INSUMO
+            WHERE ID_INSUMO = ? AND ID_USUARIO = ?
+        """, (id, id_usuario))
+
+        insumo = cursor.fetchone()
+
+        # Verifica se o insumo foi encontrado
+        if not insumo:
+            flash('Insumo não encontrado', 'error')
+            return redirect(url_for('cadastro_insumo'))
+
+        # Exclui o insumo do banco de dados
+        cursor.execute("""
+            DELETE FROM INSUMO
+            WHERE ID_INSUMO = ? AND ID_USUARIO = ?
+        """, (id, id_usuario))
+
+        con.commit()
+        flash('Insumo excluído com sucesso!', 'success')
+        return redirect(url_for('cadastro_insumo'))
+
+    except Exception:
+        con.rollback()
+        flash('Erro ao excluir o insumo!', 'error')
+        return redirect(url_for('cadastro_insumo'))
+
+    finally:
+        cursor.close()
 
 
 @app.route('/configuracao', methods=['GET'])
 def configuracao():
-    return render_template('configuracao.html')
+
+    if 'id_usuario' not in session:
+
+        return redirect(url_for('login'))
+
+    return render_template('configuracao.html',usuario=session['nome'])
+
 
 
 

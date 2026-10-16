@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Entre na sua conta na Lucrafy.">
+  <meta name="description" content="Configurações da conta Lucrafy.">
 
   <title>Lucrafy - Configurações</title>
 
@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body class="pagina-acesso pagina-login">
+<body class="pagina-acesso pagina-login pagina-configuracao">
 
   <!-- CABEÇALHO -->
   <div class="cabecalho">
@@ -35,14 +35,13 @@
 
       <!-- ACESSO -->
       <div class="acesso">
-        <a class="sair" href="{{ url_for('login') }}">Sair</a>
+        <a class="sair" href="{{ url_for('logout') }}">Sair</a>
       </div>
 
     </div>
-
   </div>
 
-  <!-- ÁREA DE LOGIN -->
+  <!-- ÁREA DE CONFIGURAÇÕES -->
   <div class="area-acesso">
 
     <!-- ILUSTRAÇÃO -->
@@ -51,10 +50,12 @@
            alt="Calculadora, gráficos e moedas verdes">
     </div>
 
-    <!-- FORMULÁRIO -->
+    <!-- CONTEÚDO DAS CONFIGURAÇÕES -->
     <div class="area-formulario">
-      <div class="caixa-formulario">
 
+      <div class="caixa-formulario caixa-configuracao">
+
+        <!-- TÍTULO -->
         <h1>Configurações</h1>
 
         <!-- MENSAGENS DO FLASK -->
@@ -70,17 +71,38 @@
           {% endif %}
         {% endwith %}
 
+        <!-- OPÇÕES DE CONFIGURAÇÃO -->
+        <div class="opcoes-configuracao">
+
+          <!-- ALTERAR SENHA -->
           <div class="campo">
-            <a href="{{ url_for('alterar_senha') }}" type="button" >Alterar Senha</a>
+            <a href="{{ url_for('alterar_senha') }}" class="botao botao-configuracao">
+              Alterar Senha
+            </a>
           </div>
 
+          <!-- VALOR POR HORA TRABALHADA -->
           <div class="campo">
-            <a href="{{ url_for('editar', id=session['id_usuario']) }}" class="botao">Valor por Hora Trabalhada</a>
+            <a href="{{ url_for('editar', id=session['id_usuario']) }}" class="botao botao-configuracao">
+              Valor por Hora Trabalhada
+            </a>
           </div>
 
-          <a href="{{ url_for('login') }}" type="button" class="botao botao-confirmar">Sair</a>
+        </div>
 
-          <a href="{{ url_for('visao-geral') }}" type="button">Voltar</a>
+        <!-- SAIR DA CONTA -->
+        <div class="area-sair-configuracao">
+          <a href="{{ url_for('logout') }}" class="botao botao-sair-configuracao">
+            Sair
+          </a>
+        </div>
+
+        <!-- VOLTAR -->
+        <div class="area-voltar-configuracao">
+          <a href="{{ url_for('visao_geral') }}" class="botao botao-voltar-configuracao">
+            Voltar
+          </a>
+        </div>
 
       </div>
     </div>
@@ -92,7 +114,10 @@
 
       <!-- LOGO E DESCRIÇÃO -->
       <div>
-        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <img class="logo-rodape"
+             src="{{ url_for('static', filename='img/logo.png') }}"
+             alt="Lucrafy">
+
         <p class="descricao-rodape">
           O gerenciador financeiro simples, prático e 100%<br>
           gratuito para quem quer controlar gastos sem<br>
@@ -102,6 +127,7 @@
 
       <!-- RODAPÉ INFERIOR -->
       <div class="rodape-base">
+
         <p class="direitos">
           © 2026 Lucrafy.
           Todos os direitos reservados.
@@ -112,10 +138,11 @@
           <span>Termos de Uso</span>
           <span>Privacidade</span>
           <span>Políticas de Segurança</span>
-
         </div>
+
       </div>
     </div>
   </div>
+
 </body>
 </html>
