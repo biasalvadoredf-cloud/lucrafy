@@ -51,12 +51,6 @@
     font-size: 13px;
     
 }
-
-.cabecalho a:hover{
-    color: var(--texto-de-destaque);
-    font-size: 14px;
-    
-}
 .logo{
     margin-left: 10px;
 }
@@ -97,11 +91,6 @@
     color: var(--texto-secundario);
     font-size: 14px;
     margin-left: 15px;
-}
-
-.opcoes a:hover{
-    color: var(--texto-de-destaque);
-    font-size: 15px;
 }
 
 /*                      GERAL                    */
@@ -172,12 +161,6 @@
     font-family: 'Poppins', Courier, monospace;
     font-size: 14px;
     font-weight: bolder;
-}
-
-.cadastro-informacoes:hover{
-    color: var(--texto-de-destaque);
-    font-size: 15px;
-    
 }
 
 /* parte de cima do form */
@@ -525,46 +508,107 @@ select{
 
   
 
+ .rodape {
+    height: 330px;
+    padding-bottom: 0px;
+  }
+
+  .rodape .largura {
+    width: calc(100% - 48px);
+  }
+
+  .rodape-conteudo {
+    padding-top: 24px;
+  }
+
+  .logo-rodape {
+    width: 94px;
+    height: 38px;
+  }
+
+  .descricao-rodape {
+    margin: 22px 0px 0px;
+    font-size: 13px;
+    line-height: 20.5px;
+  }
+
+  .rodape-base {
+    margin-top: 34.5px;
+    gap: 37px;
+  }
+
+  .rodape-base .direitos {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .textos-legais {
+    display: block;
+  }
+
+  .textos-legais span {
+    display: block;
+    line-height: 22px;
+  }
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+:root {
+  --fundo-pagina-1: #F7F6F7;
+  --fundo-pagina-2: #F9F9F9;
+  --fundo-pagina-3: #FFFFFF;
+  --texto-secundario: #303B31;
+  --texto-de-destaque: #496801;
+  --texto-principal: #242B25;
+  --texto-auxiliar: #64748B;
+  --botao-principal: #A4C95F;
+  --botao-principal-4: #a4c95f59;
+  --branco: #FFFFFF;
+  --verde-alternativo: #D9E6D8;
+}
+
+.cabecalho {
+  display: flex;
+  height: 64px;
+  background-color: var(--fundo-pagina-2);
+  align-items: center;
+}
+
+.cabecalho a {
+  font-family: Poppins, Courier, monospace;
+  color: var(--texto-secundario);
+  font-size: 13px;
+}
 .rodape {
-  height: 245px; 
-  background-color:#A4C95F;
+  height: 245px;
+  background-color: var(--branco);
 }
 
-
-.largura-rodape-conteudo {
-    padding-top: 23px; 
-    margin-left: 48px;
-
-}
-
-/* Aqui ficam os estilos para o texto sobre a Lucrafy no rodapé. */
 .descricao-rodape {
-    font-family: 'Poppins', Courier, monospace;
-    margin-top: 10px; 
-    color: var(--texto-auxiliar);
-    font-size: 15px;
-    line-height: 22.5px; /* Define o espaço que cada linha de texto ocupa. */
+  font-family: Poppins, Courier, monospace;
+  margin-top: 10px;
+  color: var(--texto-auxiliar);
+  font-size: 15px;
+  line-height: 22.5px;
 }
-
 
 .rodape-base {
   display: flex;
-  align-items: center; 
-  justify-content: space-between; /* Deixa espaço entre os itens, com um em cada ponta. */
-  margin-top: 38px; 
-  color: var(--texto-auxiliar); 
-  font-size: 11px; 
-  font-weight: 600; 
-  letter-spacing: 0.44px; /* Ajusta o espaço entre as letras. */
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 38px;
+  color: var(--texto-auxiliar);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.44px;
 }
-
 
 .rodape-base .direitos {
-  margin-bottom: 0; 
-}
-
-
-.textos-rodape{
-  display: flex; 
-  gap: 24px; /* Cria espaço entre os itens do grupo. */
+  margin-bottom: 0px;
 }

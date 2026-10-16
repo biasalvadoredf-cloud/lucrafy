@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+
     <title>Insumos</title>
 </head>
 <body>
@@ -15,11 +17,11 @@
         </div>
 
         <div class="opcao-cabecalho">
-            <a href="#">Funcionalidades</a>
+            <a href="index.html">Funcionalidades</a>
         </div>
 
         <div class="opcao-cabecalho">
-            <a href="#">Benefícios</a>
+            <a href="index.html">Benefícios</a>
         </div>
 
     </div>
@@ -80,7 +82,7 @@
                         <div class="display">
                             <div class="display-label">
                                 <label class="titulos-cadastro-insumo-select" for="categoria-insumo">Categorias</label>
-                                <a class="cadastro-informacoes" href="#">+</a>
+                                <a class="cadastro-informacoes" href="{{ url_for('categoria') }}">+</a>
                             </div>
 
                             <div class="input-insumo-categoria">
@@ -114,7 +116,7 @@
 
                             <div class="display-label">
                                 <label class="titulos-cadastro-insumo-select" for="unidade-medida">Unidade de medida</label>
-                                <a class="cadastro-informacoes" href="#">+</a>
+                                <a class="cadastro-informacoes" href="{{ url_for('unidade_medida') }}">+</a>
                             </div>
 
                             <div class="input-insumo-unidade-medida">
@@ -201,11 +203,11 @@
                             <td class="custo">R$ 5,80</td>
                             <td class="acoes">
                                 <button class="btn-editar" title="Editar">
-                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
                                 </button>
 
                                 <button class="btn-excluir" title="Excluir">
-                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
                                 </button>
                             </td>
                         </tr>
@@ -221,11 +223,11 @@
                             <td class="custo">R$ 24,90</td>
                             <td class="acoes">
                                 <button class="btn-editar" title="Editar">
-                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
                                 </button>
 
                                 <button class="btn-excluir" title="Excluir">
-                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
                                 </button>
                             </td>
                         </tr>
@@ -241,11 +243,11 @@
                             <td class="custo">R$ 1,40</td>
                             <td class="acoes">
                                 <button class="btn-editar" title="Editar">
-                                    <img src="assets/img/icone-editar.png" alt="Editar">
+                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
                                 </button>
 
                                 <button class="btn-excluir" title="Excluir">
-                                    <img src="assets/img/icone-excluir.png" alt="Excluir">
+                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
                                 </button>
                             </td>
                         </tr>
@@ -256,7 +258,7 @@
             <div class="rodape">
                 <div class="largura-rodape-conteudo">
                     <div class="rodape-conteudo">
-                        <img class="logo-rodape" src="assets/img/Logo.png" alt="Lucrafy">
+                        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
                         <p class="descricao-rodape">O gerenciador financeiro simples, prático e 100% <br>gratuito para quem quer
                         controlar gastos sem <br>burocracia nem complicação.</p>
                     </div>
@@ -271,15 +273,7 @@
 
                 </div>
             </div>
-
-
-
         </div>
-
-
-
     </div>
-
-
 </body>
 </html>

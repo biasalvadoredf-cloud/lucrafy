@@ -619,11 +619,6 @@ p {
   font-size: 13px;
 }
 
-.cabecalho a:hover {
-  color: var(--texto-de-destaque);
-  font-size: 14px;
-}
-
 .rodape {
   height: 245px;
   background-color: var(--branco);

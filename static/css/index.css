@@ -47,6 +47,7 @@ p {
   height: 64px;
   background-color: var(--fundo);
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 4px;
+  justify-content: center;
 }
 
 .cabecalho-conteudo {
@@ -74,10 +75,6 @@ p {
   margin-left: 38px;
   font-size: 13px;
   font-weight: 500;
-}
-
-.navegacao a:hover {
-  text-decoration: underline;
 }
 
 .acesso {
@@ -883,12 +880,6 @@ p {
   color: var(--texto-secundario);
   font-size: 13px;
 }
-
-.cabecalho a:hover {
-  color: var(--texto-de-destaque);
-  font-size: 14px;
-}
-
 .rodape {
   height: 245px;
   background-color: var(--branco);

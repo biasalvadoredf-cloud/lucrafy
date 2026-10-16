@@ -125,10 +125,6 @@ p {
   background-color: var(--verde-escuro);
 }
 
-.pagina-home .botao-sair-home:hover {
-  background-color: rgb(37, 46, 38);
-}
-
 * {
   margin: 0px;
   padding: 0px;
