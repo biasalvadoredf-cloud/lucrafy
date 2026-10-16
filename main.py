@@ -7,20 +7,15 @@ from flask_bcrypt import Bcrypt
 # --------------------------------------------------
 
 app = Flask(__name__)
-
 bcrypt = Bcrypt(app)
-
 app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
-
 
 # --------------------------------------------------
 # 3 - CONEXÃO COM O BANCO DE DADOS
 # --------------------------------------------------
 
 host = 'localhost'
-
 database = r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB'
-
 user = 'sysdba'
 password = 'sysdba'
 
@@ -28,14 +23,12 @@ con = fdb.connect(
     host=host,
     database=database,
     user=user,
-    password=password
-)
+    password=password)
 
 
 # --------------------------------------------------
 # 4 - VERIFICAÇÃO DE SENHA FORTE
 # --------------------------------------------------
-
 
 def senha_forte(senha):
 
@@ -69,7 +62,6 @@ def senha_forte(senha):
 
     return False
 
-
 # --------------------------------------------------
 # 5 - PÁGINA INICIAL
 # --------------------------------------------------
@@ -79,9 +71,8 @@ def index():
 
     return render_template('index.html')
 
-
 # --------------------------------------------------
-# 6 - HOME
+# 6 - VISÃO GERAL
 # --------------------------------------------------
 
 @app.route('/visao_geral')
@@ -203,15 +194,12 @@ def cadastro():
             con.commit()
 
             flash('Cadastro realizado com sucesso!', 'success')
-
             return redirect(url_for('cadastro'))
 
         except Exception:
 
             con.rollback()
-
             flash('Erro ao cadastrar usuário.', 'error')
-
             return redirect(url_for('cadastro'))
 
         finally:
@@ -359,9 +347,7 @@ def login():
         except Exception as e:
 
             con.rollback()
-
             flash(f'Ocorreu um erro -> {e}', 'error')
-
             return redirect(url_for('login'))
 
         finally:
@@ -385,7 +371,6 @@ def editar(id):
     if 'id_usuario' not in session:
 
         flash('Precisa estar logado', 'error')
-
         return redirect(url_for('login'))
 
     # --------------------------------------------------
@@ -395,11 +380,9 @@ def editar(id):
     if id != session['id_usuario']:
 
         flash('Você não pode editar outro usuário', 'error')
-
         return redirect(url_for('visao_geral'))
 
     cursor = con.cursor()
-
 
     try:
 
@@ -408,12 +391,7 @@ def editar(id):
         # --------------------------------------------------
 
         cursor.execute(
-            """
-            SELECT
-                id_usuario,
-                nome,
-                email,
-                mao_de_obra
+            """SELECT id_usuario,nome,email,mao_de_obra
             FROM usuario
             WHERE id_usuario = ?
             """,
@@ -485,36 +463,25 @@ def editar(id):
             cursor.execute(
                 """
                 UPDATE usuario
-                SET
-                    nome = ?,
+                SET nome = ?,
                     email = ?,
                     mao_de_obra = ?
                 WHERE id_usuario = ?
                 """,
-                (
-                    nome,
-                    email,
-                    mao_de_obra,
-                    id
-                )
+                (nome,email,mao_de_obra,id)
             )
 
             con.commit()
 
             session['nome'] = nome
-
             flash("Usuário editado com sucesso", 'success')
-
             return redirect(url_for('editar', id=id))
 
         # --------------------------------------------------
         # ABRIR FORMULÁRIO
         # --------------------------------------------------
 
-        return render_template(
-            'editar_usuario.html',
-            usuario=usuario
-        )
+        return render_template('editar_usuario.html',usuario=usuario)
 
     # --------------------------------------------------
     # TRATAMENTO DE ERROS
@@ -536,7 +503,6 @@ def editar(id):
 # --------------------------------------------------
 # 11 - ALTERAR SENHA
 # --------------------------------------------------
-
 
 @app.route('/alterar_senha', methods=['GET', 'POST'])
 def alterar_senha():
@@ -714,12 +680,36 @@ def alterar_senha():
 # INSUMO
 # --------------------------------------------------
 
-@app.route('/insumo', methods=['POST', 'GET'])
+@app.route('/insumo', methods=['GET', 'POST'])
 def insumo():
+
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
-    return render_template('insumo.html',usuario=session['nome'])
 
+    cursor = con.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT ID_UNIDADE, NOME, SIGLA
+            FROM UNIDADE_MEDIDA
+            ORDER BY NOME""")
+        unidades = cursor.fetchall()
+
+        cursor.execute("""
+            SELECT ID_CATEGORIA, NOME
+            FROM CATEGORIA
+            WHERE ID_USUARIO = ?
+            ORDER BY NOME
+        """, (session['id_usuario'],))
+        categorias = cursor.fetchall()
+
+        return render_template('insumo.html',
+            usuario=session['nome'],
+            unidades=unidades,
+            categorias=categorias)
+
+    finally:
+        cursor.close()
 
 # --------------------------------------------------
 # CADASTRO DE INSUMO
@@ -748,7 +738,6 @@ def cadastro_insumo():
                 flash('Preencha todos os campos!', 'error')
                 return redirect(url_for('cadastro_insumo'))
 
-
             # Verificar se o custo é maior que zero
             if custo <= 0:
                 flash('O custo precisa ser maior que zero!', 'error')
@@ -758,8 +747,8 @@ def cadastro_insumo():
             cursor.execute("""
                 SELECT ID_INSUMO
                 FROM INSUMO
-                WHERE LOWER(NOME) = LOWER(?)
-                  AND ID_USUARIO = ?
+                WHERE LOWER(NOME) = ?
+                AND ID_USUARIO = ?
             """, (nome, id_usuario))
 
             if cursor.fetchone():
@@ -769,9 +758,9 @@ def cadastro_insumo():
             # Cadastrar o insumo
             cursor.execute("""
                 INSERT INTO INSUMO
-                    (NOME, CUSTO, ID_USUARIO, ID_UNIDADE, ID_CATEGORIA)
-                VALUES (?, ?, ?, ?, ?)
-            """, (nome, custo, id_usuario, unidade_medida, categoria))
+                (NOME, CUSTO, ID_USUARIO, ID_UNIDADE, ID_CATEGORIA)
+                VALUES (?, ?, ?, ?, ?)""",
+                (nome, custo, id_usuario, unidade_medida, categoria))
 
             con.commit()
 
@@ -792,13 +781,12 @@ def cadastro_insumo():
             FROM CATEGORIA
             ORDER BY NOME
         """)
+
         categorias = cursor.fetchall()
 
-        return render_template(
-            'insumo.html',
+        return render_template('insumo.html',
             unidades=unidades,
-            categorias=categorias
-        )
+            categorias=categorias)
 
     except Exception:
         con.rollback()
@@ -853,7 +841,6 @@ def editar_insumo(id):
                 flash('Preencha todos os campos!', 'error')
                 return redirect(url_for('editar_insumo', id=id))
 
-
             # Verificar se o custo é maior que zero
             if custo <= 0:
                 flash('O custo precisa ser maior que zero!', 'error')
@@ -881,21 +868,13 @@ def editar_insumo(id):
                     ID_CATEGORIA = ?
                 WHERE ID_INSUMO = ?
                   AND ID_USUARIO = ?
-            """, (
-                nome,
-                custo,
-                unidade_medida,
-                categoria,
-                id,
-                id_usuario
-            ))
+            """, (nome,custo,unidade_medida,categoria,id,id_usuario))
 
             con.commit()
 
             flash('Insumo editado com sucesso!', 'success')
             return redirect(url_for('cadastro_insumo'))
 
-        # Abrir o formulário de edição
         return render_template('editar_insumo.html', insumo=insumo)
 
     except Exception:
@@ -917,9 +896,6 @@ def excluir_insumo(id):
     if 'id_usuario' not in session:
         flash('Precisa estar logado', 'error')
         return redirect(url_for('login'))
-
-    # Recupera o ID do usuário logado
-    id_usuario = session['id_usuario']
 
     cursor = con.cursor()
 
@@ -956,6 +932,20 @@ def excluir_insumo(id):
     finally:
         cursor.close()
 
+# ===================================================
+# PRODUTO
+# ===================================================
+
+@app.route('/produto', methods=['GET', 'POST'])
+def produto():
+
+    # Verifica se o usuário está logado
+    if 'id_usuario' not in session:
+        flash('Faça login para acessar os produtos!', 'error')
+        return redirect(url_for('login'))
+
+    # Abre a página de produtos
+    return render_template('produto.html',usuario=session['nome'])
 
 #===================================================
 # CADASTRAR PRODUTO
@@ -973,6 +963,126 @@ def excluir_insumo(id):
 
 
 
+#===================================================
+# CATEGORIA
+#===================================================
+
+@app.route('/categoria', methods=['GET', 'POST'])
+def categoria():
+
+    # Verifica se o usuário está logado
+    if 'id_usuario' not in session:
+        flash('Faça login para acessar as categorias!', 'error')
+        return redirect(url_for('login'))
+
+    cursor = con.cursor()
+
+    try:
+        if request.method == 'POST':
+
+            nome = request.form['nome'].strip()
+
+            if not nome:
+                flash('Informe o nome da categoria!', 'error')
+                return redirect(url_for('categoria'))
+
+            # Verifica se já existe uma categoria com esse nome
+            cursor.execute("""
+                SELECT ID_CATEGORIA
+                FROM CATEGORIA
+                WHERE LOWER(NOME) = LOWER(?)
+                  AND ID_USUARIO = ?
+            """, (nome, session['id_usuario']))
+
+            if cursor.fetchone():
+                flash('Essa categoria já está cadastrada!', 'error')
+                return redirect(url_for('categoria'))
+
+            # Salva a categoria no banco
+            cursor.execute("""
+                INSERT INTO CATEGORIA (NOME, ID_USUARIO)
+                VALUES (?, ?)""",
+                (nome, session['id_usuario']))
+
+            con.commit()
+
+            flash('Categoria cadastrada com sucesso!', 'success')
+            return redirect(url_for('categoria'))
+
+        # Lista as categorias do usuário logado
+        cursor.execute("""
+            SELECT ID_CATEGORIA, NOME
+            FROM CATEGORIA
+            WHERE ID_USUARIO = ?
+            ORDER BY NOME""",
+            (session['id_usuario'],))
+
+        categorias = cursor.fetchall()
+        return render_template('categoria.html',usuario=session['nome'], categorias=categoria)
+
+
+    except Exception as e:
+
+        con.rollback()
+        flash(f'Erro ao processar categoria: {e}', 'error')
+        return render_template('categoria.html',usuario=session['nome'],categorias=[])
+
+    finally:
+        cursor.close()
+
+#===================================================
+# UNIDADE DE MEDIDA
+#===================================================
+
+@app.route('/unidade_medida', methods=['GET', 'POST'])
+def unidade_medida():
+
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    cursor = con.cursor()
+
+    try:
+        if request.method == 'POST':
+
+            nome = request.form['nome'].strip()
+            sigla = request.form['sigla'].strip()
+
+            if not nome or not sigla:
+                flash('Preencha o nome e a sigla da unidade!', 'error')
+                return redirect(url_for('unidade_medida'))
+
+            cursor.execute("""
+                INSERT INTO UNIDADE_MEDIDA (NOME, SIGLA)
+                VALUES (?, ?)""",
+                (nome, sigla))
+
+            con.commit()
+
+            flash('Unidade cadastrada com sucesso!', 'success')
+            return redirect(url_for('unidade_medida'))
+
+        cursor.execute("""
+            SELECT ID_UNIDADE, NOME, SIGLA
+            FROM UNIDADE_MEDIDA
+            ORDER BY NOME
+        """)
+
+        unidades = cursor.fetchall()
+
+        return render_template(
+            'unidade_medida.html',
+            usuario=session['nome'],
+            unidades=unidades
+        )
+
+    except Exception as e:
+        con.rollback()
+        flash(f'Erro ao cadastrar unidade: {e}', 'error')
+        return redirect(url_for('unidade_medida'))
+
+    finally:
+        cursor.close()
 
 
 # ===================================================
