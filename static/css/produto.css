@@ -1,0 +1,638 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f9f9f9;
+    color: #242b25;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    gap: 32px;
+    padding: 0 18px;
+}
+
+.cabecalho a {
+    color: #303b31;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+/* ESTRUTURA */
+
+.lados {
+    display: flex;
+    min-height: 650px;
+}
+
+/* MENU LATERAL */
+
+.menu {
+    width: 20%;
+    min-width: 170px;
+    padding: 24px 20px;
+    background: #fff;
+}
+
+.menu h4 {
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 0 20px;
+}
+
+.opcoes {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 19px;
+}
+
+.opcoes img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+}
+
+.opcoes a {
+    font-size: 14px;
+    color: #303b31;
+    text-decoration: none;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.geral {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 20px 70px;
+}
+
+.cabecalho-geral h1 {
+    font-size: 29px;
+    margin: 0;
+}
+
+.cabecalho-geral p {
+    font-size: 13px;
+    margin: 3px 0 29px;
+}
+
+/* BOTÃO NOVO PRODUTO */
+
+.novo-produto {
+    width: 205px;
+    height: 40px;
+    background: #a4c95f;
+    border: 0;
+    border-radius: 11px;
+    color: #496801;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* CARTÕES */
+
+.conteudo-produto {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 14px;
+    margin-top: 63px;
+}
+
+.cartao {
+    background: #fff;
+    border-radius: 12px;
+    padding: 23px 19px 20px;
+}
+
+.titulo-cartao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.cartao h2 {
+    font-size: 17px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.titulo-cartao span {
+    font-size: 9px;
+    font-weight: 700;
+}
+
+/* TABELA DE INSUMOS */
+
+.tabela-responsiva {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 13px;
+    margin-top: 14px;
+}
+
+th {
+    font-size: 11px;
+    font-weight: 500;
+    text-align: left;
+    padding: 0 8px;
+}
+
+td {
+    padding: 0 5px;
+}
+
+td select,
+td input,
+.custo-linha {
+    height: 38px;
+    width: 100%;
+    min-width: 70px;
+    border: 0;
+    border-radius: 9px;
+    background: #f9f9f9;
+    padding: 0 10px;
+    font-family: inherit;
+    font-size: 11px;
+    color: #242b25;
+}
+
+td select {
+    min-width: 140px;
+}
+
+.custo-linha {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* BOTÕES EDITAR E EXCLUIR */
+
+.acoes {
+    white-space: nowrap;
+}
+
+.acoes button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.acoes img {
+    width: 15px;
+    height: 15px;
+}
+
+/* ADICIONAR INSUMO */
+
+.adicionar-insumo {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    height: 39px;
+    background: #f9f9f9;
+    color: #496801;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.adicionar-insumo span {
+    background: #a4c95f;
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+
+.adicionar-insumo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* CUSTO DA PRODUÇÃO */
+
+.resumo-custo {
+    padding-top: 56px;
+}
+
+.resumo-custo h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.valor-custo {
+    border: 1px solid #e8e8e8;
+    border-radius: 11px;
+    text-align: center;
+    padding: 17px 10px;
+    margin-bottom: 19px;
+}
+
+.valor-custo span {
+    display: block;
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.valor-custo strong {
+    font-size: 25px;
+}
+
+.valor-custo.destaque {
+    background: #edf4df;
+    border-color: #edf4df;
+    color: #496801;
+}
+
+
+
+/* DADOS DO PRODUTO */
+
+.dados-produto {
+    margin-bottom: 25px;
+    padding: 25px;
+}
+
+.dados-produto h2 {
+    margin-bottom: 20px;
+}
+
+.dados-produto label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dados-produto input,
+.dados-produto select,
+.dados-produto textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.dados-produto textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.salvar-produto {
+
+    margin-top: 25px;
+    padding: 12px 25px;
+    background: #a4c95f;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 170px;
+    padding: 12px 20px;
+    margin-top: 25px;
+    color: black;
+    text-decoration: none;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+
+
+}
+
+/* UNIDADE DE MEDIDA */
+
+td .unidade-insumo {
+    min-width: 75px;
+}
+
+/* BOTÃO REMOVER INSUMO */
+
+.remover-insumo {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.remover-insumo img {
+    width: 15px;
+    height: 15px;
+}
+
+/* CAMPOS INVÁLIDOS */
+
+td input:invalid,
+td select:invalid {
+    border: 1px solid #e57373;
+}
+
+/* TOTAL DOS INSUMOS */
+
+.total-insumos {
+    font-weight: 700;
+    color: #496801;
+}
+
+
+/* FORMULÁRIO PARA ADICIONAR INSUMOS */
+
+.formulario-insumo {
+    margin-top: 20px;
+}
+
+.formulario-insumo label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.formulario-insumo input,
+.formulario-insumo select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: #f9f9f9;
+    font-family: inherit;
+    font-size: 12px;
+    color: #242b25;
+}
+
+.formulario-insumo .adicionar-insumo {
+    margin-top: 20px;
+}
+
+.dados-produto input[readonly],
+.dados-produto textarea[readonly] {
+    background: #f9f9f9;
+    cursor: default;
+}
+
+/* ALINHAMENTO DA LIXEIRA */
+
+th:last-child,
+td.acoes {
+    text-align: center;
+}
+
+td.acoes {
+    vertical-align: middle;
+}
+
+td.acoes form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+td.acoes button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+td.acoes img {
+    display: block;
+    width: 15px;
+    height: 15px;
+}
+
+/* FONTE DOS DADOS DA TABELA */
+
+.insumos-utilizados tbody td {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #303b31;
+}
+
+/* BOTÃO VOLTAR AOS PRODUTOS */
+
+.botao-voltar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 200px;
+    padding: 12px 20px;
+    margin-top: 25px;
+
+    background-color: #a4c95f;
+    color: black;
+
+    border-radius: 8px;
+    text-decoration: none;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* EDITAR QUANTIDADE DOS INSUMOS */
+
+.form-editar-quantidade {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-editar-quantidade input {
+    width: 110px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
+
+.form-editar-quantidade button {
+    padding: 7px 12px;
+    background-color: #a4c95f;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* EDITAR UNIDADE DOS INSUMOS */
+
+.form-editar-unidade {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-editar-unidade select {
+    width: 75px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
+
+.form-editar-unidade button {
+    padding: 7px 12px;
+    background-color: #a4c95f;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+/* EDITAR INSUMO DO PRODUTO */
+
+.form-editar-insumo input {
+    width: 85px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
+
+.insumos-utilizados td select {
+    width: 75px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
+
+.botao-salvar-insumo {
+    padding: 7px 12px;
+    background-color: #a4c95f;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+
+
+
+/* RODAPÉ */
+
+.rodape {
+    background: #fff;
+    padding: 28px 5%;
+}
+
+.descricao-rodape {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+}
+
+.rodape-base {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 38px;
+    font-size: 10px;
+    color: #64748b;
+}
+
+.rodape-base div {
+    display: flex;
+    gap: 18px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 850px) {
+    .conteudo-produto {
+        grid-template-columns: 1fr;
+        margin-top: 30px;
+    }
+
+    .resumo-custo {
+        padding-top: 23px;
+    }
+
+    .menu {
+        min-width: 145px;
+        padding: 22px 12px;
+    }
+}
+
+@media (max-width: 560px) {
+    .cabecalho {
+        gap: 13px;
+    }
+
+    .menu {
+        width: 110px;
+        min-width: 110px;
+    }
+
+    .opcoes {
+        gap: 6px;
+    }
+
+    .opcoes a {
+        font-size: 10px;
+    }
+
+    .geral {
+        padding: 22px 10px;
+    }
+
+    .cartao {
+        padding: 18px 10px;
+    }
+
+    .rodape-base {
+        flex-direction: column;
+    }
+}

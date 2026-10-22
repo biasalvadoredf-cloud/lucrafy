@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insumos Cadastrados - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo_cadastrado.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <a href="#">Funcionalidades</a>
+        <a href="#">Benefícios</a>
+    </header>
+
+
+        <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+    <div class="estrutura">
+
+        <aside class="menu">
+            <h4>MENU PRINCIPAL</h4>
+
+            <a href="#">Visão geral</a>
+            <a href="{{ url_for('insumo') }}">Insumos</a>
+            <a href="{{ url_for('produto') }}">Produtos</a>
+            <a href="#">Relatórios</a>
+            <a href="#">Configurações</a>
+        </aside>
+
+        <main class="principal">
+
+            <h1>Insumos Cadastrados</h1>
+            <p>Visualize e gerencie seus insumos cadastrados</p>
+
+            <a href="{{ url_for('historico_custos') }}"
+               class="botao-historico">
+                Ver histórico de custos
+            </a>
+
+            <section class="cartao">
+
+                <div class="titulo-cartao">
+                    <h2>Insumos</h2>
+                    <span>{{ insumos|length }} UNIDADES CADASTRADAS</span>
+                </div>
+
+                <div class="lista-insumos">
+
+                    {% for insumo in insumos %}
+
+                    <div class="linha-insumo">
+
+                        <div class="nome-insumo">
+                            {{ insumo[1] }}
+                        </div>
+
+                        <a class="editar"
+                           href="{{ url_for('editar_insumo', id=insumo[0]) }}">
+                            <img src="{{ url_for('static', filename='img/icone-editar.png') }}"
+                                 alt="Editar">
+                        </a>
+
+                        <form action="{{ url_for('excluir_insumo', id=insumo[0]) }}" method="POST" onsubmit="return confirm('Deseja excluir este insumo?')">
+
+                            <button class="excluir" type="submit">
+                                <img src="{{ url_for('static', filename='img/icone-excluir.png') }}"
+                                     alt="Excluir">
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    {% else %}
+
+                    <p>Nenhum insumo cadastrado.</p>
+
+                    {% endfor %}
+
+                </div>
+
+                <a class="adicionar" href="{{ url_for('insumo') }}">
+                    <span>+</span> Adicionar Unidade
+                </a>
+
+            </section>
+
+            <div class="area-voltar">
+                <a class="voltar" href="{{ url_for('insumo') }}">
+                    Voltar
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer>
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <p>
+            O gerenciador financeiro simples, prático e 100%<br>
+            gratuito para quem quer controlar gastos sem<br>
+            burocracia nem complicação.
+        </p>
+
+        <div class="rodape-final">
+            <span>© 2026 Lucrafy. Todos os direitos reservados.</span>
+            <span>Termos de Uso &nbsp;&nbsp; Privacidade &nbsp;&nbsp; Políticas de Segurança</span>
+        </div>
+    </footer>
+
+</body>
+</html>

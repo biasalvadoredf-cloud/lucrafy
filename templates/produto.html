@@ -1,10 +1,246 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
 <body>
+
+    <!-- CABEÇALHO -->
+    <div class="cabecalho">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}"
+                 alt="Lucrafy" width="91" height="37">
+        </div>
+
+        <div class="opcao-cabecalho">
+            <a href="{{ url_for('index') }}">Funcionalidades</a>
+        </div>
+
+        <div class="opcao-cabecalho">
+            <a href="{{ url_for('index') }}">Benefícios</a>
+        </div>
+    </div>
+
+    <div class="lados">
+
+        <!-- MENU LATERAL -->
+        <div class="menu">
+            <h4>MENU PRINCIPAL</h4>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="">
+                <a href="{{ url_for('visao_geral') }}">Visão geral</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="">
+                <a href="{{ url_for('insumo') }}">Insumos</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
+                <a href="{{ url_for('produto') }}">Produtos</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="">
+                <a href="#">Relatórios</a>
+            </div>
+
+            <div class="opcoes">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
+                <a href="{{ url_for('configuracao') }}">Configurações</a>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO -->
+        <div class="geral">
+
+            <div class="cabecalho-geral">
+                <h1>Novo produto</h1>
+                <p>Monte a ficha de custo do que você vende.</p>
+            </div>
+
+
+            <!-- FORMULÁRIO DO PRODUTO -->
+            <form action="{{ url_for('produto') }}" method="POST">
+
+                <div class="cartao dados-produto">
+
+                    <h2>Dados do produto</h2>
+
+                    <label>Nome do produto</label>
+                    <input type="text"
+                           name="nome"
+                           placeholder="Ex: Bolo de chocolate"
+                           required>
+
+                    <label>Descrição</label>
+                    <textarea name="descricao"
+                              placeholder="Descreva seu produto"></textarea>
+
+                    <label>Categoria</label>
+                    <select name="categoria" required>
+                        <option value="">Selecione uma categoria</option>
+
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria[0] }}">
+                            {{ categoria[1] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <label>Tempo de produção (minutos)</label>
+                    <input type="number"
+                           name="tempo"
+                           min="0"
+                           placeholder="Ex: 60"
+                           required>
+
+                    <label>Margem de lucro (%)</label>
+                    <input type="number"
+                           name="margem"
+                           min="0"
+                           max="99.99"
+                           step="0.01"
+                           placeholder="Ex: 50"
+                           required>
+
+                    <button type="submit" class="salvar-produto">
+                        Cadastrar produto
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="conteudo-produto">
+
+                <!-- INSUMOS UTILIZADOS -->
+                <div class="cartao insumos-utilizados">
+
+                    <div class="titulo-cartao">
+                        <h2>Insumos utilizados</h2>
+                        <span>0 ITENS CADASTRADOS</span>
+                    </div>
+
+                    <div class="tabela-responsiva">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Insumo</th>
+                                    <th>Quantidade</th>
+                                    <th>Unidade</th>
+                                    <th>Custo</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                           <tbody id="lista-insumos">
+
+                                <tr>
+                                    <td>
+                                        <select name="id_insumo" required>
+                                            <option value="">Selecione um insumo...</option>
+
+                                            {% for insumo in insumos %}
+                                            <option value="{{ insumo[0] }}">
+                                                {{ insumo[1] }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <input type="number"
+                                               name="quantidade"
+                                               min="0.001"
+                                               step="0.001"
+                                               placeholder="0,00"
+                                               required>
+                                    </td>
+
+                                    <td>
+                                        <select name="unidade" class="unidade-insumo" required>
+                                            <option value="g">g</option>
+                                            <option value="Kg">Kg</option>
+                                            <option value="mL">mL</option>
+                                            <option value="L">L</option>
+                                            <option value="un">un</option>
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <span class="custo-linha">R$ 0,00</span>
+                                    </td>
+
+                                    <td class="acoes">
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+                <!-- CUSTO DA PRODUÇÃO -->
+                <div class="cartao resumo-custo">
+
+                    <h2>Custo da produção</h2>
+
+                    <div class="valor-custo">
+                        <span>Subtotal dos insumos</span>
+                        <strong>R$ 0,00</strong>
+                    </div>
+
+                    <div class="valor-custo destaque">
+                        <span>Custo por unidade</span>
+                        <strong>R$ 0,00</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+
+        <div class="rodape-conteudo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}"
+                 alt="Lucrafy" width="94">
+
+            <p class="descricao-rodape">
+                O gerenciador financeiro simples, prático e 100%<br>
+                gratuito para quem quer controlar gastos sem<br>
+                burocracia nem complicação.
+            </p>
+        </div>
+
+        <div class="rodape-base">
+            <p>
+                © 2026 Lucrafy. Todos os direitos reservados.
+                CNPJ: 00.000.000/0001-00
+            </p>
+
+            <div>
+                <span>Termos de Uso</span>
+                <span>Privacidade</span>
+                <span>Políticas de Segurança</span>
+            </div>
+        </div>
+
+    </footer>
 
 </body>
 </html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Histórico de Custos - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/historico_custos.css') }}">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <nav>
+            <a href="{{ url_for('index') }}">Funcionalidades</a>
+            <a href="{{ url_for('index') }}">Benefícios</a>
+        </nav>
+
+    </header>
+
+    <div class="estrutura">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu">
+
+            <h4>MENU PRINCIPAL</h4>
+
+            <a href="{{ url_for('visao_geral') }}">
+                Visão geral
+            </a>
+
+            <a href="{{ url_for('insumo') }}" class="ativo">
+                Insumos
+            </a>
+
+            <a href="{{ url_for('produto') }}">
+                Produtos
+            </a>
+
+            <a href="#">
+                Relatórios
+            </a>
+
+            <a href="{{ url_for('configuracao') }}">
+                Configurações
+            </a>
+
+        </aside>
+
+        <!-- CONTEÚDO -->
+        <main class="principal">
+
+            <h1>Histórico de Custos</h1>
+
+            <p class="subtitulo">
+                Acompanhe todas as alterações de preços dos seus insumos.
+            </p>
+
+            <!-- CARTÃO -->
+            <section class="cartao">
+
+                <div class="cabecalho-cartao">
+
+                    <div>
+                        <h2>Alterações Registradas</h2>
+                        <p>Consulte o histórico de custos dos seus insumos.</p>
+                    </div>
+
+                </div>
+
+                <!-- TABELA -->
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>INSUMO</th>
+                                <th>CUSTO ANTERIOR</th>
+                                <th>CUSTO NOVO</th>
+                                <th>DATA DA ALTERAÇÃO</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in historico %}
+
+                            <tr>
+                                <td class="nome">
+                                    {{ item[0] }}
+                                </td>
+
+                                <td>
+                                    R$ {{ "%.2f"|format(item[1]) }}
+                                </td>
+
+                                <td class="novo-custo">
+                                    R$ {{ "%.2f"|format(item[2]) }}
+                                </td>
+
+                                <td>
+                                    {{ item[3].strftime('%d/%m/%Y às %H:%M') }}
+                                </td>
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="4" class="vazio">
+                                    Nenhuma alteração de custo registrada.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- BOTÃO VOLTAR -->
+            <div class="area-voltar">
+
+                <a href="{{ url_for('insumos_cadastrados') }}" class="voltar">
+                    Voltar
+                </a>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer>
+
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <p>
+            O gerenciador financeiro simples, prático e 100% gratuito
+            para quem quer controlar gastos sem burocracia nem complicação.
+        </p>
+
+        <div class="rodape-final">
+            <span>© 2026 Lucrafy. Todos os direitos reservados.</span>
+            <span>Termos de Uso · Privacidade · Políticas de Segurança</span>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
