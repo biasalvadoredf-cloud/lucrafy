@@ -1,19 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Produtos - Lucrafy</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
+
 <body>
 
     <!-- CABEÇALHO -->
     <div class="cabecalho">
+
         <div class="logo">
             <img src="{{ url_for('static', filename='img/logo.png') }}"
                  alt="Lucrafy" width="91" height="37">
@@ -26,12 +29,14 @@
         <div class="opcao-cabecalho">
             <a href="{{ url_for('index') }}">Benefícios</a>
         </div>
+
     </div>
 
     <div class="lados">
 
         <!-- MENU LATERAL -->
         <div class="menu">
+
             <h4>MENU PRINCIPAL</h4>
 
             <div class="opcoes">
@@ -58,131 +63,170 @@
                 <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
                 <a href="{{ url_for('configuracao') }}">Configurações</a>
             </div>
+
         </div>
 
-        <!-- CONTEÚDO -->
+        <!-- CONTEÚDO PRINCIPAL -->
         <div class="geral">
 
             <div class="cabecalho-geral">
-                <h1>Novo produto</h1>
-                <p>Monte a ficha de custo do que você vende.</p>
+                {% if not produto %}
+                    <h1>Novo produto</h1>
+                    <p>Monte a ficha de custo do que você vende.</p>
+                {% else %}
+                    <h1>{{ produto[1] }}</h1>
+                    <p>Adicione os insumos utilizados na produção.</p>
+                {% endif %}
             </div>
+
+            <!-- MENSAGENS -->
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                    <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
+                {% endfor %}
+            {% endwith %}
 
             {% if not produto %}
-            <!-- FORMULÁRIO DO PRODUTO -->
 
-            <form action="{{ url_for('produto') }}" method="POST">
+                <!-- CADASTRO DO PRODUTO -->
+                <form action="{{ url_for('produto') }}" method="POST">
 
+                    <div class="cartao dados-produto">
 
-                <div class="cartao dados-produto">
+                        <h2>Dados do produto</h2>
 
+                        <label for="nome">Nome do produto</label>
+                        <input type="text"
+                               id="nome"
+                               name="nome"
+                               placeholder="Ex: Bolo de chocolate"
+                               required>
 
-                    <h2>Dados do produto</h2>
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao"
+                                  name="descricao"
+                                  placeholder="Descreva seu produto"></textarea>
 
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" name="categoria" required>
 
-                    <label>Nome do produto</label>
-                    <input type="text" name="nome"
-                           placeholder="Ex: Bolo de chocolate" required>
+                            <option value="">Selecione uma categoria</option>
 
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria[0] }}">
+                                    {{ categoria[1] }}
+                                </option>
+                            {% endfor %}
 
-                    <label>Descrição</label>
-                    <textarea name="descricao"
-                              placeholder="Descreva seu produto"></textarea>
+                        </select>
 
+                        <label for="tempo">Tempo de produção (minutos)</label>
+                        <input type="number"
+                               id="tempo"
+                               name="tempo"
+                               min="0"
+                               required>
 
-                    <label>Categoria</label>
-                    <select name="categoria" required>
-                        <option value="">Selecione uma categoria</option>
+                        <label for="margem">Margem de lucro (%)</label>
+                        <input type="number"
+                               id="margem"
+                               name="margem"
+                               min="0.01"
+                               max="99.99"
+                               step="0.01"
+                               required>
 
-
-                        {% for categoria in categorias %}
-                        <option value="{{ categoria[0] }}">
-                            {{ categoria[1] }}
-                        </option>
-                        {% endfor %}
-                    </select>
-
-
-                    <label>Tempo de produção (minutos)</label>
-                    <input type="number" name="tempo"
-                           min="0" required>
-
-
-                    <label>Margem de lucro (%)</label>
-                    <input type="number" name="margem"
-                           min="0.01" max="99.99"
-                           step="0.01" required>
-
-
-                </div>
-
-
-                <div class="conteudo-produto">
-
-                    <div class="cartao resumo-custo">
-                        <h2>Custo da produção</h2>
-
-
-                        <p>
-                            O custo será calculado automaticamente
-                            após o cadastro do produto.
-                        </p>
                     </div>
 
+                    <button type="submit" class="salvar-produto">
+                        Cadastrar produto
+                    </button>
 
-                </div>
-
-
-                <button type="submit" class="salvar-produto">
-                    Cadastrar produto e insumos
-                </button>
-            </form>
-
-            <div class="cartao insumos-utilizados">
-                <div class="titulo-cartao">
-                    <h2>Insumos utilizados</h2>
-                </div>
-
-                <form action="{{ url_for('adicionar_insumo_produto') }}">
-                    <input type="hidden" name="id_produto" value="{{ produto[0] }}"/>
-                    <label>Insumo</label>
-                    <select name="id_insumo" required>
-                        <option value="">Selecione um insumo</option>
-
-                        {% for insumo in insumos %}
-                        <option value="{{ insumo[0] }}">
-                            {{ insumo[1] }}
-                        </option>
-                        {% endfor %}
-                    </select>
                 </form>
 
-            </div>
+            {% else %}
 
-                <!-- CUSTO DA PRODUÇÃO -->
+                <!-- ADICIONAR INSUMOS AO PRODUTO -->
+                <div class="cartao insumos-utilizados">
+
+                    <div class="titulo-cartao">
+                        <h2>Insumos utilizados</h2>
+                    </div>
+
+                    <form action="{{ url_for('adicionar_insumo_produto') }}"
+                          method="POST">
+
+                        <input type="hidden"
+                               name="id_produto"
+                               value="{{ produto[0] }}">
+
+                        <label for="id_insumo">Insumo</label>
+
+                        <select name="id_insumo"
+                                id="id_insumo"
+                                required>
+
+                            <option value="">Selecione um insumo</option>
+
+                            {% for insumo in insumos %}
+                                <option value="{{ insumo[0] }}">
+                                    {{ insumo[1] }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+
+                        <label for="quantidade">Quantidade utilizada</label>
+
+                        <input type="number"
+                               name="quantidade"
+                               id="quantidade"
+                               min="0.001"
+                               step="0.001"
+                               required>
+
+                        <button type="submit" class="salvar-produto">
+                            Adicionar insumo
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <!-- RESUMO DO CUSTO -->
                 <div class="cartao resumo-custo">
 
                     <h2>Custo da produção</h2>
 
                     <div class="valor-custo">
                         <span>Subtotal dos insumos</span>
-                        <strong>R$ 0,00</strong>
+                        <strong>R$ {{ "%.2f"|format(custo_total|default(0)|float) }}</strong>
                     </div>
 
                     <div class="valor-custo destaque">
-                        <span>Custo por unidade</span>
-                        <strong>R$ 0,00</strong>
+                        <span>Preço de venda sugerido</span>
+                        <strong>R$ {{ "%.2f"|format(preco_sugerido|default(0)|float) }}</strong>
                     </div>
 
                 </div>
-            </div>
+
+                <p>
+                    <a href="{{ url_for('produtos_cadastrados') }}">
+                        Voltar para produtos cadastrados
+                    </a>
+                </p>
+
+            {% endif %}
+
         </div>
+
     </div>
 
     <!-- RODAPÉ -->
     <footer class="rodape">
 
         <div class="rodape-conteudo">
+
             <img src="{{ url_for('static', filename='img/logo.png') }}"
                  alt="Lucrafy" width="94">
 
@@ -191,9 +235,11 @@
                 gratuito para quem quer controlar gastos sem<br>
                 burocracia nem complicação.
             </p>
+
         </div>
 
         <div class="rodape-base">
+
             <p>
                 © 2026 Lucrafy. Todos os direitos reservados.
                 CNPJ: 00.000.000/0001-00
@@ -204,9 +250,11 @@
                 <span>Privacidade</span>
                 <span>Políticas de Segurança</span>
             </div>
+
         </div>
 
     </footer>
 
 </body>
 </html>
+```
