@@ -24,15 +24,25 @@
 
         <!-- MENSAGENS DO FLASK -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            <div class="flash-messages">
-              {% for category, message in messages %}
-                <div class="flash {{ category }}">
-                  {{ message }}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
                 </div>
-              {% endfor %}
-            </div>
-          {% endif %}
+            {% endif %}
         {% endwith %}
 
     <div class="lados">
@@ -51,7 +61,7 @@
                 Insumos
             </a>
 
-            <a href="{{ url_for('produto') }}">
+            <a href="{{ url_for('produtos_cadastrados') }}">
                 <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
                 Produtos
             </a>
@@ -96,15 +106,22 @@
                         </div>
 
                         <div class="campo">
-                            <label for="unidade_medida">Unidade de medida</label>
-
+                            <div class="display-label">
+                                <label for="unidade_medida">Unidade de medida</label>
+                                <a class
+                        ="cadastro-informacoes"
+                                   href
+                        ="{{ url_for('unidade_medida') }}"
+                                   aria-label="Cadastrar unidade de medida">
+                                    +
+                                </a>
+                            </div>
                             <select id="unidade_medida" name="unidade_medida" required>
                                 <option value="">Selecione</option>
-
                                 {% for unidade in unidades %}
-                                <option value="{{ unidade[0] }}">
-                                    {{ unidade[1] }} ({{ unidade[2] }})
-                                </option>
+                                    <option value="{{ unidade[0] }}">
+                                        {{ unidade[1] }} ({{ unidade[2] }})
+                                    </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -116,7 +133,7 @@
 
                         <div class="campo">
                             <label for="categoria">Categoria</label>
-
+                            <a class="cadastro-informacoes" href="{{ url_for('categoria') }}" aria-label="Cadastrar categoria">+</a>
                             <select id="categoria" name="categoria" required>
                                 <option value="">Selecione</option>
 
@@ -141,56 +158,6 @@
                 </form>
 
             </section>
-
-            <!-- FILTROS VISUAIS -->
-            <div class="filtros">
-
-                <select aria-label="Categorias">
-                    <option>Todas as categorias</option>
-
-                    {% for categoria in categorias %}
-                    <option>{{ categoria[1] }}</option>
-                    {% endfor %}
-                </select>
-
-                <select aria-label="Unidades">
-                    <option>Todas as unidades</option>
-
-                    {% for unidade in unidades %}
-                    <option>
-                        {{ unidade[1] }} ({{ unidade[2] }})
-                    </option>
-                    {% endfor %}
-                </select>
-
-            </div>
-
-            <!-- CATEGORIAS -->
-            <div class="linha-categorias">
-                <strong>Categorias:</strong>
-                <span class="ativo">Todos</span>
-                <span>Ingredientes</span>
-                <span>Embalagens</span>
-                <span>Outros</span>
-            </div>
-
-            <!-- ÁREA DE INSUMOS -->
-            <section class="dados-insumos">
-
-                <div class="titulo-tabela">
-                    <h2>Insumos cadastrados</h2>
-
-                    <a href="{{ url_for('insumos_cadastrados') }}">
-                        Visualizar e gerenciar →
-                    </a>
-                </div>
-
-                <p>
-                    Após cadastrar, consulte os insumos na tela de gerenciamento.
-                </p>
-
-            </section>
-
         </main>
     </div>
 

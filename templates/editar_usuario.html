@@ -55,18 +55,28 @@
 
                 <h2>Editar usuário</h2>
 
-                <!-- MENSAGENS FLASK -->
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="flash-messages">
-                            {% for category, message in messages %}
-                                <div class="flash {{ category }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
+                <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
                         </div>
-                    {% endif %}
-                {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
                 <!-- FORMULÁRIO -->
                 <form action="{{ url_for('editar', id=usuario[0]) }}" method="POST" class="form-cadastro">

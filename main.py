@@ -83,6 +83,55 @@ def visao_geral():
 
         return redirect(url_for('login'))
 
+    cursor = con.cursor()
+
+    try:
+        id_usuario = session['id_usuario']
+
+        # Contar os produtos cadastrados
+        cursor.execute("""SELECT COUNT(*) FROM PRODUTO WHERE ID_USUARIO = ?""", (id_usuario,))
+
+        total_produtos = cursor.fetchone()[0]
+
+        # Contar os insumos cadastrados
+        cursor.execute("""SELECT COUNT(*) FROM INSUMO WHERE ID_USUARIO = ?""", (id_usuario,))
+
+        total_insumos = cursor.fetchone()[0]
+
+        # Custo médio
+        cursor.execute("""SELECT AVG(CUSTO) FROM PRODUTO WHERE ID_USUARIO = ?""", (id_usuario,))
+
+        custo_medio = cursor.fetchone()[0]
+
+        if custo_medio is None:
+            custo_medio = 0
+
+        # Margem média
+        cursor.execute("""SELECT AVG(MARGEM_LUCRO) FROM PRODUTO WHERE ID_USUARIO = ?""", (id_usuario,))
+
+        margem_media = cursor.fetchone()[0]
+
+        if margem_media is None:
+            margem_media = 0
+
+        cursor.execute("""SELECT FIRST 3 NOME, CUSTO, PRECO_SUGERIDO FROM PRODUTO WHERE ID_USUARIO = ? 
+        ORDER BY margem_lucro DESC
+        """, (id_usuario,))
+
+        produtos_destaque = cursor.fetchall()
+
+
+
+        return render_template('visao_geral.html', usuario=session['nome'],
+                               total_produtos=total_produtos,
+                               total_insumos=total_insumos,
+                               custo_medio=custo_medio,
+                               margem_media=margem_media,
+                               produtos_destaque=produtos_destaque)
+
+    finally:
+        cursor.close()
+
     return render_template('visao_geral.html',usuario=session['nome'])
 
 
@@ -1463,17 +1512,23 @@ def atualizar_custo_produto(id_produto):
 #===================================================
 # CADASTRAR PRODUTO
 #===================================================
-
 @app.route('/produto', methods=['GET', 'POST'])
 def produto():
+
 
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
+
     cursor = con.cursor()
 
+
     try:
+        id_usuario = session['id_usuario']
+
+
         if request.method == 'POST':
+
 
             nome = request.form['nome'].strip()
             descricao = request.form['descricao']
@@ -1481,63 +1536,268 @@ def produto():
             tempo = int(request.form['tempo'])
             categoria = int(request.form['categoria'])
 
-            if not nome or margem < 0 or margem >= 100 or tempo < 0:
+
+            if (not nome or not margem.is_finite()
+                    or margem <= 0 or margem >= 100
+                    or tempo < 0):
+
+
                 flash('Verifique os dados do produto.', 'error')
                 return redirect(url_for('produto'))
 
+
+            # Verificar categoria do usuário
+            cursor.execute("""
+                SELECT ID_CATEGORIA
+                FROM CATEGORIA
+                WHERE ID_CATEGORIA = ?
+                  AND ID_USUARIO = ?
+            """, (categoria, id_usuario))
+
+
+            if cursor.fetchone() is None:
+                flash('Categoria inválida.', 'error')
+                return redirect(url_for('produto'))
+
+
+            itens = []
+            insumos_usados = []
+
+
+            # Verificar os 5 campos de insumos
+            for numero in range(1, 6):
+
+
+                id_insumo = request.form[f'insumo_{numero}']
+                quantidade_texto = request.form[f'quantidade_{numero}']
+                id_unidade_texto = request.form[f'unidade_{numero}']
+
+
+                # Ignorar linha completamente vazia
+                if not id_insumo and not quantidade_texto and not id_unidade_texto:
+                    continue
+
+
+                if not id_insumo or not quantidade_texto or not id_unidade_texto:
+                    flash('Preencha todos os dados do insumo.', 'error')
+                    return redirect(url_for('produto'))
+
+
+                id_insumo = int(id_insumo)
+                id_unidade = int(id_unidade_texto)
+                quantidade = Decimal(quantidade_texto)
+
+
+                if not quantidade.is_finite() or quantidade <= 0:
+                    flash('Informe uma quantidade válida.', 'error')
+                    return redirect(url_for('produto'))
+
+
+                if id_insumo in insumos_usados:
+                    flash('O mesmo insumo foi selecionado duas vezes.', 'error')
+                    return redirect(url_for('produto'))
+
+
+                insumos_usados.append(id_insumo)
+
+
+                # Buscar estoque e unidade cadastrada
+                cursor.execute("""
+                    SELECT I.NOME, I.ESTOQUE_ATUAL, U.SIGLA
+                    FROM INSUMO I
+                    LEFT JOIN UNIDADE_MEDIDA U
+                        ON I.ID_UNIDADE = U.ID_UNIDADE
+                    WHERE I.ID_INSUMO = ?
+                      AND I.ID_USUARIO = ?
+                """, (id_insumo, id_usuario))
+
+
+                insumo = cursor.fetchone()
+
+
+                if insumo is None:
+                    flash('Insumo não encontrado.', 'error')
+                    return redirect(url_for('produto'))
+
+
+                nome_insumo = insumo[0]
+
+
+                estoque = Decimal(str(insumo[1])) if insumo[1] is not None else Decimal('0')
+                unidade_estoque = insumo[2]
+
+
+                # Buscar unidade selecionada
+                cursor.execute("""
+                    SELECT SIGLA
+                    FROM UNIDADE_MEDIDA
+                    WHERE ID_UNIDADE = ?
+                """, (id_unidade,))
+
+
+                unidade = cursor.fetchone()
+
+
+                if unidade is None:
+                    flash('Unidade inválida.', 'error')
+                    return redirect(url_for('produto'))
+
+
+                unidade_escolhida = unidade[0]
+                quantidade_necessaria = quantidade
+
+
+                # Converter unidades
+                if unidade_escolhida == 'g' and unidade_estoque == 'Kg':
+                    quantidade_necessaria /= Decimal('1000')
+
+
+                elif unidade_escolhida == 'Kg' and unidade_estoque == 'g':
+                    quantidade_necessaria *= Decimal('1000')
+
+
+                elif unidade_escolhida == 'mL' and unidade_estoque == 'L':
+                    quantidade_necessaria /= Decimal('1000')
+
+
+                elif unidade_escolhida == 'L' and unidade_estoque == 'mL':
+                    quantidade_necessaria *= Decimal('1000')
+
+
+                elif unidade_escolhida != unidade_estoque:
+                    flash(
+                        f'Unidade incompatível para {nome_insumo}.',
+                        'error'
+                    )
+                    return redirect(url_for('produto'))
+
+
+                # Verificar estoque
+                if quantidade_necessaria > estoque:
+                    flash(
+                        f'Estoque insuficiente de {nome_insumo}! '
+                        f'Disponível: {estoque} {unidade_estoque}.',
+                        'error'
+                    )
+                    return redirect(url_for('produto'))
+
+
+                itens.append(
+                    (id_insumo, id_unidade, quantidade)
+                )
+
+
+            if not itens:
+                flash('Adicione pelo menos um insumo.', 'error')
+                return redirect(url_for('produto'))
+
+
+            # Cadastrar produto e obter o ID criado
             cursor.execute("""
                 INSERT INTO PRODUTO
                 (NOME, DESCRICAO, MARGEM_LUCRO,
                  TEMPO_PRODUCAO, ID_CATEGORIA,
                  ID_USUARIO, CUSTO, PRECO_SUGERIDO, ATIVO)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                RETURNING ID_PRODUTO
             """, (
                 nome,
                 descricao,
                 margem,
                 tempo,
                 categoria,
-                session['id_usuario'],
+                id_usuario,
                 Decimal('0.00'),
                 Decimal('0.00'),
                 1
             ))
 
+
+            id_produto = cursor.fetchone()[0]
+
+
+            # Adicionar os insumos ao produto
+            for id_insumo, id_unidade, quantidade in itens:
+
+
+                cursor.execute("""
+                    INSERT INTO COMPOSICAO_PRODUTO
+                    (ID_PRODUTO, ID_INSUMO, ID_UNIDADE, QUANTIDADE)
+                    VALUES (?, ?, ?, ?)
+                """, (
+                    id_produto,
+                    id_insumo,
+                    id_unidade,
+                    quantidade
+                ))
+
+
+            # Calcular custo e preço sugerido
+            atualizar_custo_produto(id_produto)
+
+
             con.commit()
 
-            flash('Produto cadastrado com sucesso!', 'success')
-            return redirect(url_for('produtos_cadastrados'))
 
+            flash('Produto e insumos cadastrados com sucesso!', 'success')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
+
+
+        # Buscar insumos cadastrados
         cursor.execute("""
             SELECT ID_INSUMO, NOME
             FROM INSUMO
             WHERE ID_USUARIO = ?
-        """, (session['id_usuario'],))
+            ORDER BY NOME
+        """, (id_usuario,))
+
 
         insumos = cursor.fetchall()
 
+
+        # Buscar categorias do usuário
         cursor.execute("""
             SELECT ID_CATEGORIA, NOME
             FROM CATEGORIA
-        """)
+            WHERE ID_USUARIO = ?
+            ORDER BY NOME
+        """, (id_usuario,))
+
 
         categorias = cursor.fetchall()
+
+
+        # Buscar unidades
+        cursor.execute("""
+            SELECT ID_UNIDADE, NOME, SIGLA
+            FROM UNIDADE_MEDIDA
+            ORDER BY NOME
+        """)
+
+
+        unidades = cursor.fetchall()
+
 
         return render_template(
             'produto.html',
             usuario=session['nome'],
             insumos=insumos,
-            categorias=categorias
+            categorias=categorias,
+            unidades=[],
+            composicao=[],
+            produto=None
         )
+
 
     except Exception as e:
         con.rollback()
+        print('Erro ao cadastrar produto:', e)
         flash('Erro ao cadastrar produto.', 'error')
-        return redirect(url_for('produtos_cadastrados'))
+        return redirect(url_for('produto'))
+
 
     finally:
         cursor.close()
-
 
 #===================================================
 # PRODUTOS CADASTRADOS

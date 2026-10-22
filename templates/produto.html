@@ -68,27 +68,32 @@
                 <p>Monte a ficha de custo do que você vende.</p>
             </div>
 
-
+            {% if not produto %}
             <!-- FORMULÁRIO DO PRODUTO -->
+
             <form action="{{ url_for('produto') }}" method="POST">
+
 
                 <div class="cartao dados-produto">
 
+
                     <h2>Dados do produto</h2>
 
+
                     <label>Nome do produto</label>
-                    <input type="text"
-                           name="nome"
-                           placeholder="Ex: Bolo de chocolate"
-                           required>
+                    <input type="text" name="nome"
+                           placeholder="Ex: Bolo de chocolate" required>
+
 
                     <label>Descrição</label>
                     <textarea name="descricao"
                               placeholder="Descreva seu produto"></textarea>
 
+
                     <label>Categoria</label>
                     <select name="categoria" required>
                         <option value="">Selecione uma categoria</option>
+
 
                         {% for categoria in categorias %}
                         <option value="{{ categoria[0] }}">
@@ -97,101 +102,62 @@
                         {% endfor %}
                     </select>
 
+
                     <label>Tempo de produção (minutos)</label>
-                    <input type="number"
-                           name="tempo"
-                           min="0"
-                           placeholder="Ex: 60"
-                           required>
+                    <input type="number" name="tempo"
+                           min="0" required>
+
 
                     <label>Margem de lucro (%)</label>
-                    <input type="number"
-                           name="margem"
-                           min="0"
-                           max="99.99"
-                           step="0.01"
-                           placeholder="Ex: 50"
-                           required>
+                    <input type="number" name="margem"
+                           min="0.01" max="99.99"
+                           step="0.01" required>
 
-                    <button type="submit" class="salvar-produto">
-                        Cadastrar produto
-                    </button>
 
                 </div>
 
+
+                <div class="conteudo-produto">
+
+                    <div class="cartao resumo-custo">
+                        <h2>Custo da produção</h2>
+
+
+                        <p>
+                            O custo será calculado automaticamente
+                            após o cadastro do produto.
+                        </p>
+                    </div>
+
+
+                </div>
+
+
+                <button type="submit" class="salvar-produto">
+                    Cadastrar produto e insumos
+                </button>
             </form>
 
-
-            <div class="conteudo-produto">
-
-                <!-- INSUMOS UTILIZADOS -->
-                <div class="cartao insumos-utilizados">
-
-                    <div class="titulo-cartao">
-                        <h2>Insumos utilizados</h2>
-                        <span>0 ITENS CADASTRADOS</span>
-                    </div>
-
-                    <div class="tabela-responsiva">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Insumo</th>
-                                    <th>Quantidade</th>
-                                    <th>Unidade</th>
-                                    <th>Custo</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-
-                           <tbody id="lista-insumos">
-
-                                <tr>
-                                    <td>
-                                        <select name="id_insumo" required>
-                                            <option value="">Selecione um insumo...</option>
-
-                                            {% for insumo in insumos %}
-                                            <option value="{{ insumo[0] }}">
-                                                {{ insumo[1] }}
-                                            </option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <input type="number"
-                                               name="quantidade"
-                                               min="0.001"
-                                               step="0.001"
-                                               placeholder="0,00"
-                                               required>
-                                    </td>
-
-                                    <td>
-                                        <select name="unidade" class="unidade-insumo" required>
-                                            <option value="g">g</option>
-                                            <option value="Kg">Kg</option>
-                                            <option value="mL">mL</option>
-                                            <option value="L">L</option>
-                                            <option value="un">un</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <span class="custo-linha">R$ 0,00</span>
-                                    </td>
-
-                                    <td class="acoes">
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
+            <div class="cartao insumos-utilizados">
+                <div class="titulo-cartao">
+                    <h2>Insumos utilizados</h2>
                 </div>
+
+                <form action="{{ url_for('adicionar_insumo_produto') }}">
+                    <input type="hidden" name="id_produto" value="{{ produto[0] }}"/>
+                    <label>Insumo</label>
+                    <select name="id_insumo" required>
+                        <option value="">Selecione um insumo</option>
+
+                        {% for insumo in insumos %}
+                        <option value="{{ insumo[0] }}">
+                            {{ insumo[1] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+            </div>
 
                 <!-- CUSTO DA PRODUÇÃO -->
                 <div class="cartao resumo-custo">

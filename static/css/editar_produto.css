@@ -1,0 +1,61 @@
+
+
+
+.flash-messages {
+    width: 100%;
+    padding: 0 25px;
+    margin: 18px auto 0;
+}
+.flash-message {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 12px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+/* ÍCONE */
+.flash-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 700;
+}
+/* TEXTO */
+.flash-texto {
+    flex: 1;
+}
+/* SUCESSO */
+.flash-message.success {
+    background: #edf7e5;
+    color: #365b1c;
+    border: 1px solid #cce7b8;
+    border-left: 5px solid #80b845;
+}
+.flash-message.success .flash-icone {
+    background: #a4c95f;
+    color: #ffffff;
+}
+/* ERRO */
+.flash-message.error {
+    background: #fff1f0;
+    color: #a52a2a;
+    border: 1px solid #f5c9c5;
+    border-left: 5px solid #e15b52;
+}
+.flash-message.error .flash-icone {
+    background: #e15b52;
+    color: #ffffff;
+}

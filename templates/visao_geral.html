@@ -52,7 +52,7 @@
 
             <div class="opcoes">
                 <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="Elemento Produtos">
-                <a href="{{ url_for('produto') }}">Produtos</a>
+                <a href="{{ url_for('produtos_cadastrados') }}">Produtos</a>
             </div>
 
             <div class="opcoes">
@@ -71,7 +71,7 @@
 
             <div class="cabecalho-visao-geral">
                 <h1>Visão Geral</h1>
-                <a href="#">+ NOVO PRODUTO</a>
+                <a href="{{ url_for('produto') }}">+ NOVO PRODUTO</a>
             </div>
 
             <!-- CARTÕES DE INDICADORES -->
@@ -79,22 +79,22 @@
 
                 <div class="cartao-indicador">
                     <h3>Produtos</h3>
-                    <p>0</p>
+                    <p>{{ total_produtos }}</p>
                 </div>
 
                 <div class="cartao-indicador">
                     <h3>Insumos</h3>
-                    <p>0</p>
+                    <p>{{ total_insumos }}</p>
                 </div>
 
                 <div class="cartao-indicador">
                     <h3>Custo Médio</h3>
-                    <p>R$0</p>
+                    <p>R$ {{ custo_medio }}</p>
                 </div>
 
                 <div class="cartao-indicador">
                     <h3>Margem Média</h3>
-                    <p>0%</p>
+                    <p>{{ margem_media }}%</p>
                 </div>
 
             </div>
@@ -106,89 +106,36 @@
             </div>
 
             <div class="cartoes-produto-destaque">
+                {% for produto in produtos_destaque %}
 
-                <!-- BOLO DE CHOCOLATE -->
-                <div class="cartao-produto-destaque">
-                    <h3>Bolo de Chocolate</h3>
-
-                    <div class="infos-cartao-produto">
-
-                        <div class="info">
-                            <h4>Custo</h4>
-                            <p>R$12,50</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Preço Sugerido</h4>
-                            <p>R$25,00</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Lucro</h4>
-                            <p>50%</p>
-                        </div>
-
-                    </div>
+                <div class="produto-destaque">
+                    <h3>{{ produto[0] }}</h3>
+                    <p>Custo: R$ {{ produto[1] }}</p>
+                    <p>Preço sugerido: R$ {{ produto[2] }}</p>
                 </div>
 
-                <!-- BROWNIE -->
-                <div class="cartao-produto-destaque">
-                    <h3>Brownie</h3>
-
-                    <div class="infos-cartao-produto">
-
-                        <div class="info">
-                            <h4>Custo</h4>
-                            <p>R$7,80</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Preço Sugerido</h4>
-                            <p>R$16,00</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Lucro</h4>
-                            <p>51%</p>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- COOKIE -->
-                <div class="cartao-produto-destaque">
-                    <h3>Cookie</h3>
-
-                    <div class="infos-cartao-produto">
-
-                        <div class="info">
-                            <h4>Custo</h4>
-                            <p>R$4,20</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Preço Sugerido</h4>
-                            <p>R$10,00</p>
-                        </div>
-
-                        <div class="info">
-                            <h4>Lucro</h4>
-                            <p>58%</p>
-                        </div>
-
-                    </div>
-                </div>
-
+                {% else %}
+                <p>Nenhum produto encontrado</p>
+                {% endfor %}
             </div>
 
-            <!-- RESUMO DA MARGEM -->
             <div class="resumo-margem">
-                <h4>Sua margem está saudável</h4>
-                <p>Sua margem média de 32% está em um bom patamar para o seu negócio.</p>
+
+                {% if margem_media >= 30 %}
+                    <p>Margem saudável! Seus produtos apresentam uma boa margem de lucro.</p>
+
+                {% elif margem_media >= 15 %}
+                    <p>Atenção! Sua margem de lucro pode melhorar.</p>
+
+                {% else %}
+                    <p>Margem baixa! Revise os custos e preços dos seus produtos.</p>
+
+                {% endif %}
+
             </div>
 
             <div class="botao-ver-todos">
-                <a href="#">Ver Todos</a>
+                <a href="{{ url_for('produtos_cadastrados') }}">Ver Todos</a>
             </div>
 
             <!-- RODAPÉ -->

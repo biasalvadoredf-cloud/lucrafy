@@ -62,17 +62,28 @@
 
                 <h2>Alterar Senha</h2>
 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="flash-messages">
-                            {% for category, message in messages %}
-                                <div class="flash {{ category }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
+                <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
                         </div>
-                    {% endif %}
-                {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
                 <form action="{{ url_for('alterar_senha') }}" method="POST" class="form-alterar_senha">
 
