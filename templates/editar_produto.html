@@ -15,29 +15,6 @@
 
 <body>
 
-    <!-- MENSAGENS DO FLASK -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
-
-                            <span class="flash-icone">
-                                {% if category == 'success' %}
-                                    ✓
-                                {% else %}
-                                    !
-                                {% endif %}
-                            </span>
-
-                            <span class="flash-texto">{{ message }}</span>
-
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
     <!-- CABEÇALHO -->
     <div class="cabecalho">
 
@@ -91,8 +68,32 @@
         </div>
 
 
+
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="geral">
+
+            <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
             <div class="cabecalho-geral">
 
@@ -101,6 +102,7 @@
                 <p>Gerencie os insumos e os custos deste produto.</p>
 
             </div>
+
 
 
             <!-- EDITAR DADOS DO PRODUTO -->

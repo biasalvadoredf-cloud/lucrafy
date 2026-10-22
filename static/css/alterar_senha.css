@@ -43,7 +43,7 @@ p {
 
 .cabecalho {
   height: 64px;
-  background-color: var(--fundo);
+  background-color: var(--branco);
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 4px;
 }
 

@@ -1832,7 +1832,7 @@ def categoria():
             con.commit()
 
             flash('Categoria cadastrada com sucesso!', 'success')
-            return redirect(url_for('categoria'))
+            return redirect(url_for('insumo'))
 
         # Lista as categorias do usuário logado
         cursor.execute("""
@@ -1885,7 +1885,7 @@ def unidade_medida():
             con.commit()
 
             flash('Unidade cadastrada com sucesso!', 'success')
-            return redirect(url_for('unidade_medida'))
+            return redirect(url_for('insumo'))
 
         cursor.execute("""
             SELECT ID_UNIDADE, NOME, SIGLA
@@ -1904,7 +1904,7 @@ def unidade_medida():
     except Exception as e:
         con.rollback()
         flash(f'Erro ao cadastrar unidade: {e}', 'error')
-        return redirect(url_for('unidade_medida'))
+        return redirect(url_for('insumo'))
 
     finally:
         cursor.close()

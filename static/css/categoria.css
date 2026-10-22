@@ -37,7 +37,7 @@
 .cabecalho{
     display: flex;
     height: 64px;
-    background-color: var(--fundo-pagina-2);
+    background: #ffffff;
     align-items: center;
 }
 
@@ -623,3 +623,275 @@ select{
     .modal button:hover{
         background-color: var(--botao-principal-4);
     }
+
+    body {
+    overflow: hidden;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.overlay .modal {
+    position: relative;
+    box-sizing: border-box;
+    width: 420px;
+    max-width: 100%;
+    max-height: calc(100dvh - 48px);
+    padding: 34px 28px 28px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: #d9e6d8;
+    color: #242b25;
+    font-family: inherit;
+}
+
+.overlay .modal h2 {
+    margin: 0 0 22px;
+    padding: 0 10px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.overlay .modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+}
+
+.overlay .modal label {
+    display: block;
+    margin: 0 0 -10px;
+    font-size: 13px;
+}
+
+.overlay .modal input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #f9f9f9;
+    color: #303b31;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.overlay .modal button {
+    width: 100%;
+    min-height: 46px;
+    margin: 4px 0 0;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #a4c95f;
+    color: #242b25;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.overlay .fechar-modal {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #303b31;
+    font-size: 24px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.overlay .modal input:focus-visible,
+.overlay .modal button:focus-visible,
+.overlay .fechar-modal:focus-visible {
+    outline: 2px solid #496801;
+    outline-offset: 2px;
+}
+
+.mensagens-modal {
+    margin-bottom: 16px;
+}
+
+.mensagens-modal .flash {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.mensagens-modal .error {
+    background: #ffe4df;
+    color: #8a3028;
+}
+
+.mensagens-modal .success {
+    background: #edf4dd;
+    color: #496801;
+}
+
+@media (max-width: 700px) {
+    .overlay {
+        padding: 20px;
+    }
+
+    .overlay .modal {
+        width: 350px;
+        max-height: calc(100dvh - 40px);
+        padding: 34px 22px 24px;
+    }
+
+    .overlay .modal h2 {
+        font-size: 22px;
+    }
+
+    .overlay .modal input {
+        font-size: 16px;
+    }
+}
+
+.fundo-insumos {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.fundo-insumos .lados {
+    display: flex;
+}
+
+
+.fundo-insumos .geral {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+}
+
+
+.fundo-insumos .cadastrar-insumo {
+    display: block;
+    width: 100%;
+    max-width: 930px;
+    height: auto;
+    min-height: 0;
+    margin: 30px auto 0;
+    padding: 26px 30px;
+}
+
+
+.fundo-insumos .cadastrar-insumo > form {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+
+.fundo-insumos .cadastrar-insumo h2 {
+    margin: 0 0 23px;
+    padding: 0;
+}
+
+
+.fundo-insumos .campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 35px;
+}
+
+
+.fundo-insumos .campo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+}
+
+
+.fundo-insumos .campo input,
+.fundo-insumos .campo select {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+
+.fundo-insumos .botoes-formulario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-top: 24px;
+}
+
+
+@media (max-width: 700px) {
+    .fundo-insumos .lados {
+        display: block;
+    }
+
+
+    .fundo-insumos .cadastrar-insumo {
+        margin-top: 20px;
+        padding: 20px 16px;
+    }
+
+
+    .fundo-insumos .campos {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+
+    .fundo-insumos .botoes-formulario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (min-width: 701px) {
+    .fundo-insumos .cabecalho-geral {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .cabecalho-geral h1 {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .cabecalho-geral p {
+        margin: 4px 0 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .menu h4 {
+        margin: 0 0 24px;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+}

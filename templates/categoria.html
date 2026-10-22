@@ -1,337 +1,215 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Categoria - Lucrafy</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/categoria.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
-
-    <title>Criar Categorias</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
 
 <body>
+<div class="fundo-insumos" inert>
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
-    <!-- Modal para cadastrar categoria -->
-    <div class="overlay" id="overlay">
-        <div class="modal">
-            <h2>Cadastrar Categoria</h2>
+        <a href="{{ url_for('index') }}">Funcionalidades</a>
+        <a href="{{ url_for('index') }}">Benefícios</a>
+    </header>
 
-            <form action="{{ url_for('categoria') }}" method="POST">
-                <input id="categoria" name="nome" required type="text" placeholder="Ex: Fritos">
-                <button type="submit">Salvar</button>
-            </form>
-        </div>
-    </div>
 
-    <!-- Cabeçalho -->
-    <div class="cabecalho">
+        <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
 
-        <div class="logo">
-            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo LucraFy" width="91px" height="37px">
-        </div>
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
 
-        <div class="opcao-cabecalho">
-            <a href="#">Funcionalidades</a>
-        </div>
+                            <span class="flash-texto">{{ message }}</span>
 
-        <div class="opcao-cabecalho">
-            <a href="#">Benefícios</a>
-        </div>
-
-    </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
     <div class="lados">
 
-        <!-- Menu lateral -->
-        <div class="menu">
+        <!-- MENU LATERAL -->
+        <aside class="menu">
             <h4>MENU PRINCIPAL</h4>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="elemento Visão Geral">
-                <a href="#">Visão Geral</a>
-            </div>
+            <a href="{{ url_for('visao_geral') }}">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="">
+                Visão Geral
+            </a>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="elemento Insumos">
-                <a href="#">Insumos</a>
-            </div>
+            <a href="{{ url_for('insumo') }}">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="">
+                Insumos
+            </a>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="elemento Produtos">
-                <a href="#">Produtos</a>
-            </div>
+            <a href="{{ url_for('produtos_cadastrados') }}">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
+                Produtos
+            </a>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="elemento Relatórios">
-                <a href="#">Relatórios</a>
-            </div>
+            <a href="#">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="">
+                Relatórios
+            </a>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="elemento Configurações">
-                <a href="#">Configurações</a>
-            </div>
-        </div>
+            <a href="{{ url_for('configuracao') }}">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
+                Configurações
+            </a>
+        </aside>
 
-        <!-- Conteúdo principal -->
-        <div class="geral">
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="geral">
 
             <div class="cabecalho-geral">
                 <h1>Insumos</h1>
                 <p>Organize os custos de cada ingrediente ou material.</p>
             </div>
 
-            <!-- Formulário de cadastro de insumo -->
-            <div class="cadastrar-insumo">
+            <!-- CADASTRAR INSUMO -->
+            <section class="cadastrar-insumo">
+
+                <h2>Cadastrar insumo</h2>
 
                 <form action="{{ url_for('cadastro_insumo') }}" method="POST">
 
-                    <h3>Cadastrar Insumo</h3>
+                    <div class="campos">
 
-                    <!-- Parte superior do formulário -->
-                    <div class="form-cima">
-
-                        <div class="display">
-                            <label class="titulos-cadastro-insumo" for="nome-insumo">Nome dos insumos</label>
-
-                            <div class="input-insumo-nome">
-                                <input type="text" placeholder="Ex: Farinha de trigo" required name="nome" id="nome-insumo">
-                            </div>
+                        <div class="campo">
+                            <label for="nome">Nome do insumo</label>
+                            <input id="nome" type="text" name="nome" placeholder="Ex.: Farinha de trigo" required>
                         </div>
 
-                        <div class="display">
+                        <div class="campo">
+                            <label for="custo">Custo unitário (R$)</label>
+                            <input id="custo" type="number" name="custo"  placeholder="0,00"
+                                required>
+                        </div>
 
+                        <div class="campo">
                             <div class="display-label">
-                                <label class="titulos-cadastro-insumo-select" for="categoria-insumo">Categorias</label>
-                                <a class="cadastro-informacoes" href="#">+</a>
+                                <label for="unidade_medida">Unidade de medida</label>
+                                <a class
+                        ="cadastro-informacoes"
+                                   href
+                        ="{{ url_for('unidade_medida') }}"
+                                   aria-label="Cadastrar unidade de medida">
+                                    +
+                                </a>
                             </div>
-
-                            <div class="input-insumo-categoria">
-                                <select name="categoria" required id="categoria-insumo">
-                                    <option value="">Selecione...</option>
-                                    {% for categoria in categorias %}
-                                        <option value="{{ categoria[0] }}">
-                                            {{ categoria[1] }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
+                            <select id="unidade_medida" name="unidade_medida" required>
+                                <option value="">Selecione</option>
+                                {% for unidade in unidades %}
+                                    <option value="{{ unidade[0] }}">
+                                        {{ unidade[1] }} ({{ unidade[2] }})
+                                    </option>
+                                {% endfor %}
+                            </select>
                         </div>
 
-                    </div>
-
-                    <!-- Parte inferior do formulário -->
-                    <div class="form-baixo">
-
-                        <div class="display">
-
-                            <label class="titulos-cadastro-insumo" for="custo-unitario">Custo unitário</label>
-
-                            <div class="input-insumo-custo">
-                                <h4>R$</h4>
-
-                                <input class="custo-insumo-input" type="number" step="0.01" min="0" required name="custo" id="custo-unitario">
-                            </div>
-
+                        <div class="campo">
+                            <label for="estoque_atual">Estoque atual</label>
+                            <input id="estoque_atual" type="number" name="estoque_atual" min="0" step="0.001" placeholder="Ex.: 5" required>
                         </div>
 
-                        <div class="display">
-
+                        <div class="campo">
                             <div class="display-label">
-                                <label class="titulos-cadastro-insumo-select" for="unidade-medida">Unidade de medida</label>
-                                <a class="cadastro-informacoes" href="#">+</a>
+                                <label for="categoria">Categoria</label>
+                                <a class="cadastro-informacoes" href="{{ url_for('categoria') }}" aria-label="Cadastrar categoria">+</a>
                             </div>
-
-                            <div class="input-insumo-unidade-medida">
-                                <select name="unidade_medida" required id="unidade-medida">
-                                    <option value="">Selecione...</option>
-                                    {% for unidade in unidades %}
-                                        <option value="{{ unidade[0] }}">
-                                            {{ unidade[1] }} - {{ unidade[2] }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
 
+
                     </div>
 
-                    <button type="submit">Salvar Insumo</button>
+                    <div class="botoes-formulario">
+                        <a class="ver-insumos" href="{{ url_for('insumos_cadastrados') }}">
+                            Ver insumos cadastrados
+                        </a>
 
-                </form>
-
-            </div>
-
-            <!-- Filtros -->
-            <div class="form-escolhas">
-                <form>
-                    <div class="todas-escolhas">
-                        <select class="select-todas-escolhas" name="categoria-insumo" id="filtro-categoria">
-                            <option value="">Todas as categorias</option>
-
-                            {% for categoria in categorias %}
-                                <option value="{{ categoria[0] }}">
-                                    {{ categoria[1] }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="todas-escolhas">
-                        <select class="select-todas-escolhas" name="unidade-medida" id="filtro-unidade">
-                            <option value="">Todas as unidades</option>
-                            {% for unidade in unidades %}
-                                <option value="{{ unidade[0] }}">
-                                    {{ unidade[1] }} - {{ unidade[2] }}
-                                </option>
-                            {% endfor %}
-                        </select>
+                        <button type="submit">Cadastrar</button>
                     </div>
 
                 </form>
 
-            </div>
-
-            <!-- Categorias exibidas na página -->
-            <div class="linha-categorias">
-                <span>Categorias:</span>
-
-                <button type="button" class="ativo">Todos</button>
-                <button type="button">Ingredientes</button>
-                <button type="button">Embalagens</button>
-                <button type="button">Outros</button>
-            </div>
-
-            <!-- Tabela de insumos -->
-            <div class="dados-insumos">
-
-                <table>
-
-                    <thead>
-                        <tr class="cabecalho-insumos">
-                            <th>Insumo</th>
-                            <th>Categoria</th>
-                            <th>Unidade</th>
-                            <th>Custo Unitário</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>Farinha de Trigo</td>
-
-                            <td>
-                                <span class="categorias-tabela ingredientes">
-                                    Ingredientes
-                                </span>
-                            </td>
-
-                            <td>kg</td>
-
-                            <td class="custo">R$ 5,80</td>
-
-                            <td class="acoes">
-                                <button type="button" class="btn-editar" title="Editar">
-                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
-                                </button>
-
-                                <button type="button" class="btn-excluir" title="Excluir">
-                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Chocolate em Pó</td>
-
-                            <td>
-                                <span class="categorias-tabela ingredientes">Ingredientes</span>
-                            </td>
-
-                            <td>kg</td>
-
-                            <td class="custo">R$ 24,90</td>
-
-                            <td class="acoes">
-                                <button type="button" class="btn-editar" title="Editar">
-                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
-                                </button>
-
-                                <button type="button" class="btn-excluir" title="Excluir">
-                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Embalagem Kraft</td>
-
-                            <td><span class="categorias-tabela embalagens">Embalagens</span></td>
-
-                            <td>un</td>
-
-                            <td class="custo">R$ 1,40</td>
-
-                            <td class="acoes">
-                                <button type="button" class="btn-editar" title="Editar">
-                                    <img src="{{ url_for('static', filename='img/icone-editar.png') }}" alt="Editar">
-                                </button>
-
-                                <button type="button" class="btn-excluir" title="Excluir">
-                                    <img src="{{ url_for('static', filename='img/icone-excluir.png') }}" alt="Excluir">
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <!-- Rodapé -->
-            <div class="rodape">
-
-                <div class="largura-rodape-conteudo">
-
-                    <div class="rodape-conteudo">
-                        <img class="logo-rodape" src="assets/img/Logo.png" alt="Lucrafy">
-
-                        <p class="descricao-rodape">
-                            O gerenciador financeiro simples, prático e 100%
-                            <br>
-                            gratuito para quem quer controlar gastos sem
-                            <br>
-                            burocracia nem complicação.
-                        </p>
-                    </div>
-
-                    <div class="rodape-base">
-
-                        <p class="direitos">
-                            © 2026 Lucrafy. Todos os direitos reservados.
-                            CNPJ: 00.000.000/0001-00
-                        </p>
-
-                        <div class="textos-rodape">
-                            <span>Termos de Uso</span>
-                            <span>Privacidade</span>
-                            <span>Políticas de Segurança</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+            </section>
+        </main>
     </div>
 
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <p>
+            O gerenciador financeiro simples, prático e 100% gratuito
+            para quem quer controlar gastos sem burocracia nem complicação.
+        </p>
+
+        <div class="rodape-base">
+            <span>© 2026 Lucrafy. Todos os direitos reservados.</span>
+
+            <span>
+                Termos de Uso &nbsp; Privacidade &nbsp; Políticas de Segurança
+            </span>
+        </div>
+
+    </footer>
+</div>
+
+<div class="overlay">
+    <section class="modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="titulo-categoria">
+
+        <a class="fechar-modal"
+           href="{{ url_for('insumo') }}"
+           aria-label="Voltar para Insumos">
+            &times;
+        </a>
+
+        <h2 id="titulo-categoria">Cadastrar Categoria</h2>
+
+        <form action="{{ url_for('categoria') }}" method="POST">
+            <input id="nome-categoria"
+                   name="nome"
+                   type="text"
+                   placeholder="Ex: Fritos"
+                   aria-label="Nome da categoria"
+                   required
+                   autofocus>
+
+            <button type="submit">Salvar</button>
+        </form>
+    </section>
+</div>
 </body>
+
 </html>

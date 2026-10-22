@@ -19,30 +19,6 @@
         <a href="#">Benefícios</a>
     </header>
 
-
-        <!-- MENSAGENS DO FLASK -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
-
-                            <span class="flash-icone">
-                                {% if category == 'success' %}
-                                    ✓
-                                {% else %}
-                                    !
-                                {% endif %}
-                            </span>
-
-                            <span class="flash-texto">{{ message }}</span>
-
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
     <div class="estrutura">
 
         <aside class="menu">
@@ -57,6 +33,29 @@
 
         <main class="principal">
 
+                        <!-- MENSAGENS DO FLASK -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+
+                                <span class="flash-icone">
+                                    {% if category == 'success' %}
+                                        ✓
+                                    {% else %}
+                                        !
+                                    {% endif %}
+                                </span>
+
+                                <span class="flash-texto">{{ message }}</span>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
             <h1>Insumos Cadastrados</h1>
             <p>Visualize e gerencie seus insumos cadastrados</p>
 
@@ -69,7 +68,6 @@
 
                 <div class="titulo-cartao">
                     <h2>Insumos</h2>
-                    <span>{{ insumos|length }} UNIDADES CADASTRADAS</span>
                 </div>
 
                 <div class="lista-insumos">

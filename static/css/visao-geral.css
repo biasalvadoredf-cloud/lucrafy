@@ -45,7 +45,7 @@ p {
 
 .cabecalho {
   height: 64px;
-  background-color: var(--fundo);
+  background: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 4px;
 }
 
@@ -260,6 +260,11 @@ p {
   width: 300px;
   height: 130px;
   border-radius: 18px;
+}
+.produto-destaque{
+    background-color:var(--fundo-pagina-3);
+    padding: 15px 100px;
+    border-radius: 12px;
 }
 
 .cartao-produto-destaque h3 {
