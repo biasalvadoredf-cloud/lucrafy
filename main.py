@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 # --------------------------------------------------
 
 host = 'localhost'
-database = r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB'
+database = r'C:\Users\Aluno\Desktop\banco_lucrafay\BANCO.FDB'
 user = 'sysdba'
 password = 'sysdba'
 
@@ -1562,7 +1562,19 @@ def produto():
                 flash('Categoria inválida!', 'error')
                 return redirect(url_for('produto'))
 
+            cursor.execute("""
+                            SELECT ID_PRODUTO
+                            FROM produto    
+                            WHERE LOWER(NOME) = LOWER(?)
+                            AND ID_USUARIO = ?
+                        """, (nome, session['id_usuario']))
+
+            if cursor.fetchone():
+                flash('Este produto já está cadastrado!', 'error')
+                return redirect(url_for('produto'))
+
             # Cadastrar produto
+
             cursor.execute("""
                 INSERT INTO PRODUTO
                 (NOME, DESCRICAO, MARGEM_LUCRO,
@@ -1941,12 +1953,25 @@ def unidade_medida():
     try:
         if request.method == 'POST':
 
-            nome = request.form['nome'].strip()
+            nome = request.form['nome'].strip().lower()
             sigla = request.form['sigla'].strip()
 
             if not nome or not sigla:
                 flash('Preencha todos os campos!', 'error')
                 return redirect(url_for('unidade_medida'))
+
+            cursor.execute("""
+                            SELECT ID_UNIDADE
+                            FROM unidade_medida
+                            WHERE LOWER(NOME) = LOWER(?)
+                            AND ID_USUARIO = ?
+                        """, (nome, session['id_usuario']))
+
+            if cursor.fetchone():
+                flash('Unidade já cadastrada!', 'error')
+                return redirect(url_for('unidade_medida'))
+
+
 
             cursor.execute("""
                 INSERT INTO UNIDADE_MEDIDA (NOME, SIGLA)
@@ -1974,7 +1999,6 @@ def unidade_medida():
 
     except Exception as e:
         con.rollback()
-        print('Erro ao cadastrar unidade:', e)
         flash('Erro ao cadastrar unidade.', 'error')
         return redirect(url_for('insumo'))
 
