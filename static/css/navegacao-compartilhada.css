@@ -456,3 +456,155 @@
         font-size: 12px;
     }
 }
+
+/* Tabelas em cards no mobile; o desktop mantém as colunas originais. */
+@media (max-width: 700px) {
+    .lu-site .lu-tabela-container {
+        width: 100%;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    .lu-site table.lu-tabela-cards,
+    .lu-site .lu-tabela-cards tbody {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .lu-site table.lu-tabela-cards {
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .lu-site .lu-tabela-cards thead {
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .lu-site .lu-tabela-cards tbody tr {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 16px 12px;
+        margin: 0 0 14px;
+        padding: 16px;
+        border: 1px solid #e3e9db;
+        border-radius: 12px;
+        background: #fafbf8;
+    }
+
+    .lu-site .lu-tabela-cards tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .lu-site .lu-tabela-cards tbody td {
+        display: block;
+        width: auto;
+        min-width: 0;
+        max-width: 100%;
+        padding: 0;
+        border: 0;
+        color: #303b31;
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .lu-site .lu-tabela-cards td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        color: #61704f;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .lu-site .lu-tabela-cards td:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e3e9db;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .lu-site .lu-tabela-cards td.lu-campo-inteiro,
+    .lu-site .lu-tabela-cards td[colspan] {
+        grid-column: 1 / -1;
+    }
+
+    .lu-site .lu-tabela-cards td[colspan] {
+        padding: 8px 0;
+        border: 0;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .lu-site .lu-tabela-cards td.novo-custo {
+        color: #638a28;
+        font-weight: 700;
+    }
+
+    .lu-site .lu-tabela-cards .botao-editar {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .lu-site .lu-tabela-cards td input,
+    .lu-site .lu-tabela-cards td select {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .lu-site .lu-tabela-cards .form-editar-insumo {
+        display: block;
+        margin: 0;
+    }
+
+    .lu-site .lu-tabela-cards .botao-salvar-insumo {
+        width: 100%;
+        min-height: 44px;
+        margin: 8px 0 0;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes {
+        justify-self: stretch;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes form {
+        justify-content: flex-start;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes button {
+        min-width: 44px;
+        min-height: 44px;
+        border: 1px solid #e3e9db;
+        border-radius: 8px;
+        background: #fff;
+    }
+}
+
+@media (max-width: 360px) {
+    .lu-site .lu-tabela-cards tbody tr {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

@@ -93,45 +93,45 @@
                 </div>
 
                 <!-- TABELA -->
-                <div class="tabela-container">
+                <div class="tabela-container lu-tabela-container">
 
-                    <table>
+                    <table class="lu-tabela-cards" role="table">
 
-                        <thead>
-                            <tr>
-                                <th>INSUMO</th>
-                                <th>CUSTO ANTERIOR</th>
-                                <th>CUSTO NOVO</th>
-                                <th>DATA DA ALTERAÇÃO</th>
+                        <thead role="rowgroup">
+                            <tr role="row">
+                                <th scope="col" role="columnheader">INSUMO</th>
+                                <th scope="col" role="columnheader">CUSTO ANTERIOR</th>
+                                <th scope="col" role="columnheader">CUSTO NOVO</th>
+                                <th scope="col" role="columnheader">DATA DA ALTERAÇÃO</th>
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody role="rowgroup">
 
                             {% for item in historico %}
 
-                            <tr>
-                                <td class="nome">
+                            <tr role="row">
+                                <td class="nome" data-label="Insumo" role="cell">
                                     {{ item[0] }}
                                 </td>
 
-                                <td>
+                                <td data-label="Custo anterior" role="cell">
                                     R$ {{ "%.2f"|format(item[1]) }}
                                 </td>
 
-                                <td class="novo-custo">
+                                <td class="novo-custo" data-label="Custo novo" role="cell">
                                     R$ {{ "%.2f"|format(item[2]) }}
                                 </td>
 
-                                <td>
+                                <td class="lu-campo-inteiro" data-label="Data da alteração" role="cell">
                                     {{ item[3].strftime('%d/%m/%Y às %H:%M') }}
                                 </td>
                             </tr>
 
                             {% else %}
 
-                            <tr>
-                                <td colspan="4" class="vazio">
+                            <tr role="row">
+                                <td colspan="4" class="vazio" role="cell">
                                     Nenhuma alteração de custo registrada.
                                 </td>
                             </tr>

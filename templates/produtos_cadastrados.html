@@ -82,48 +82,35 @@
 
                 <h2>Meus produtos</h2>
 
-                <div class="tabela-responsiva">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Custo</th>
-                                <th>Preço sugerido</th>
-                                <th>Margem</th>
-                                <th>Ações</th>
+                <div class="tabela-responsiva lu-tabela-container">
+                    <table class="lu-tabela-cards" role="table">
+                        <thead role="rowgroup">
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Produto</th>
+                                <th scope="col" role="columnheader">Custo</th>
+                                <th scope="col" role="columnheader">Preço sugerido</th>
+                                <th scope="col" role="columnheader">Margem</th>
+                                <th scope="col" role="columnheader">Ações</th>
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody role="rowgroup">
                             {% for produto in produtos %}
-                            <tr>
-                                <td>{{ produto[1] }}</td>
-                                <td>R$ {{ "%.2f"|format(produto[2]) }}</td>
-                                <td>R$ {{ "%.2f"|format(produto[3]) }}</td>
-                                <td>{{ produto[4] }}%</td>
-                                <td>
-                                    <div class="acoes">
-                                        <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}"
-                                           class="botao-editar">
-                                            Editar / Adicionar insumos
-                                        </a>
-
-                                         <form action="{{ url_for('excluir_produto', id_produto=produto[0]) }}"
-                                              method="POST">
-
-                                            <button type="submit"
-                                                    class="botao-excluir"
-                                                    onclick="return confirm('Deseja realmente excluir este produto?')">
-                                                Excluir
-                                            </button>
-
-                                        </form>
-                                    </div>
+                            <tr role="row">
+                                <td data-label="Produto" role="cell">{{ produto[1] }}</td>
+                                <td data-label="Custo" role="cell">R$ {{ "%.2f"|format(produto[2]) }}</td>
+                                <td data-label="Preço sugerido" role="cell">R$ {{ "%.2f"|format(produto[3]) }}</td>
+                                <td class="lu-campo-inteiro" data-label="Margem" role="cell">{{ produto[4] }}%</td>
+                                <td class="lu-campo-inteiro" data-label="Ações" role="cell">
+                                    <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}"
+                                       class="botao-editar">
+                                        Editar / Adicionar insumos
+                                    </a>
                                  </td>
                             </tr>
                             {% else %}
-                            <tr>
-                                <td colspan="5" class="vazio">
+                            <tr role="row">
+                                <td colspan="5" class="vazio" role="cell">
                                     Nenhum produto cadastrado.
                                 </td>
                             </tr>

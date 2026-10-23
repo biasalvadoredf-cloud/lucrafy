@@ -162,30 +162,30 @@
 
 
                     <!-- TABELA DE INSUMOS -->
-                    <div class="tabela-responsiva">
+                    <div class="tabela-responsiva lu-tabela-container">
 
-                        <table>
+                        <table class="lu-tabela-cards" role="table">
 
-                            <thead>
+                            <thead role="rowgroup">
 
-                                <tr>
-                                    <th>Insumo</th>
-                                    <th>Quantidade</th>
-                                    <th>Unidade</th>
-                                    <th>Ações</th>
+                                <tr role="row">
+                                    <th scope="col" role="columnheader">Insumo</th>
+                                    <th scope="col" role="columnheader">Quantidade</th>
+                                    <th scope="col" role="columnheader">Unidade</th>
+                                    <th scope="col" role="columnheader">Ações</th>
                                 </tr>
 
                             </thead>
 
-                            <tbody>
+                            <tbody role="rowgroup">
 
                                 {% for item in composicao %}
 
-                                <tr>
+                                <tr role="row">
 
-                                    <td>{{ item[1] }}</td>
+                                    <td data-label="Insumo" role="cell">{{ item[1] }}</td>
 
-                                    <td>
+                                    <td data-label="Quantidade" role="cell">
                                         <form action="{{ url_for('editar_insumo_produto', id_composicao=item[0]) }}"
                                               method="POST"
                                               class="form-editar-insumo"
@@ -194,7 +194,7 @@
                                         </form>
                                     </td>
 
-                                    <td>
+                                    <td data-label="Unidade" role="cell">
                                         <select name="id_unidade"
                                                 form="editar-insumo-{{ item[0] }}"
                                                 required>
@@ -217,7 +217,7 @@
                                         </button>
                                     </td>
 
-                                    <td class="acoes">
+                                    <td class="acoes lu-campo-inteiro" data-label="Ações" role="cell">
 
                                         <form action="{{ url_for('excluir_insumo_produto', id_composicao=item[0]) }}"
                                             method="POST">
@@ -238,8 +238,8 @@
 
                                 {% else %}
 
-                                <tr>
-                                    <td colspan="4">
+                                <tr role="row">
+                                    <td colspan="4" role="cell">
                                         Nenhum insumo adicionado.
                                     </td>
                                 </tr>
