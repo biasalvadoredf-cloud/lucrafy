@@ -102,10 +102,16 @@
                                 <td data-label="Preço sugerido" role="cell">R$ {{ "%.2f"|format(produto[3]) }}</td>
                                 <td class="lu-campo-inteiro" data-label="Margem" role="cell">{{ produto[4] }}%</td>
                                 <td class="lu-campo-inteiro" data-label="Ações" role="cell">
-                                    <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}"
-                                       class="botao-editar">
-                                        Editar / Adicionar insumos
-                                    </a>
+                                    <div class="lu-acoes-produto">
+                                        <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}" class="botao-editar">
+                                            Editar / Adicionar insumos
+                                        </a>
+                                        <form action="{{ url_for('excluir_produto', id_produto=produto[0]) }}" method="POST">
+                                            <button class="lu-excluir-produto" type="submit" title="Excluir produto" aria-label="Excluir produto {{ produto[1] }}">
+                                                <img src="{{ url_for('static', filename='img/icone-excluir.svg') }}" alt="" width="16" height="16">
+                                            </button>
+                                        </form>
+                                    </div>
                                  </td>
                             </tr>
                             {% else %}

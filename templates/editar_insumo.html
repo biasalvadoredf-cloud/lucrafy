@@ -64,6 +64,9 @@
             {% endif %}
         {% endwith %}
 
+            {% if insumo[6] == 0 %}
+            <p class="lu-aviso-inativo">Insumo inativo: continua vinculado aos produtos, mas não entra no custo nem no preço sugerido.</p>
+            {% endif %}
             <p class="subtitulo">Visualize e gerencie seus insumos cadastrados</p>
 
             <div class="conteudo">
@@ -77,15 +80,23 @@
                     </div>
 
                     {% for item in insumos %}
-                    <div class="linha-insumo">
+                    <div class="linha-insumo lu-status-lista{% if item[2] == 0 %} lu-insumo-inativo{% endif %}">
 
                         <div class="nome-insumo">
-                            {{ item[1] }}
+                            <span class="lu-nome-insumo">{{ item[1] }}</span>
+                            {% if item[2] == 0 %}<span class="lu-status-insumo">Inativo</span>{% endif %}
                         </div>
 
                         <a class="editar" href="{{ url_for('editar_insumo', id=item[0]) }}">
                             <img src="{{ url_for('static', filename='img/icone-editar.svg') }}" alt="Editar">
                         </a>
+
+                        <form action="{{ url_for('alterar_status_insumo', id=item[0]) }}" method="POST">
+                            <input type="hidden" name="ativo" value="{{ 1 if item[2] == 0 else 0 }}">
+                            <button class="lu-alterar-status" type="submit" title="{{ 'Reativar' if item[2] == 0 else 'Inativar' }} insumo">
+                                {{ 'Reativar' if item[2] == 0 else 'Inativar' }}
+                            </button>
+                        </form>
 
                         <form action="{{ url_for('excluir_insumo', id=item[0]) }}" method="POST"
                             onsubmit="return confirm('Deseja excluir este insumo?')">
@@ -99,7 +110,7 @@
                     {% endfor %}
 
                     <a class="adicionar" href="{{ url_for('insumo') }}">
-                        <span>+</span> Adicionar Unidade
+                        <span>+</span> Adicionar Insumo
                     </a>
 
                 </section>

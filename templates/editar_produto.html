@@ -177,9 +177,12 @@
 
                                 {% for item in composicao %}
 
-                                <tr role="row">
+                                <tr role="row"{% if item[4] == 0 %} class="lu-insumo-inativo"{% endif %}>
 
-                                    <td data-label="Insumo" role="cell">{{ item[1] }}</td>
+                                    <td data-label="Insumo" role="cell">
+                                        <span class="lu-nome-insumo">{{ item[1] }}</span>
+                                        {% if item[4] == 0 %}<span class="lu-status-insumo">Inativo · fora do custo</span>{% endif %}
+                                    </td>
 
                                     <td data-label="Quantidade" role="cell">
                                         <form action="{{ url_for('editar_insumo_produto', id_composicao=item[0]) }}"

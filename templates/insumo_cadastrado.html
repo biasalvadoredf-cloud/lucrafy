@@ -77,10 +77,11 @@
 
                     {% for insumo in insumos %}
 
-                    <div class="linha-insumo">
+                    <div class="linha-insumo lu-status-lista{% if insumo[2] == 0 %} lu-insumo-inativo{% endif %}">
 
                         <div class="nome-insumo">
-                            {{ insumo[1] }}
+                            <span class="lu-nome-insumo">{{ insumo[1] }}</span>
+                            {% if insumo[2] == 0 %}<span class="lu-status-insumo">Inativo</span>{% endif %}
                         </div>
 
                         <a class="editar"
@@ -89,7 +90,14 @@
                                  alt="Editar">
                         </a>
 
-                        <form action="{{ url_for('excluir_insumo', id=insumo[0]) }}" method="POST" onsubmit="return confirm('Deseja excluir este insumo?')">
+                        <form action="{{ url_for('alterar_status_insumo', id=insumo[0]) }}" method="POST">
+                            <input type="hidden" name="ativo" value="{{ 1 if insumo[2] == 0 else 0 }}">
+                            <button class="lu-alterar-status" type="submit" title="{{ 'Reativar' if insumo[2] == 0 else 'Inativar' }} insumo">
+                                {{ 'Reativar' if insumo[2] == 0 else 'Inativar' }}
+                            </button>
+                        </form>
+
+                        <form action="{{ url_for('excluir_insumo', id=insumo[0]) }}" method="POST">
 
                             <button class="excluir" type="submit">
                                 <img src="{{ url_for('static', filename='img/icone-excluir.svg') }}"
@@ -109,7 +117,7 @@
                 </div>
 
                 <a class="adicionar" href="{{ url_for('insumo') }}">
-                    <span>+</span> Adicionar Unidade
+                    <span>+</span> Adicionar Insumo
                 </a>
 
             </section>

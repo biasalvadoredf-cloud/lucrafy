@@ -608,3 +608,132 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+/* Ações de produto e status dos insumos. */
+.lu-site .lu-acoes-produto {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lu-site .lu-acoes-produto form {
+    margin: 0;
+}
+
+.lu-site .lu-excluir-produto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: #ffd8d5;
+    cursor: pointer;
+}
+
+.lu-site .lu-excluir-produto img {
+    width: 16px;
+    height: 16px;
+}
+
+.lu-site .lu-status-lista {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px auto 44px;
+    align-items: center;
+    gap: 8px;
+}
+
+.lu-site .lu-status-lista .nome-insumo {
+    overflow-wrap: anywhere;
+}
+
+.lu-site .lu-status-lista > .editar,
+.lu-site .lu-status-lista .excluir {
+    width: 44px;
+    height: 44px;
+}
+
+.lu-site .lu-status-lista form {
+    margin: 0;
+    min-width: 0;
+}
+
+.lu-site .lu-alterar-status {
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid #dbe5ce;
+    border-radius: 9px;
+    background: #edf4df;
+    color: #496801;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lu-site .lu-insumo-inativo .lu-nome-insumo {
+    color: #74796f;
+    text-decoration: line-through;
+}
+
+.lu-site .lu-insumo-inativo :is(input, select) {
+    color: #74796f;
+    text-decoration: line-through;
+}
+
+.lu-site .lu-status-insumo {
+    display: block;
+    margin-top: 4px;
+    color: #79551d;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.lu-site .lu-aviso-inativo {
+    padding: 12px 16px;
+    border: 1px solid #efdeb6;
+    border-radius: 9px;
+    background: #fff8e7;
+    color: #79551d;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .lu-site .lu-status-lista {
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .lu-site .lu-status-lista > .nome-insumo {
+        grid-column: 1 / -1;
+    }
+
+    .lu-site .lu-status-lista .lu-alterar-status {
+        width: 100%;
+    }
+
+    .lu-site .lu-acoes-produto {
+        flex-wrap: nowrap;
+    }
+
+    .lu-site .lu-acoes-produto .botao-editar {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .lu-site .lu-acoes-produto form {
+        flex: 0 0 44px;
+    }
+
+    .lu-site .lu-excluir-produto {
+        width: 44px;
+        height: 44px;
+    }
+}

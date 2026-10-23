@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 # --------------------------------------------------
 
 host = 'localhost'
-database = r'C:\Users\Aluno\Desktop\banco_lucrafay\BANCO.FDB'
+database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -717,9 +717,7 @@ def alterar_senha():
     except Exception as e:
 
         con.rollback()
-
         flash(f'Ocorreu um erro -> {e}', 'error')
-
         return redirect(url_for('visao_geral'))
 
     finally:
@@ -818,32 +816,31 @@ def cadastro_insumo():
         cursor.execute("""
             INSERT INTO INSUMO
             (NOME, CUSTO, ID_USUARIO, ID_UNIDADE,
-             ID_CATEGORIA, ESTOQUE_ATUAL)
-            VALUES (?, ?, ?, ?, ?, ?)
+             ID_CATEGORIA, ESTOQUE_ATUAL, ATIVO)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (
             nome,
             custo,
             session['id_usuario'],
             unidade,
             categoria,
-            estoque
+            estoque,
+            1
         ))
 
         con.commit()
 
-        flash('Insumo cadastrado com sucesso!', 'success')
-        return redirect(url_for('insumos_cadastrados'))
-
     except Exception as e:
         con.rollback()
-        flash('Erro ao cadastrar insumo.', 'error')
+        print(f'Erro ao cadastrar insumo: {e}')
+        flash('Erro ao cadastrar o insumo!', 'error')
         return redirect(url_for('insumo'))
 
     finally:
         cursor.close()
 
-
-
+    flash('Insumo cadastrado com sucesso!', 'success')
+    return redirect(url_for('insumo'))
 # --------------------------------------------------
 # INSUMOS CADASTRADOS
 # --------------------------------------------------
@@ -860,7 +857,7 @@ def insumos_cadastrados():
     try:
         # Buscar os insumos do usuário
         cursor.execute("""
-            SELECT ID_INSUMO, NOME
+            SELECT ID_INSUMO, NOME, COALESCE(ATIVO, 1)
             FROM INSUMO
             WHERE ID_USUARIO = ?
             ORDER BY NOME
@@ -892,7 +889,7 @@ def editar_insumo(id):
         # Buscar o insumo
         cursor.execute("""
             SELECT ID_INSUMO, NOME, CUSTO, ID_UNIDADE,
-                   ID_CATEGORIA, ESTOQUE_ATUAL
+                   ID_CATEGORIA, ESTOQUE_ATUAL, COALESCE(ATIVO, 1)
             FROM INSUMO
             WHERE ID_INSUMO = ?
             AND ID_USUARIO = ?
@@ -997,7 +994,7 @@ def editar_insumo(id):
 
         # Buscar insumos cadastrados
         cursor.execute("""
-            SELECT ID_INSUMO, NOME
+            SELECT ID_INSUMO, NOME, COALESCE(ATIVO, 1)
             FROM INSUMO
             WHERE ID_USUARIO = ?
             ORDER BY NOME
@@ -1023,6 +1020,73 @@ def editar_insumo(id):
         cursor.close()
 
 
+#ALTERAR STATUS INSUMO
+@app.route('/alterar_status_insumo/<int:id>', methods=['POST'])
+def alterar_status_insumo(id):
+
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    ativo = request.form.get('ativo')
+
+    if ativo not in ('0', '1'):
+        flash('Status do insumo inválido!', 'error')
+        return redirect(url_for('insumos_cadastrados'))
+
+    cursor = con.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT ID_INSUMO
+            FROM INSUMO
+            WHERE ID_INSUMO = ? AND ID_USUARIO = ?
+        """, (id, session['id_usuario']))
+
+        if not cursor.fetchone():
+            flash('Insumo não encontrado!', 'error')
+            return redirect(url_for('insumos_cadastrados'))
+
+        cursor.execute("""
+            UPDATE INSUMO
+            SET ATIVO = ?
+            WHERE ID_INSUMO = ? AND ID_USUARIO = ?
+        """, (int(ativo), id, session['id_usuario']))
+
+        cursor.execute("""
+            SELECT DISTINCT C.ID_PRODUTO
+            FROM COMPOSICAO_PRODUTO C
+            JOIN PRODUTO P ON P.ID_PRODUTO = C.ID_PRODUTO
+            WHERE C.ID_INSUMO = ? AND P.ID_USUARIO = ?
+        """, (id, session['id_usuario']))
+
+        for vinculo in cursor.fetchall():
+            if not atualizar_custo_produto(vinculo[0]):
+                raise ValueError('Não foi possível recalcular o produto.')
+
+        con.commit()
+
+        if ativo == '1':
+            mensagem = 'Insumo reativado com sucesso!'
+        else:
+            mensagem = (
+                'Insumo inativado com sucesso! '
+                'Os produtos vinculados foram recalculados.'
+            )
+
+        flash(mensagem, 'success')
+
+    except Exception:
+        con.rollback()
+        flash(
+            'Não foi possível alterar o status do insumo. '
+            'Nenhuma alteração foi salva.',
+            'error'
+        )
+
+    finally:
+        cursor.close()
+
+    return redirect(url_for('insumos_cadastrados'))
 #===================================================
 # EXCLUIR INSUMO
 #===================================================
@@ -1056,7 +1120,11 @@ def excluir_insumo(id):
         """, (id,))
 
         if cursor.fetchone():
-            flash('Não é possível excluir um insumo utilizado em um produto!', 'error')
+            flash(
+                'Este insumo está vinculado a um produto. '
+                'Use Inativar para retirá-lo do cálculo sem apagar o vínculo.',
+                'error'
+            )
             return redirect(url_for('insumos_cadastrados'))
 
         # Excluir histórico de custos
@@ -1124,12 +1192,13 @@ def adicionar_insumo_produto():
             ON I.ID_UNIDADE = U.ID_UNIDADE
             WHERE I.ID_INSUMO = ?
             AND I.ID_USUARIO = ?
+            AND COALESCE(I.ATIVO, 1) = 1
         """, (id_insumo, session['id_usuario']))
 
         insumo = cursor.fetchone()
 
         if not insumo:
-            flash('Insumo não encontrado!', 'error')
+            flash('Insumo não encontrado ou inativo!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
         nome = insumo[0]
@@ -1195,6 +1264,19 @@ def adicionar_insumo_produto():
             flash('Esse insumo já está no produto!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
+        # descontar do estoque somente se houver quantidade
+        cursor.execute("""
+        UPDATE INSUMO
+        SET ESTOQUE_ATUAL = ESTOQUE_ATUAL - ?
+        WHERE ID_INSUMO = ?
+        AND ID_USUARIO = ?
+        AND ESTOQUE_ATUAL >= ?""", (quantidade_necessaria, id_insumo, session['id_usuario'], quantidade_necessaria))
+
+        if cursor.rowcount == 0:
+            con.rollback()
+            flash(f'Estoque insuficiente de {nome}!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
+
         # Adicionar insumo ao produto
         cursor.execute("""
             INSERT INTO COMPOSICAO_PRODUTO
@@ -1202,8 +1284,11 @@ def adicionar_insumo_produto():
             VALUES (?, ?, ?, ?)
         """, (id_produto, id_insumo, id_unidade, quantidade))
 
-        # Atualizar custo do produto
-        atualizar_custo_produto(id_produto)
+
+        if not atualizar_custo_produto(id_produto):
+            con.rollback()
+            flash('Erro ao calcular custo do produto', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
 
         con.commit()
 
@@ -1219,11 +1304,9 @@ def adicionar_insumo_produto():
     finally:
         cursor.close()
 
-
 # ===================================================
 # EXCLUIR INSUMO DO PRODUTO
 # ===================================================
-
 @app.route('/excluir_insumo_produto/<int:id_composicao>', methods=['POST'])
 def excluir_insumo_produto(id_composicao):
 
@@ -1233,15 +1316,23 @@ def excluir_insumo_produto(id_composicao):
     cursor = con.cursor()
 
     try:
-        # Buscar o produto ao qual o insumo pertence
+        # Buscar insumo e produto
         cursor.execute("""
-            SELECT C.ID_PRODUTO
+            SELECT C.ID_PRODUTO, C.ID_INSUMO,
+                   C.QUANTIDADE, U1.SIGLA, U2.SIGLA
             FROM COMPOSICAO_PRODUTO C
             LEFT JOIN PRODUTO P
             ON C.ID_PRODUTO = P.ID_PRODUTO
+            LEFT JOIN INSUMO I
+            ON C.ID_INSUMO = I.ID_INSUMO
+            LEFT JOIN UNIDADE_MEDIDA U1
+            ON C.ID_UNIDADE = U1.ID_UNIDADE
+            LEFT JOIN UNIDADE_MEDIDA U2
+            ON I.ID_UNIDADE = U2.ID_UNIDADE
             WHERE C.ID_COMPOSICAO = ?
             AND P.ID_USUARIO = ?
-        """, (id_composicao, session['id_usuario']))
+            AND I.ID_USUARIO = ?
+        """, (id_composicao,session['id_usuario'],session['id_usuario']))
 
         resultado = cursor.fetchone()
 
@@ -1250,34 +1341,69 @@ def excluir_insumo_produto(id_composicao):
             return redirect(url_for('produtos_cadastrados'))
 
         id_produto = resultado[0]
+        id_insumo = resultado[1]
+        quantidade = resultado[2]
+        unidade_usada = resultado[3]
+        unidade_estoque = resultado[4]
 
-        # Excluir insumo do produto
+
+        # Converter quantidade para unidade do estoque
+        devolver = quantidade
+
+        if unidade_usada == 'g' and unidade_estoque == 'Kg':
+            devolver = quantidade / 1000
+
+        elif unidade_usada == 'Kg' and unidade_estoque == 'g':
+            devolver = quantidade * 1000
+
+        elif unidade_usada == 'mL' and unidade_estoque == 'L':
+            devolver = quantidade / 1000
+
+        elif unidade_usada == 'L' and unidade_estoque == 'mL':
+            devolver = quantidade * 1000
+
+        elif unidade_usada != unidade_estoque:
+            flash('Unidades incompatíveis!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
+
+        # Devolver ao estoque
+        cursor.execute("""
+            UPDATE INSUMO
+            SET ESTOQUE_ATUAL = COALESCE(ESTOQUE_ATUAL, 0) + ?
+            WHERE ID_INSUMO = ?
+            AND ID_USUARIO = ?
+        """, (devolver, id_insumo, session['id_usuario']))
+
+
+        # Excluir da receita
         cursor.execute("""
             DELETE FROM COMPOSICAO_PRODUTO
             WHERE ID_COMPOSICAO = ?
         """, (id_composicao,))
 
-        # Atualizar custo e preço do produto
-        atualizar_custo_produto(id_produto)
+
+        # Atualizar custo e preço sugerido
+        if not atualizar_custo_produto(id_produto):
+            con.rollback()
+            flash('Erro ao calcular custo do produto!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
 
         con.commit()
 
-        flash('Insumo removido com sucesso!', 'success')
+        flash('Insumo excluído e estoque atualizado!', 'success')
         return redirect(url_for('editar_produto', id_produto=id_produto))
 
     except Exception as e:
         con.rollback()
-        print('Erro ao excluir insumo do produto:', e)
         flash('Erro ao excluir insumo!', 'error')
         return redirect(url_for('produtos_cadastrados'))
 
     finally:
         cursor.close()
 
-# ==============================================
+# ===================================================
 # EDITAR INSUMO DO PRODUTO
-# ==============================================
-
+# ===================================================
 @app.route('/editar_insumo_produto/<int:id_composicao>', methods=['POST'])
 def editar_insumo_produto(id_composicao):
 
@@ -1290,17 +1416,14 @@ def editar_insumo_produto(id_composicao):
         quantidade = Decimal(request.form['quantidade'])
         id_unidade = int(request.form['id_unidade'])
 
-        # Buscar o insumo e o produto
+        # Buscar dados do insumo
         cursor.execute("""
-            SELECT C.ID_PRODUTO, I.NOME,
-                   I.ESTOQUE_ATUAL, U.SIGLA
+            SELECT C.ID_PRODUTO, C.ID_INSUMO, C.QUANTIDADE,
+                   I.NOME, I.ESTOQUE_ATUAL, U.SIGLA, C.ID_UNIDADE
             FROM COMPOSICAO_PRODUTO C
-            LEFT JOIN PRODUTO P
-            ON C.ID_PRODUTO = P.ID_PRODUTO
-            LEFT JOIN INSUMO I
-            ON C.ID_INSUMO = I.ID_INSUMO
-            LEFT JOIN UNIDADE_MEDIDA U
-            ON I.ID_UNIDADE = U.ID_UNIDADE
+            JOIN PRODUTO P ON C.ID_PRODUTO = P.ID_PRODUTO
+            JOIN INSUMO I ON C.ID_INSUMO = I.ID_INSUMO
+            JOIN UNIDADE_MEDIDA U ON I.ID_UNIDADE = U.ID_UNIDADE
             WHERE C.ID_COMPOSICAO = ?
             AND P.ID_USUARIO = ?
             AND I.ID_USUARIO = ?
@@ -1317,19 +1440,18 @@ def editar_insumo_produto(id_composicao):
             return redirect(url_for('produtos_cadastrados'))
 
         id_produto = insumo[0]
-        nome = insumo[1]
-        estoque = insumo[2]
-        unidade_estoque = insumo[3]
+        id_insumo = insumo[1]
+        quantidade_antiga = insumo[2]
+        nome = insumo[3]
+        estoque = insumo[4] or Decimal('0')
+        unidade_estoque = insumo[5]
+        id_unidade_antiga = insumo[6]
 
-        if estoque is None:
-            estoque = 0
-
-        # Verificar quantidade
         if quantidade <= 0:
             flash('A quantidade deve ser maior que zero!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
-        # Buscar unidade escolhida
+        # Buscar unidades
         cursor.execute("""
             SELECT SIGLA
             FROM UNIDADE_MEDIDA
@@ -1338,35 +1460,66 @@ def editar_insumo_produto(id_composicao):
 
         unidade = cursor.fetchone()
 
-        if not unidade:
+        cursor.execute("""
+            SELECT SIGLA
+            FROM UNIDADE_MEDIDA
+            WHERE ID_UNIDADE = ?
+        """, (id_unidade_antiga,))
+
+        unidade_antiga = cursor.fetchone()
+
+        if not unidade or not unidade_antiga:
             flash('Unidade não encontrada!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
-        unidade_escolhida = unidade[0]
+        unidade_nova = unidade[0]
+        unidade_anterior = unidade_antiga[0]
 
-        # Converter unidades
-        quantidade_necessaria = quantidade
+        # Converter quantidade antiga para a unidade do estoque
+        quantidade_anterior = quantidade_antiga
 
-        if unidade_escolhida == 'g' and unidade_estoque == 'Kg':
-            quantidade_necessaria = quantidade / 1000
-
-        elif unidade_escolhida == 'Kg' and unidade_estoque == 'g':
-            quantidade_necessaria = quantidade * 1000
-
-        elif unidade_escolhida == 'mL' and unidade_estoque == 'L':
-            quantidade_necessaria = quantidade / 1000
-
-        elif unidade_escolhida == 'L' and unidade_estoque == 'mL':
-            quantidade_necessaria = quantidade * 1000
-
-        elif unidade_escolhida != unidade_estoque:
+        if unidade_anterior == 'g' and unidade_estoque == 'Kg':
+            quantidade_anterior = quantidade_antiga / 1000
+        elif unidade_anterior == 'Kg' and unidade_estoque == 'g':
+            quantidade_anterior = quantidade_antiga * 1000
+        elif unidade_anterior == 'mL' and unidade_estoque == 'L':
+            quantidade_anterior = quantidade_antiga / 1000
+        elif unidade_anterior == 'L' and unidade_estoque == 'mL':
+            quantidade_anterior = quantidade_antiga * 1000
+        elif unidade_anterior != unidade_estoque:
             flash('Unidades incompatíveis!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
-        # Verificar estoque
-        if quantidade_necessaria > estoque:
+        # Converter nova quantidade para a unidade do estoque
+        quantidade_nova = quantidade
+
+        if unidade_nova == 'g' and unidade_estoque == 'Kg':
+            quantidade_nova = quantidade / 1000
+        elif unidade_nova == 'Kg' and unidade_estoque == 'g':
+            quantidade_nova = quantidade * 1000
+        elif unidade_nova == 'mL' and unidade_estoque == 'L':
+            quantidade_nova = quantidade / 1000
+        elif unidade_nova == 'L' and unidade_estoque == 'mL':
+            quantidade_nova = quantidade * 1000
+        elif unidade_nova != unidade_estoque:
+            flash('Unidades incompatíveis!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
+
+        # Calcular diferença entre a quantidade nova e antiga
+        diferenca = quantidade_nova - quantidade_anterior
+
+        # Verificar se existe estoque para o aumento
+        if diferenca > estoque:
             flash(f'Estoque insuficiente de {nome}!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
+
+        # Atualizar estoque somente pela diferença
+        cursor.execute("""
+            UPDATE INSUMO
+            SET ESTOQUE_ATUAL = ESTOQUE_ATUAL - ?
+            WHERE ID_INSUMO = ?
+            AND ID_USUARIO = ?
+        """, (diferenca, id_insumo, session['id_usuario']))
 
         # Atualizar quantidade e unidade
         cursor.execute("""
@@ -1375,8 +1528,11 @@ def editar_insumo_produto(id_composicao):
             WHERE ID_COMPOSICAO = ?
         """, (quantidade, id_unidade, id_composicao))
 
-        # Recalcular custo e preço
-        atualizar_custo_produto(id_produto)
+        # Atualizar custo e preço
+        if not atualizar_custo_produto(id_produto):
+            con.rollback()
+            flash('Erro ao calcular custo do produto!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
 
         con.commit()
 
@@ -1385,11 +1541,13 @@ def editar_insumo_produto(id_composicao):
 
     except Exception as e:
         con.rollback()
+        print('Erro ao atualizar insumo:', e)
         flash('Erro ao atualizar insumo!', 'error')
         return redirect(url_for('produtos_cadastrados'))
 
     finally:
         cursor.close()
+
 
 #===================================================
 # HISTÓRICO DE CUSTOS
@@ -1434,10 +1592,10 @@ def historico_custos():
 
 def calcular_preco_sugerido(custo, margem):
 
-    if margem < 0 or margem >= 100:
+    if margem < 0:
         return None
 
-    preco = custo / (1 - margem / 100)
+    preco = custo + (custo * margem / 100)
 
     return round(preco, 2)
 
@@ -1488,8 +1646,8 @@ def atualizar_custo_produto(id_produto):
             JOIN UNIDADE_MEDIDA U2
             ON C.ID_UNIDADE = U2.ID_UNIDADE
             WHERE C.ID_PRODUTO = ?
+            AND COALESCE(I.ATIVO, 1) = 1
         """, (id_produto,))
-
         custo_total = Decimal('0')
 
         for quantidade, custo, unidade_insumo, unidade_usada in cursor.fetchall():
@@ -1546,7 +1704,7 @@ def produto():
             tempo = int(request.form['tempo'])
             categoria = int(request.form['categoria'])
 
-            if not nome or margem <= 0 or margem >= 100 or tempo < 0:
+            if not nome or margem <= 0 or tempo < 0:
                 flash('Verifique os dados do produto!', 'error')
                 return redirect(url_for('produto'))
 
@@ -1599,6 +1757,7 @@ def produto():
             SELECT ID_INSUMO, NOME
             FROM INSUMO
             WHERE ID_USUARIO = ?
+            AND COALESCE(ATIVO, 1) = 1
             ORDER BY NOME
         """, (session['id_usuario'],))
 
@@ -1709,6 +1868,7 @@ def editar_produto(id_produto):
             SELECT ID_INSUMO, NOME
             FROM INSUMO
             WHERE ID_USUARIO = ?
+            AND COALESCE(ATIVO, 1) = 1
             ORDER BY NOME
         """, (session['id_usuario'],))
 
@@ -1726,7 +1886,7 @@ def editar_produto(id_produto):
         # Buscar ingredientes do produto
         cursor.execute("""
             SELECT C.ID_COMPOSICAO, I.NOME,
-                   C.QUANTIDADE, U.SIGLA
+                   C.QUANTIDADE, U.SIGLA, COALESCE(I.ATIVO, 1)
             FROM COMPOSICAO_PRODUTO C
             LEFT JOIN INSUMO I
             ON C.ID_INSUMO = I.ID_INSUMO
@@ -1773,7 +1933,7 @@ def salvar_edicao_produto(id_produto):
         margem = Decimal(request.form['margem'])
 
         # Verificar os dados
-        if not nome or tempo < 0 or margem <= 0 or margem >= 100:
+        if not nome or tempo < 0 or margem <= 0:
             flash('Verifique os dados do produto!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
 
@@ -1803,11 +1963,17 @@ def salvar_edicao_produto(id_produto):
             id_produto, session['id_usuario']
         ))
 
-        # Recalcular custo e preço sugerido
-        if not atualizar_custo_produto(id_produto):
-            con.rollback()
-            flash('Erro ao calcular o custo do produto!', 'error')
-            return redirect(url_for('editar_produto', id_produto=id_produto))
+        # Recalcular os produtos vinculados antes de confirmar a edição.
+        cursor.execute("""
+            SELECT DISTINCT C.ID_PRODUTO
+            FROM COMPOSICAO_PRODUTO C
+            JOIN PRODUTO P ON P.ID_PRODUTO = C.ID_PRODUTO
+            WHERE C.ID_INSUMO = ? AND P.ID_USUARIO = ?
+        """, (id, session['id_usuario']))
+
+        for vinculo in cursor.fetchall():
+            if not atualizar_custo_produto(vinculo[0]):
+                raise ValueError('Não foi possível recalcular o produto.')
 
         con.commit()
 
@@ -1823,9 +1989,9 @@ def salvar_edicao_produto(id_produto):
     finally:
         cursor.close()
 
-#===================================================
+# ===================================================
 # EXCLUIR PRODUTO
-#===================================================
+# ===================================================
 
 @app.route('/excluir_produto/<int:id_produto>', methods=['POST'])
 def excluir_produto(id_produto):
@@ -1848,13 +2014,59 @@ def excluir_produto(id_produto):
             flash('Produto não encontrado!', 'error')
             return redirect(url_for('produtos_cadastrados'))
 
-        # Excluir os ingredientes do produto
+        # Buscar ingredientes do produto
+        cursor.execute("""
+            SELECT C.ID_INSUMO, C.QUANTIDADE,
+                   U1.SIGLA, U2.SIGLA
+            FROM COMPOSICAO_PRODUTO C
+            LEFT JOIN INSUMO I
+            ON C.ID_INSUMO = I.ID_INSUMO
+            LEFT JOIN UNIDADE_MEDIDA U1
+            ON C.ID_UNIDADE = U1.ID_UNIDADE
+            LEFT JOIN UNIDADE_MEDIDA U2
+            ON I.ID_UNIDADE = U2.ID_UNIDADE
+            WHERE C.ID_PRODUTO = ?
+            AND I.ID_USUARIO = ?
+        """, (id_produto, session['id_usuario']))
+
+        ingredientes = cursor.fetchall()
+
+        # Devolver ingredientes ao estoque
+        for id_insumo, quantidade, unidade_usada, unidade_estoque in ingredientes:
+
+            devolver = quantidade
+
+            if unidade_usada == 'g' and unidade_estoque == 'Kg':
+                devolver = quantidade / 1000
+
+            elif unidade_usada == 'Kg' and unidade_estoque == 'g':
+                devolver = quantidade * 1000
+
+            elif unidade_usada == 'mL' and unidade_estoque == 'L':
+                devolver = quantidade / 1000
+
+            elif unidade_usada == 'L' and unidade_estoque == 'mL':
+                devolver = quantidade * 1000
+
+            elif unidade_usada != unidade_estoque:
+                con.rollback()
+                flash('Unidades incompatíveis!', 'error')
+                return redirect(url_for('produtos_cadastrados'))
+
+            cursor.execute("""
+                UPDATE INSUMO
+                SET ESTOQUE_ATUAL = COALESCE(ESTOQUE_ATUAL, 0) + ?
+                WHERE ID_INSUMO = ?
+                AND ID_USUARIO = ?
+            """, (devolver, id_insumo, session['id_usuario']))
+
+        # Excluir ingredientes da receita
         cursor.execute("""
             DELETE FROM COMPOSICAO_PRODUTO
             WHERE ID_PRODUTO = ?
         """, (id_produto,))
 
-        # Excluir o produto
+        # Excluir produto
         cursor.execute("""
             DELETE FROM PRODUTO
             WHERE ID_PRODUTO = ?
@@ -1863,77 +2075,13 @@ def excluir_produto(id_produto):
 
         con.commit()
 
-        flash('Produto excluído com sucesso!', 'success')
+        flash('Produto excluído e estoque devolvido!', 'success')
         return redirect(url_for('produtos_cadastrados'))
 
     except Exception as e:
         con.rollback()
         flash('Erro ao excluir produto!', 'error')
         return redirect(url_for('produtos_cadastrados'))
-
-    finally:
-        cursor.close()
-
-
-#===================================================
-# CATEGORIA
-#===================================================
-
-@app.route('/categoria', methods=['GET', 'POST'])
-def categoria():
-
-    if 'id_usuario' not in session:
-        return redirect(url_for('login'))
-
-    cursor = con.cursor()
-
-    try:
-        if request.method == 'POST':
-
-            nome = request.form['nome'].strip()
-
-            if not nome:
-                flash('Informe o nome da categoria!', 'error')
-                return redirect(url_for('categoria'))
-
-            cursor.execute("""
-                SELECT ID_CATEGORIA
-                FROM CATEGORIA
-                WHERE LOWER(NOME) = LOWER(?)
-                AND ID_USUARIO = ?
-            """, (nome, session['id_usuario']))
-
-            if cursor.fetchone():
-                flash('Categoria já cadastrada!', 'error')
-                return redirect(url_for('categoria'))
-
-            cursor.execute("""
-                INSERT INTO CATEGORIA (NOME, ID_USUARIO)
-                VALUES (?, ?)
-            """, (nome, session['id_usuario']))
-
-            con.commit()
-
-            flash('Categoria cadastrada com sucesso!', 'success')
-            return redirect(url_for('insumo'))
-
-        cursor.execute("""
-            SELECT ID_CATEGORIA, NOME
-            FROM CATEGORIA
-            WHERE ID_USUARIO = ?
-            ORDER BY NOME
-        """, (session['id_usuario'],))
-
-        categorias = cursor.fetchall()
-
-        return render_template('categoria.html',
-            usuario=session['nome'],
-            categorias=categorias )
-
-    except Exception as e:
-        con.rollback()
-        flash('Erro ao cadastrar categoria.', 'error')
-        return redirect(url_for('insumo'))
 
     finally:
         cursor.close()
@@ -2004,6 +2152,69 @@ def unidade_medida():
 
     finally:
         cursor.close()
+
+# ===================================================
+# CATEGORIA
+# ===================================================
+@app.route('/categoria', methods=['GET', 'POST'])
+def categoria():
+
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    cursor = con.cursor()
+
+    try:
+        if request.method == 'POST':
+
+            nome = request.form['nome'].strip()
+
+            if not nome:
+                flash('Informe o nome da categoria!', 'error')
+                return redirect(url_for('categoria'))
+
+            cursor.execute("""
+                SELECT ID_CATEGORIA
+                FROM CATEGORIA
+                WHERE LOWER(NOME) = LOWER(?)
+                AND ID_USUARIO = ?
+            """, (nome, session['id_usuario']))
+
+            if cursor.fetchone():
+                flash('Categoria já cadastrada!', 'error')
+                return redirect(url_for('categoria'))
+
+            cursor.execute("""
+                INSERT INTO CATEGORIA (NOME, ID_USUARIO)
+                VALUES (?, ?)
+            """, (nome, session['id_usuario']))
+
+            con.commit()
+
+            flash('Categoria cadastrada com sucesso!', 'success')
+            return redirect(url_for('insumo'))
+
+        cursor.execute("""
+            SELECT ID_CATEGORIA, NOME
+            FROM CATEGORIA
+            WHERE ID_USUARIO = ?
+            ORDER BY NOME
+        """, (session['id_usuario'],))
+
+        categorias = cursor.fetchall()
+
+        return render_template('categoria.html',
+            usuario=session['nome'],
+            categorias=categorias )
+
+    except Exception as e:
+        con.rollback()
+        flash('Erro ao cadastrar categoria.', 'error')
+        return redirect(url_for('insumo'))
+
+    finally:
+        cursor.close()
+
 
 
 # ===================================================
