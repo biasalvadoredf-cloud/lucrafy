@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insumos - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+</head>
+
+<body class="lu-site lu-app" data-section="insumos">
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho lu-header">
+        <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <a href="{{ url_for('index') }}">Funcionalidades</a>
+        <a href="{{ url_for('index') }}">Benefícios</a>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
+
+
+        <!-- MENSAGENS DO FLASK -->
+        
+
+    <div class="lados lu-layout">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
+            <h4>MENU PRINCIPAL</h4>
+
+            <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">
+                Visão Geral
+            </a>
+
+            <a href="{{ url_for('insumo') }}" data-section="insumos" class="lu-nav-item lu-current" aria-current="page">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">
+                Insumos
+            </a>
+
+            <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
+                Produtos
+            </a>
+
+            <a href="#" data-section="relatorios" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
+                Relatórios
+            </a>
+
+            <a href="{{ url_for('configuracao') }}" data-section="configuracoes" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">
+                Configurações
+            </a>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="geral lu-content">
+{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+
+            <div class="cabecalho-geral">
+                <h1>Insumos</h1>
+                <p>Organize os custos de cada ingrediente ou material.</p>
+            </div>
+
+            <!-- CADASTRAR INSUMO -->
+            <section class="cadastrar-insumo">
+
+                <h2>Cadastrar insumo</h2>
+
+                <form action="{{ url_for('cadastro_insumo') }}" method="POST">
+
+                    <div class="campos">
+
+                        <div class="campo">
+                            <label for="nome">Nome do insumo</label>
+                            <input id="nome" type="text" name="nome" placeholder="Ex.: Farinha de trigo" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="custo">Custo unitário (R$)</label>
+                            <input id="custo" type="number" name="custo"  min="0" step="0.001" placeholder="0,00"
+                                required>
+                        </div>
+
+                        <div class="campo">
+                            <div class="display-label">
+                                <label for="unidade_medida">Unidade de medida</label>
+                                <a class
+                        ="cadastro-informacoes"
+                                   href
+                        ="{{ url_for('unidade_medida') }}"
+                                   aria-label="Cadastrar unidade de medida">
+                                    +
+                                </a>
+                            </div>
+                            <select id="unidade_medida" name="unidade_medida" required>
+                                <option value="">Selecione</option>
+                                {% for unidade in unidades %}
+                                    <option value="{{ unidade[0] }}">
+                                        {{ unidade[1] }} ({{ unidade[2] }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="estoque_atual">Estoque atual</label>
+                            <input id="estoque_atual" type="number" name="estoque_atual" min="0" step="0.001" placeholder="Ex.: 5" required>
+                        </div>
+
+                        <div class="campo">
+                            <div class="display-label">
+                                <label for="categoria">Categoria</label>
+                                <a class="cadastro-informacoes" href="{{ url_for('categoria') }}" aria-label="Cadastrar categoria">+</a>
+                            </div>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="botoes-formulario">
+                        <a class="ver-insumos" href="{{ url_for('insumos_cadastrados') }}">
+                            Ver insumos cadastrados
+                        </a>
+
+                        <button type="submit">Cadastrar</button>
+                    </div>
+
+                </form>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape lu-footer">
+
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+
+        <p>
+            O gerenciador financeiro simples, prático e 100% gratuito
+            para quem quer controlar gastos sem burocracia nem complicação.
+        </p>
+
+        <div class="rodape-base">
+            <span>© 2026 Lucrafy. Todos os direitos reservados.</span>
+
+            <span>
+                Termos de Uso &nbsp; Privacidade &nbsp; Políticas de Segurança
+            </span>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
