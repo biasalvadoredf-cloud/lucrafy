@@ -15,12 +15,13 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/configuracao.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
-<body class="pagina-acesso pagina-login">
+<body class="pagina-acesso pagina-login lu-site lu-app" data-section="configuracoes">
 
   <!-- CABEÇALHO -->
-  <div class="cabecalho">
+  <div class="cabecalho lu-header">
     <div class="largura cabecalho-conteudo">
 
       <!-- LOGO -->
@@ -39,7 +40,9 @@
         <a class="sair" href="{{ url_for('login') }}">Sair</a>
       </div>
 
-    </div>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</div>
 
   </div>
 
@@ -98,7 +101,7 @@
   </div>
 
   <!-- RODAPÉ -->
-  <div class="rodape">
+  <div class="rodape lu-footer">
     <div class="largura rodape-conteudo">
 
       <!-- LOGO E DESCRIÇÃO -->
@@ -128,5 +131,13 @@
       </div>
     </div>
   </div>
+
+    <nav class="lu-menu lu-mobile-only" data-menu="principal" aria-label="Menu principal">
+        <a class="lu-nav-item" data-section="visao" href="{{ url_for('visao_geral') }}"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">Visão geral</a>
+        <a class="lu-nav-item" data-section="insumos" href="{{ url_for('insumo') }}"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">Insumos</a>
+        <a class="lu-nav-item" data-section="produtos" href="{{ url_for('produtos_cadastrados') }}"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">Produtos</a>
+        <a class="lu-nav-item" data-section="relatorios" href="#"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">Relatórios</a>
+        <a class="lu-nav-item lu-current" data-section="configuracoes" href="{{ url_for('configuracao') }}" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">Configurações</a>
+    </nav>
 </body>
 </html>

@@ -9,49 +9,67 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/produtos_cadastrados.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
-<body>
+<body class="lu-site lu-app" data-section="produtos">
 
-    <header class="cabecalho">
+    <header class="cabecalho lu-header">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy" width="91">
 
         <a href="{{ url_for('index') }}">Funcionalidades</a>
         <a href="{{ url_for('index') }}">Benefícios</a>
-    </header>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
 
-    <div class="lados">
+    <div class="lados lu-layout">
 
-        <div class="menu">
+        <div class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
             <h4>MENU PRINCIPAL</h4>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="">
-                <a href="{{ url_for('visao_geral') }}">Visão geral</a>
+            <div class="opcoes lu-nav-item" data-section="visao">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">
+                <a href="{{ url_for('visao_geral') }}" data-section="visao">Visão geral</a>
             </div>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="">
-                <a href="{{ url_for('insumo') }}">Insumos</a>
+            <div class="opcoes lu-nav-item" data-section="insumos">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">
+                <a href="{{ url_for('insumo') }}" data-section="insumos">Insumos</a>
             </div>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
-                <a href="{{ url_for('produto') }}">Produtos</a>
+            <div class="opcoes lu-nav-item lu-current" data-section="produtos">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
+                <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" aria-current="page">Produtos</a>
             </div>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="">
-                <a href="#">Relatórios</a>
+            <div class="opcoes lu-nav-item" data-section="relatorios">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
+                <a href="#" data-section="relatorios">Relatórios</a>
             </div>
 
-            <div class="opcoes">
-                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
-                <a href="{{ url_for('configuracao') }}">Configurações</a>
+            <div class="opcoes lu-nav-item" data-section="configuracoes">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">
+                <a href="{{ url_for('configuracao') }}" data-section="configuracoes">Configurações</a>
             </div>
         </div>
 
-        <main class="geral">
+        <main class="geral lu-content">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}" role="status">
+                    <span class="flash-icone" aria-hidden="true">
+                        {% if category == 'success' %}✓{% else %}!{% endif %}
+                    </span>
+                    <span class="flash-texto">{{ message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
 
             <h1>Produtos Cadastrados</h1>
             <p>Gerencie seus produtos</p>
@@ -84,10 +102,23 @@
                                 <td>R$ {{ "%.2f"|format(produto[3]) }}</td>
                                 <td>{{ produto[4] }}%</td>
                                 <td>
-                                    <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}"
-                                       class="botao-editar">
-                                        Editar / Adicionar insumos
-                                    </a>
+                                    <div class="acoes">
+                                        <a href="{{ url_for('editar_produto', id_produto=produto[0]) }}"
+                                           class="botao-editar">
+                                            Editar / Adicionar insumos
+                                        </a>
+
+                                         <form action="{{ url_for('excluir_produto', id_produto=produto[0]) }}"
+                                              method="POST">
+
+                                            <button type="submit"
+                                                    class="botao-excluir"
+                                                    onclick="return confirm('Deseja realmente excluir este produto?')">
+                                                Excluir
+                                            </button>
+
+                                        </form>
+                                    </div>
                                  </td>
                             </tr>
                             {% else %}
@@ -106,6 +137,12 @@
         </main>
     </div>
 
+
+    <footer class="rodape lu-footer">
+        <img class="logo-rodape" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
+        <p class="descricao-rodape">O gerenciador financeiro simples, prático e 100% gratuito<br>para quem quer controlar gastos sem burocracia nem complicação.</p>
+        <div class="rodape-base"><span>© 2026 Lucrafy. Todos os direitos reservados.</span><span>Termos de Uso &nbsp; Privacidade &nbsp; Políticas de Segurança</span></div>
+    </footer>
 </body>
 
 </html>

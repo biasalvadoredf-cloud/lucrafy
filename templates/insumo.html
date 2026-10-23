@@ -9,21 +9,60 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
-<body>
+<body class="lu-site lu-app" data-section="insumos">
 
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
+    <header class="cabecalho lu-header">
         <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
         <a href="{{ url_for('index') }}">Funcionalidades</a>
         <a href="{{ url_for('index') }}">Benefícios</a>
-    </header>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
 
 
         <!-- MENSAGENS DO FLASK -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        
+
+    <div class="lados lu-layout">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
+            <h4>MENU PRINCIPAL</h4>
+
+            <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">
+                Visão Geral
+            </a>
+
+            <a href="{{ url_for('insumo') }}" data-section="insumos" class="lu-nav-item lu-current" aria-current="page">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">
+                Insumos
+            </a>
+
+            <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
+                Produtos
+            </a>
+
+            <a href="#" data-section="relatorios" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
+                Relatórios
+            </a>
+
+            <a href="{{ url_for('configuracao') }}" data-section="configuracoes" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">
+                Configurações
+            </a>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="geral lu-content">
+{% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="flash-messages">
                     {% for category, message in messages %}
@@ -45,40 +84,6 @@
             {% endif %}
         {% endwith %}
 
-    <div class="lados">
-
-        <!-- MENU LATERAL -->
-        <aside class="menu">
-            <h4>MENU PRINCIPAL</h4>
-
-            <a href="{{ url_for('visao_geral') }}">
-                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="">
-                Visão Geral
-            </a>
-
-            <a href="{{ url_for('insumo') }}">
-                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="">
-                Insumos
-            </a>
-
-            <a href="{{ url_for('produtos_cadastrados') }}">
-                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
-                Produtos
-            </a>
-
-            <a href="#">
-                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="">
-                Relatórios
-            </a>
-
-            <a href="{{ url_for('configuracao') }}">
-                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
-                Configurações
-            </a>
-        </aside>
-
-        <!-- CONTEÚDO PRINCIPAL -->
-        <main class="geral">
 
             <div class="cabecalho-geral">
                 <h1>Insumos</h1>
@@ -162,7 +167,7 @@
     </div>
 
     <!-- RODAPÉ -->
-    <footer class="rodape">
+    <footer class="rodape lu-footer">
 
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 

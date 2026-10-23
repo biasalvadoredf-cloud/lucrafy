@@ -15,9 +15,10 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
-<body>
+<body class="lu-site">
 
   <!-- CABEÇALHO -->
   <div class="cabecalho">
@@ -45,7 +46,22 @@
   </div>
 
   <!-- INÍCIO -->
-  <div id="inicio">
+  
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}" role="status">
+                    <span class="flash-icone" aria-hidden="true">
+                        {% if category == 'success' %}✓{% else %}!{% endif %}
+                    </span>
+                    <span class="flash-texto">{{ message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+<div id="inicio">
 
     <!-- APRESENTAÇÃO -->
     <div class="apresentacao">
@@ -253,7 +269,7 @@
   </div>
 
   <!-- RODAPÉ -->
-  <div class="rodape">
+  <div class="rodape lu-footer">
     <div class="largura rodape-conteudo">
 
       <div>

@@ -7,8 +7,13 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
-<body class="pagina-home">
+<body class="pagina-home lu-site lu-app" data-section="visao">
+    <header class="cabecalho lu-header lu-mobile-only"><a class="marca" href="{{ url_for('visao_geral') }}"><img src="{{ url_for('static', filename='img/logo.png') }}" width="91" height="37" alt="Lucrafy"></a>
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+    </header>
+
 
     <main class="cartao-home">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -31,5 +36,13 @@
         </div>
     </main>
 
+
+    <nav class="lu-menu lu-mobile-only" data-menu="principal" aria-label="Menu principal">
+        <a class="lu-nav-item lu-current" data-section="visao" href="{{ url_for('visao_geral') }}" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">Visão geral</a>
+        <a class="lu-nav-item" data-section="insumos" href="{{ url_for('insumo') }}"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">Insumos</a>
+        <a class="lu-nav-item" data-section="produtos" href="{{ url_for('produtos_cadastrados') }}"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">Produtos</a>
+        <a class="lu-nav-item" data-section="relatorios" href="#"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">Relatórios</a>
+        <a class="lu-nav-item" data-section="configuracoes" href="{{ url_for('configuracao') }}"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">Configurações</a>
+    </nav>
 </body>
 </html>

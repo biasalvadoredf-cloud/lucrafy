@@ -1113,3 +1113,36 @@ td.acoes img {
         display: none;
     }
 }
+/* Link para cadastrar categoria mantendo o padrão de Insumos. */
+.dados-produto .categoria-produto-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+.dados-produto .categoria-produto-label label {
+    margin: 0;
+}
+.dados-produto .adicionar-categoria-produto {
+    display: inline-flex;
+    flex: 0 0 28px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 10px;
+    background: #a4c95f;
+    color: #303b31;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+}
+.dados-produto .adicionar-categoria-produto:focus-visible {
+    outline: 2px solid #496801;
+    outline-offset: 2px;
+}

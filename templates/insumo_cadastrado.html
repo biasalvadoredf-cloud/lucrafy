@@ -10,28 +10,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
-<body>
+<body class="lu-site lu-app" data-section="insumos">
 
-    <header class="cabecalho">
+    <header class="cabecalho lu-header">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
         <a href="#">Funcionalidades</a>
         <a href="#">Benefícios</a>
-    </header>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
 
-    <div class="estrutura">
+    <div class="estrutura lu-layout">
 
-        <aside class="menu">
+        <aside class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
             <h4>MENU PRINCIPAL</h4>
 
-            <a href="#">Visão geral</a>
-            <a href="{{ url_for('insumo') }}">Insumos</a>
-            <a href="{{ url_for('produto') }}">Produtos</a>
-            <a href="#">Relatórios</a>
-            <a href="#">Configurações</a>
+            <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" width="18" height="18" alt=""> Visão geral</a>
+            <a href="{{ url_for('insumo') }}" data-section="insumos" class="lu-nav-item lu-current" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" width="18" height="18" alt=""> Insumos</a>
+            <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" width="18" height="18" alt=""> Produtos</a>
+            <a href="#" data-section="relatorios" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" width="18" height="18" alt=""> Relatórios</a>
+            <a href="{{ url_for('configuracao') }}" data-section="configuracoes" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" width="18" height="18" alt=""> Configurações</a>
         </aside>
 
-        <main class="principal">
+        <main class="principal lu-content">
 
                         <!-- MENSAGENS DO FLASK -->
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -82,14 +85,14 @@
 
                         <a class="editar"
                            href="{{ url_for('editar_insumo', id=insumo[0]) }}">
-                            <img src="{{ url_for('static', filename='img/icone-editar.png') }}"
+                            <img src="{{ url_for('static', filename='img/icone-editar.svg') }}"
                                  alt="Editar">
                         </a>
 
                         <form action="{{ url_for('excluir_insumo', id=insumo[0]) }}" method="POST" onsubmit="return confirm('Deseja excluir este insumo?')">
 
                             <button class="excluir" type="submit">
-                                <img src="{{ url_for('static', filename='img/icone-excluir.png') }}"
+                                <img src="{{ url_for('static', filename='img/icone-excluir.svg') }}"
                                      alt="Excluir">
                             </button>
 
@@ -120,7 +123,7 @@
         </main>
     </div>
 
-    <footer>
+    <footer class="lu-footer">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
         <p>

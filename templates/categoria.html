@@ -10,76 +10,59 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/categoria.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
-<body>
+<body class="lu-site lu-app" data-section="insumos">
 <div class="fundo-insumos" inert>
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
+    <header class="cabecalho lu-header">
         <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
         <a href="{{ url_for('index') }}">Funcionalidades</a>
         <a href="{{ url_for('index') }}">Benefícios</a>
-    </header>
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
 
 
         <!-- MENSAGENS DO FLASK -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
+        
 
-                            <span class="flash-icone">
-                                {% if category == 'success' %}
-                                    ✓
-                                {% else %}
-                                    !
-                                {% endif %}
-                            </span>
-
-                            <span class="flash-texto">{{ message }}</span>
-
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-    <div class="lados">
+    <div class="lados lu-layout">
 
         <!-- MENU LATERAL -->
-        <aside class="menu">
+        <aside class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
             <h4>MENU PRINCIPAL</h4>
 
-            <a href="{{ url_for('visao_geral') }}">
-                <img src="{{ url_for('static', filename='img/elemento-visaogeral.png') }}" alt="">
+            <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">
                 Visão Geral
             </a>
 
-            <a href="{{ url_for('insumo') }}">
-                <img src="{{ url_for('static', filename='img/elemento-insumo.png') }}" alt="">
+            <a href="{{ url_for('insumo') }}" data-section="insumos" class="lu-nav-item lu-current" aria-current="page">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">
                 Insumos
             </a>
 
-            <a href="{{ url_for('produtos_cadastrados') }}">
-                <img src="{{ url_for('static', filename='img/elemento-produtos.png') }}" alt="">
+            <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
                 Produtos
             </a>
 
-            <a href="#">
-                <img src="{{ url_for('static', filename='img/elemento-relatorios.png') }}" alt="">
+            <a href="#" data-section="relatorios" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
                 Relatórios
             </a>
 
-            <a href="{{ url_for('configuracao') }}">
-                <img src="{{ url_for('static', filename='img/elemento-configuracao.png') }}" alt="">
+            <a href="{{ url_for('configuracao') }}" data-section="configuracoes" class="lu-nav-item">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">
                 Configurações
             </a>
         </aside>
 
         <!-- CONTEÚDO PRINCIPAL -->
-        <main class="geral">
+        <main class="geral lu-content">
 
             <div class="cabecalho-geral">
                 <h1>Insumos</h1>
@@ -163,7 +146,7 @@
     </div>
 
     <!-- RODAPÉ -->
-    <footer class="rodape">
+    <footer class="rodape lu-footer">
 
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy">
 
@@ -196,6 +179,28 @@
         </a>
 
         <h2 id="titulo-categoria">Cadastrar Categoria</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
 
         <form action="{{ url_for('categoria') }}" method="POST">
             <input id="nome-categoria"
