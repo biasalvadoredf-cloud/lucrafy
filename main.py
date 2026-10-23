@@ -16,9 +16,9 @@ app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 # --------------------------------------------------
 
 host = 'localhost'
-database = r'C:\Users\biasa\Downloads\banco_lucrafay\BANCO.FDB'
+database = r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB'
 user = 'sysdba'
-password = 'masterkey'
+password = 'sysdba'
 
 con = fdb.connect(
     host=host,
