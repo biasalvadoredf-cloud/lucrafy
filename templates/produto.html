@@ -8,7 +8,7 @@
     <title>Produtos - Lucrafy</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}?v=4">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
@@ -107,16 +107,22 @@
 
             {% if not produto %}
 
+                <!-- FOTO DO PRODUTO (salva antes do cadastro, igual às configurações) -->
+                <form action="{{ url_for('foto_produto_novo') }}" method="POST" enctype="multipart/form-data" class="cartao foto-produto-novo">
+                    {% if tem_foto_nova %}
+                        <img class="foto-produto-previa" src="{{ url_for('foto_produto_novo') }}?t={{ range(1, 100000) | random }}" alt="Foto do produto">
+                    {% endif %}
+                    <label for="arquivo">Foto do produto (JPG)</label>
+                    <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg" required>
+                    <button type="submit">Salvar foto</button>
+                </form>
+
                 <!-- CADASTRO DO PRODUTO -->
-                <form action="{{ url_for('produto') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url_for('produto') }}" method="POST">
 
                     <div class="cartao dados-produto">
 
                         <h2>Dados do produto</h2>
-                        <label for="arquivo">Foto do produto (JPG)</label>
-                        <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg">
-
-
                         <label for="nome">Nome do produto</label>
                         <input type="text"
                                id="nome"
@@ -284,4 +290,3 @@
 
 </body>
 </html>
-```
