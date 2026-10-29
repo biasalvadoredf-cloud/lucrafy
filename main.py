@@ -1782,15 +1782,12 @@ def produto():
 
             id_produto = cursor.fetchone()[0]
 
-            arquivo = request.files.get('arquivo')
-            if arquivo and arquivo.filename:
-                if not arquivo.filename.lower().endswith(('.jpg', '.jpeg')):
-                    con.rollback()
-                    flash('Envie uma imagem JPG.', 'error')
-                    return redirect(url_for('produto'))
-                arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], f'produto{id_produto}.jpg'))
-
             con.commit()
+
+            # Foto salva antes do cadastro: passa a ser a foto do produto
+            foto_nova = os.path.join(app.config['UPLOAD_FOLDER'], f"produto_novo{session['id_usuario']}.jpg")
+            if os.path.isfile(foto_nova):
+                os.replace(foto_nova, os.path.join(app.config['UPLOAD_FOLDER'], f'produto{id_produto}.jpg'))
 
             flash('Produto cadastrado com sucesso!', 'success')
             return redirect(url_for('editar_produto', id_produto=id_produto))
@@ -2322,7 +2319,9 @@ def injetar_foto_perfil():
     id_usuario = session.get('id_usuario')
     tem_foto = bool(id_usuario) and os.path.isfile(
         os.path.join(app.config['UPLOAD_FOLDER'], f'usuario{id_usuario}.jpg'))
-    return {'tem_foto_perfil': tem_foto}
+    tem_foto_nova = bool(id_usuario) and os.path.isfile(
+        os.path.join(app.config['UPLOAD_FOLDER'], f'produto_novo{id_usuario}.jpg'))
+    return {'tem_foto_perfil': tem_foto, 'tem_foto_nova': tem_foto_nova}
 
 @app.route('/foto_perfil', methods=['GET', 'POST'])
 def foto_perfil():
@@ -2339,6 +2338,26 @@ def foto_perfil():
             arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo))
             flash('Foto de perfil salva com sucesso!', 'success')
         return redirect(url_for('configuracao'))
+    if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)):
+        return '', 404
+    return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
+
+
+@app.route('/foto_produto_novo', methods=['GET', 'POST'])
+def foto_produto_novo():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    nome_arquivo = f"produto_novo{session['id_usuario']}.jpg"
+    if request.method == 'POST':
+        arquivo = request.files.get('arquivo')
+        if not arquivo or not arquivo.filename:
+            flash('Selecione uma imagem JPG.', 'error')
+        elif not arquivo.filename.lower().endswith(('.jpg', '.jpeg')):
+            flash('Envie uma imagem JPG.', 'error')
+        else:
+            arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo))
+            flash('Foto do produto salva com sucesso!', 'success')
+        return redirect(url_for('produto'))
     if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)):
         return '', 404
     return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
