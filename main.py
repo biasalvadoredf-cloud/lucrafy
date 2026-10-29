@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, send_file, send_from_directory
 import fdb
 from flask_bcrypt import Bcrypt
 from decimal import Decimal
+from fpdf import FPDF
+import os
 
 # --------------------------------------------------
 # 2 - CONFIGURAÇÃO DO FLASK
@@ -11,12 +13,17 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 
+# Fotos e PDFs: diretórios conforme os exemplos da aula.
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'uploads')
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
 # --------------------------------------------------
 # 3 - CONEXÃO COM O BANCO DE DADOS
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -1747,6 +1754,14 @@ def produto():
 
             id_produto = cursor.fetchone()[0]
 
+            arquivo = request.files.get('arquivo')
+            if arquivo and arquivo.filename:
+                if not arquivo.filename.lower().endswith(('.jpg', '.jpeg')):
+                    con.rollback()
+                    flash('Envie uma imagem JPG.', 'error')
+                    return redirect(url_for('produto'))
+                arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], f'produto{id_produto}.jpg'))
+
             con.commit()
 
             flash('Produto cadastrado com sucesso!', 'success')
@@ -1792,6 +1807,7 @@ def produto():
 
     except Exception as e:
         con.rollback()
+        print('Erro', e)
         flash('Erro ao cadastrar produto!', 'error')
         return redirect(url_for('produtos_cadastrados'))
 
@@ -1971,9 +1987,8 @@ def salvar_edicao_produto(id_produto):
             WHERE C.ID_INSUMO = ? AND P.ID_USUARIO = ?
         """, (id, session['id_usuario']))
 
-        for vinculo in cursor.fetchall():
-            if not atualizar_custo_produto(vinculo[0]):
-                raise ValueError('Não foi possível recalcular o produto.')
+        if not atualizar_custo_produto(id_produto):
+            raise ValueError('Não foi possível recalcular o produto.')
 
         con.commit()
 
@@ -1982,7 +1997,6 @@ def salvar_edicao_produto(id_produto):
 
     except Exception as e:
         con.rollback()
-        print('Erro ao atualizar produto:', e)
         flash('Erro ao atualizar produto!', 'error')
         return redirect(url_for('produtos_cadastrados'))
 
@@ -2234,6 +2248,116 @@ def configuracao():
 # --------------------------------------------------
 #  INICIALIZAÇÃO DO SISTEMA
 # --------------------------------------------------
+
+
+# --------------------------------------------------
+# FOTO DO PRODUTO (modelo do PDF: arquivo pelo ID)
+# --------------------------------------------------
+@app.route('/foto_produto/<int:id_produto>', methods=['GET', 'POST'])
+def foto_produto(id_produto):
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    cursor = con.cursor()
+    try:
+        cursor.execute("SELECT ID_PRODUTO FROM PRODUTO WHERE ID_PRODUTO = ? AND ID_USUARIO = ?",
+                       (id_produto, session['id_usuario']))
+        if not cursor.fetchone():
+            return 'Produto não encontrado.', 404
+        nome_arquivo = f'produto{id_produto}.jpg'
+        if request.method == 'POST':
+            arquivo = request.files.get('arquivo')
+            if not arquivo or not arquivo.filename:
+                flash('Selecione uma imagem JPG.', 'error')
+            elif not arquivo.filename.lower().endswith(('.jpg', '.jpeg')):
+                flash('Envie uma imagem JPG.', 'error')
+            else:
+                arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo))
+                flash('Foto salva com sucesso!', 'success')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
+        if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)):
+            return send_from_directory(os.path.join(app.root_path, 'static', 'img'), 'elemento-produtos.svg')
+        return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
+    finally:
+        cursor.close()
+
+# --------------------------------------------------
+# RELATÓRIOS (FPDF e send_file, conforme o PDF da aula)
+# --------------------------------------------------
+@app.route('/relatorios')
+def relatorios():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    cursor = con.cursor()
+    try:
+        cursor.execute("""SELECT ID_PRODUTO, NOME, CUSTO, PRECO_SUGERIDO, MARGEM_LUCRO
+                          FROM PRODUTO WHERE ID_USUARIO = ? ORDER BY MARGEM_LUCRO DESC""",
+                       (session['id_usuario'],))
+        produtos = cursor.fetchall()
+        custo_total = Decimal('0')
+        receita = Decimal('0')
+        for item in produtos:
+            custo_total += item[2] or 0
+            receita += item[3] or 0
+        return render_template('relatorios.html', produtos=produtos,
+                               custo_total=custo_total, receita=receita, lucro=receita-custo_total)
+    finally:
+        cursor.close()
+
+@app.route('/relatorios/pdf')
+def relatorio_pdf():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    tipo = request.args.get('tipo', 'margem')
+    cursor = con.cursor()
+    try:
+        if tipo == 'insumos':
+            titulo = 'Insumos cadastrados'
+            cursor.execute("""SELECT ID_INSUMO, NOME, CUSTO FROM INSUMO
+                              WHERE ID_USUARIO = ? AND COALESCE(ATIVO, 1) = 1 ORDER BY NOME""",
+                           (session['id_usuario'],))
+        elif tipo == 'valor':
+            titulo = 'Produtos por valor (maior para menor)'
+            cursor.execute("""SELECT ID_PRODUTO, NOME, CUSTO, PRECO_SUGERIDO, MARGEM_LUCRO
+                              FROM PRODUTO WHERE ID_USUARIO = ? ORDER BY PRECO_SUGERIDO DESC""",
+                           (session['id_usuario'],))
+        elif tipo == 'margem':
+            titulo = 'Produtos por margem de lucro'
+            cursor.execute("""SELECT ID_PRODUTO, NOME, CUSTO, PRECO_SUGERIDO, MARGEM_LUCRO
+                              FROM PRODUTO WHERE ID_USUARIO = ? ORDER BY MARGEM_LUCRO DESC""",
+                           (session['id_usuario'],))
+        else:
+            return 'Tipo de relatório inválido.', 400
+        itens = cursor.fetchall()
+    finally:
+        cursor.close()
+    if not itens:
+        flash('Não há registros para gerar o relatório.', 'error')
+        return redirect(url_for('relatorios'))
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font('Arial', style='B', size=16)
+    pdf.cell(190, 10, titulo, ln=True, align='C')
+    pdf.ln(5)
+    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
+    pdf.ln(5)
+    for item in itens:
+        # Linhas separadas mantêm os nomes de até 100 caracteres dentro da página.
+        pdf.set_font('Arial', style='B', size=10)
+        pdf.cell(190, 8, f'ID: {item[0]}', ln=True)
+        pdf.set_font('Arial', size=9)
+        pdf.cell(190, 8, item[1][:50], ln=True)
+        if len(item[1]) > 50:
+            pdf.cell(190, 8, item[1][50:], ln=True)
+        pdf.cell(190, 8, f'Custo: R$ {item[2]:.2f}', ln=True)
+        if tipo != 'insumos':
+            pdf.cell(190, 8, f'Valor: R$ {item[3]:.2f} - Margem: {item[4]}%', ln=True)
+        pdf.ln(5)
+    pdf.set_font('Arial', style='B', size=12)
+    pdf.cell(190, 10, f'Total de registros: {len(itens)}', ln=True, align='C')
+    pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], f'relatorio_{tipo}_{session["id_usuario"]}.pdf')
+    pdf.output(pdf_path)
+    return send_file(pdf_path, as_attachment=True, mimetype='application/pdf')
 
 if __name__ == '__main__':
 

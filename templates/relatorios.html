@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios | Lucrafy</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/relatorios.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+</head>
+
+<body class="pagina-relatorios lu-site lu-app" data-section="relatorios">
+    <!-- CABEÇALHO -->
+    <header class="cabecalho lu-header">
+
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Lucrafy">
+
+        <nav>
+            <a href="{{ url_for('index') }}">Funcionalidades</a>
+            <a href="{{ url_for('index') }}">Benefícios</a>
+        </nav>
+
+    
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
+
+    <div class="estrutura lu-layout">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
+
+            <h4>MENU PRINCIPAL</h4>
+
+            <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" width="18" height="18" alt=""> 
+                Visão geral
+            </a>
+
+            <a href="{{ url_for('insumo') }}" class="lu-nav-item" data-section="insumos"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" width="18" height="18" alt=""> 
+                Insumos
+            </a>
+
+            <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" width="18" height="18" alt=""> 
+                Produtos
+            </a>
+
+            <a href="{{ url_for('relatorios') }}" data-section="relatorios" class="lu-nav-item lu-current" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" width="18" height="18" alt=""> 
+                Relatórios
+            </a>
+
+            <a href="{{ url_for('configuracao') }}" data-section="configuracoes" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" width="18" height="18" alt=""> 
+                Configurações
+            </a>
+
+        </aside>
+
+        <!-- CONTEÚDO -->
+        <main class="geral lu-content">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}" role="status">
+                    <span class="flash-icone" aria-hidden="true">
+                        {% if category == 'success' %}✓{% else %}!{% endif %}
+                    </span>
+                    <span class="flash-texto">{{ message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+            <!-- TÍTULO DA PÁGINA -->
+            <div class="cabecalho-relatorios">
+
+                <div class="textos-relatorios">
+                    <h1>Relatórios</h1>
+                    <p>Entenda custos e lucros por produto ou categoria.</p>
+                </div>
+
+                <div class="baixar-relatorio">
+                    <button type="submit" form="baixar-pdf">Baixar Relatório</button>
+                </div>
+
+            </div>
+
+            <form class="filtros-relatorios" action="{{ url_for('relatorio_pdf') }}" method="GET" id="baixar-pdf">
+                <div class="filtro-relatorio">
+                    <label for="tipo">Relatório em PDF</label>
+                    <select id="tipo" name="tipo" class="opcoes-filtro">
+                        <option value="margem">Produtos por margem de lucro</option>
+                        <option value="valor">Produtos por valor (maior para menor)</option>
+                        <option value="insumos">Insumos cadastrados</option>
+                    </select>
+                </div>
+            </form>
+
+            <!-- CARTÕES DE INDICADORES -->
+            <div class="cartoes-indicadores">
+
+                <!-- CUSTO TOTAL -->
+                <div class="cartao-indicador">
+                    <h3>Soma dos custos unitários</h3>
+
+                    <div class="informacoes-indicador">
+                        <p>R$ {{ "%.2f"|format(custo_total) }}</p>
+
+                        <div class="icone-indicador">
+                            <img src="{{ url_for('static', filename='img/icone-custo-relatorio.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECEITA ESTIMADA -->
+                <div class="cartao-indicador">
+                    <h3>Soma dos preços sugeridos</h3>
+
+                    <div class="informacoes-indicador">
+                        <p>R$ {{ "%.2f"|format(receita) }}</p>
+
+                        <div class="icone-indicador">
+                            <img src="{{ url_for('static', filename='img/icone-receita-relatorio.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LUCRO ESPERADO -->
+                <div class="cartao-indicador">
+                    <h3>Soma dos lucros unitários</h3>
+
+                    <div class="informacoes-indicador">
+                        <p>R$ {{ "%.2f"|format(lucro) }}</p>
+
+                        <div class="icone-indicador">
+                            <img src="{{ url_for('static', filename='img/icone-lucro-relatorio.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DESEMPENHO DOS PRODUTOS -->
+            <div class="desempenho-produtos">
+
+                <h2>Desempenho dos produtos</h2>
+
+                <!-- CABEÇALHO DA TABELA -->
+                <div class="cabecalho-desempenho">
+
+                    <div class="coluna-produto">
+                        <h4>Produto</h4>
+                    </div>
+
+                    <div class="coluna-custo">
+                        <h4>Custo unit.</h4>
+                    </div>
+
+                    <div class="coluna-preco">
+                        <h4>Preço venda</h4>
+                    </div>
+
+                    <div class="coluna-margem">
+                        <h4>Margem</h4>
+                    </div>
+
+                    <div class="coluna-lucro">
+                        <h4>Lucro unit.</h4>
+                    </div>
+
+                </div>
+
+                {% for produto in produtos %}
+                <div class="linha-desempenho">
+                    <div class="coluna-produto"><p>{{ produto[1] }}</p></div>
+                    <div class="coluna-custo"><p>R$ {{ "%.2f"|format(produto[2]) }}</p></div>
+                    <div class="coluna-preco"><p>R$ {{ "%.2f"|format(produto[3]) }}</p></div>
+                    <div class="coluna-margem"><p class="margem-produto">{{ produto[4] }}%</p></div>
+                    <div class="coluna-lucro"><p>R$ {{ "%.2f"|format(produto[3] - produto[2]) }}</p></div>
+                </div>
+                {% else %}
+                <p>Nenhum produto cadastrado.</p>
+                {% endfor %}
+            </div>
+
+        </main>
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="lu-footer">
+
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Lucrafy">
+
+        <p>
+            O gerenciador financeiro simples, prático e 100% gratuito
+            para quem quer controlar gastos sem burocracia nem complicação.
+        </p>
+
+        <div class="rodape-final">
+            <span>© 2026 Lucrafy. Todos os direitos reservados.</span>
+            <span>Termos de Uso · Privacidade · Políticas de Segurança</span>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

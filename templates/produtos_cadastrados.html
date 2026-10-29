@@ -45,7 +45,7 @@
 
             <div class="opcoes lu-nav-item" data-section="relatorios">
                 <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
-                <a href="#" data-section="relatorios">Relatórios</a>
+                <a href="{{ url_for('relatorios') }}" data-section="relatorios">Relatórios</a>
             </div>
 
             <div class="opcoes lu-nav-item" data-section="configuracoes">
@@ -97,7 +97,7 @@
                         <tbody role="rowgroup">
                             {% for produto in produtos %}
                             <tr role="row">
-                                <td data-label="Produto" role="cell">{{ produto[1] }}</td>
+                                <td data-label="Produto" role="cell"><img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" alt="" width="48" height="48" style="object-fit: contain; vertical-align: middle;"> {{ produto[1] }}</td>
                                 <td data-label="Custo" role="cell">R$ {{ "%.2f"|format(produto[2]) }}</td>
                                 <td data-label="Preço sugerido" role="cell">R$ {{ "%.2f"|format(produto[3]) }}</td>
                                 <td class="lu-campo-inteiro" data-label="Margem" role="cell">{{ produto[4] }}%</td>

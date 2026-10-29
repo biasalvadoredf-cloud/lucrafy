@@ -59,7 +59,7 @@
 
             <div class="opcoes lu-nav-item" data-section="relatorios">
                 <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
-                <a href="#" data-section="relatorios">Relatórios</a>
+                <a href="{{ url_for('relatorios') }}" data-section="relatorios">Relatórios</a>
             </div>
 
             <div class="opcoes lu-nav-item" data-section="configuracoes">
@@ -108,11 +108,14 @@
             {% if not produto %}
 
                 <!-- CADASTRO DO PRODUTO -->
-                <form action="{{ url_for('produto') }}" method="POST">
+                <form action="{{ url_for('produto') }}" method="POST" enctype="multipart/form-data">
 
                     <div class="cartao dados-produto">
 
                         <h2>Dados do produto</h2>
+                        <label for="arquivo">Foto do produto (JPG)</label>
+                        <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg">
+
 
                         <label for="nome">Nome do produto</label>
                         <input type="text"

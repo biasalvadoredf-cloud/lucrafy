@@ -60,7 +60,7 @@
 
             <div class="opcoes lu-nav-item" data-section="relatorios">
                 <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
-                <a href="#" data-section="relatorios">Relatórios</a>
+                <a href="{{ url_for('relatorios') }}" data-section="relatorios">Relatórios</a>
             </div>
 
             <div class="opcoes lu-nav-item" data-section="configuracoes">
@@ -109,6 +109,13 @@
 
 
             <!-- EDITAR DADOS DO PRODUTO -->
+            <form action="{{ url_for('foto_produto', id_produto=produto[0]) }}" method="POST" enctype="multipart/form-data" class="cartao">
+                <img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" alt="Foto de {{ produto[1] }}" width="120" height="120" style="object-fit: contain; max-width: 100%;">
+                <label for="arquivo">Foto do produto (JPG)</label>
+                <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg" required>
+                <button type="submit">Salvar foto</button>
+            </form>
+
             <form action="{{ url_for('salvar_edicao_produto', id_produto=produto[0]) }}" method="POST">
 
                 <div class="cartao dados-produto">
