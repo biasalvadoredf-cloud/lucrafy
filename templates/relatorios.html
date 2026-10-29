@@ -18,12 +18,10 @@
     <!-- CABEÇALHO -->
     <header class="cabecalho lu-header">
 
-        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Lucrafy">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy" width="91">
 
-        <nav>
-            <a href="{{ url_for('index') }}">Funcionalidades</a>
-            <a href="{{ url_for('index') }}">Benefícios</a>
-        </nav>
+        <a href="{{ url_for('index') }}">Funcionalidades</a>
+        <a href="{{ url_for('index') }}">Benefícios</a>
 
     
         <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
@@ -37,7 +35,7 @@
             <h4>MENU PRINCIPAL</h4>
 
             <a href="{{ url_for('visao_geral') }}" data-section="visao" class="lu-nav-item"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" width="18" height="18" alt=""> 
-                Visão geral
+                Visão Geral
             </a>
 
             <a href="{{ url_for('insumo') }}" class="lu-nav-item" data-section="insumos"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" width="18" height="18" alt=""> 
