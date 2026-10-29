@@ -1,9 +1,14 @@
+# --------------------------------------------------
+# 1 - IMPORTAÇÕES
+# --------------------------------------------------
+
 from flask import Flask, render_template, request, flash, redirect, url_for, session, send_file, send_from_directory
 import fdb
 from flask_bcrypt import Bcrypt
 from decimal import Decimal
 from fpdf import FPDF
 import os
+
 
 # --------------------------------------------------
 # 2 - CONFIGURAÇÃO DO FLASK
@@ -13,10 +18,11 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = 'chave_secreta_lucrafy'
 
-# Fotos e PDFs: diretórios conforme os exemplos da aula.
+# Pasta de uploads (fotos de perfil, fotos de produto e PDFs)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'uploads')
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
+
 
 # --------------------------------------------------
 # 3 - CONEXÃO COM O BANCO DE DADOS
@@ -70,6 +76,7 @@ def senha_forte(senha):
 
     return False
 
+
 # --------------------------------------------------
 # 5 - PÁGINA INICIAL
 # --------------------------------------------------
@@ -78,6 +85,7 @@ def senha_forte(senha):
 def index():
 
     return render_template('index.html')
+
 
 # --------------------------------------------------
 # 6 - VISÃO GERAL
@@ -164,9 +172,8 @@ def logout():
 
 
 # --------------------------------------------------
-# 8 - CADASTRO DE USUÁRIOS
+# 8 - CADASTRO DE USUÁRIO
 # --------------------------------------------------
-
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -275,7 +282,6 @@ def cadastro():
 # --------------------------------------------------
 # 9 - LOGIN
 # --------------------------------------------------
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -737,8 +743,9 @@ def alterar_senha():
 
         cursor.close()
 
+
 # --------------------------------------------------
-# INSUMO
+# 12 - INSUMO (FORMULÁRIO)
 # --------------------------------------------------
 
 @app.route('/insumo', methods=['GET', 'POST'])
@@ -779,8 +786,9 @@ def insumo():
     finally:
         cursor.close()
 
+
 # --------------------------------------------------
-# CADASTRO DE INSUMO
+# 13 - CADASTRO DE INSUMO
 # --------------------------------------------------
 
 @app.route('/cadastro_insumo', methods=['POST'])
@@ -854,10 +862,11 @@ def cadastro_insumo():
 
     flash('Insumo cadastrado com sucesso!', 'success')
     return redirect(url_for('insumo'))
-# --------------------------------------------------
-# INSUMOS CADASTRADOS
-# --------------------------------------------------
 
+
+# --------------------------------------------------
+# 14 - INSUMOS CADASTRADOS
+# --------------------------------------------------
 
 @app.route('/insumos_cadastrados')
 def insumos_cadastrados():
@@ -886,8 +895,9 @@ def insumos_cadastrados():
     finally:
         cursor.close()
 
+
 # --------------------------------------------------
-# EDITAR INSUMO
+# 15 - EDITAR INSUMO
 # --------------------------------------------------
 
 @app.route('/editar_insumo/<int:id>', methods=['GET', 'POST'])
@@ -1033,7 +1043,10 @@ def editar_insumo(id):
         cursor.close()
 
 
-#ALTERAR STATUS INSUMO
+# --------------------------------------------------
+# 16 - ALTERAR STATUS DO INSUMO
+# --------------------------------------------------
+
 @app.route('/alterar_status_insumo/<int:id>', methods=['POST'])
 def alterar_status_insumo(id):
 
@@ -1100,9 +1113,11 @@ def alterar_status_insumo(id):
         cursor.close()
 
     return redirect(url_for('insumos_cadastrados'))
-#===================================================
-# EXCLUIR INSUMO
-#===================================================
+
+
+# --------------------------------------------------
+# 17 - EXCLUIR INSUMO
+# --------------------------------------------------
 
 @app.route('/excluir_insumo/<int:id>', methods=['POST'])
 def excluir_insumo(id):
@@ -1167,9 +1182,9 @@ def excluir_insumo(id):
         cursor.close()
 
 
-#===================================================
-# ADICIONAR INSUMO AO PRODUTO
-#===================================================
+# --------------------------------------------------
+# 18 - ADICIONAR INSUMO AO PRODUTO
+# --------------------------------------------------
 
 @app.route('/adicionar_insumo_produto', methods=['POST'])
 def adicionar_insumo_produto():
@@ -1317,9 +1332,11 @@ def adicionar_insumo_produto():
     finally:
         cursor.close()
 
-# ===================================================
-# EXCLUIR INSUMO DO PRODUTO
-# ===================================================
+
+# --------------------------------------------------
+# 19 - EXCLUIR INSUMO DO PRODUTO
+# --------------------------------------------------
+
 @app.route('/excluir_insumo_produto/<int:id_composicao>', methods=['POST'])
 def excluir_insumo_produto(id_composicao):
 
@@ -1414,9 +1431,11 @@ def excluir_insumo_produto(id_composicao):
     finally:
         cursor.close()
 
-# ===================================================
-# EDITAR INSUMO DO PRODUTO
-# ===================================================
+
+# --------------------------------------------------
+# 20 - EDITAR INSUMO DO PRODUTO
+# --------------------------------------------------
+
 @app.route('/editar_insumo_produto/<int:id_composicao>', methods=['POST'])
 def editar_insumo_produto(id_composicao):
 
@@ -1562,9 +1581,10 @@ def editar_insumo_produto(id_composicao):
         cursor.close()
 
 
-#===================================================
-# HISTÓRICO DE CUSTOS
-#===================================================
+# --------------------------------------------------
+# 21 - HISTÓRICO DE CUSTOS
+# --------------------------------------------------
+
 @app.route('/historico_custos')
 def historico_custos():
 
@@ -1599,9 +1619,9 @@ def historico_custos():
         cursor.close()
 
 
-#===================================================
-# FUNÇÃO - PREÇO SUGERIDO
-#===================================================
+# --------------------------------------------------
+# 22 - FUNÇÃO - CALCULAR PREÇO SUGERIDO
+# --------------------------------------------------
 
 def calcular_preco_sugerido(custo, margem):
 
@@ -1613,9 +1633,9 @@ def calcular_preco_sugerido(custo, margem):
     return round(preco, 2)
 
 
-#===================================================
-# FUNÇÃO - CUSTO DO INSUMO
-#===================================================
+# --------------------------------------------------
+# 23 - FUNÇÃO - CALCULAR CUSTO DO INSUMO
+# --------------------------------------------------
 
 def calcular_custo_insumo(custo, quantidade, unidade_insumo, unidade_usada):
 
@@ -1639,9 +1659,10 @@ def calcular_custo_insumo(custo, quantidade, unidade_insumo, unidade_usada):
 
     return custo * quantidade
 
-#===================================================
-# FUNÇÃO - ATUALIZAR CUSTO DO PRODUTO
-#===================================================
+
+# --------------------------------------------------
+# 24 - FUNÇÃO - ATUALIZAR CUSTO DO PRODUTO
+# --------------------------------------------------
 
 def atualizar_custo_produto(id_produto):
 
@@ -1697,9 +1718,10 @@ def atualizar_custo_produto(id_produto):
         cursor.close()
 
 
-#===================================================
-# CADASTRAR PRODUTO
-#===================================================
+# --------------------------------------------------
+# 25 - CADASTRAR PRODUTO
+# --------------------------------------------------
+
 @app.route('/produto', methods=['GET', 'POST'])
 def produto():
 
@@ -1820,9 +1842,10 @@ def produto():
     finally:
         cursor.close()
 
-# ===================================================
-# PRODUTOS CADASTRADOS
-# ===================================================
+
+# --------------------------------------------------
+# 26 - PRODUTOS CADASTRADOS
+# --------------------------------------------------
 
 @app.route('/produtos_cadastrados')
 def produtos_cadastrados():
@@ -1856,9 +1879,10 @@ def produtos_cadastrados():
     finally:
         cursor.close()
 
-#===================================================
-# EDITAR PRODUTO
-#===================================================
+
+# --------------------------------------------------
+# 27 - EDITAR PRODUTO
+# --------------------------------------------------
 
 @app.route('/editar_produto/<int:id_produto>')
 def editar_produto(id_produto):
@@ -1936,9 +1960,10 @@ def editar_produto(id_produto):
     finally:
         cursor.close()
 
-#===================================================
-# SALVAR EDICÃO DE PRODUTOS
-#===================================================
+
+# --------------------------------------------------
+# 28 - SALVAR EDIÇÃO DE PRODUTO
+# --------------------------------------------------
 
 @app.route('/salvar_edicao_produto/<int:id_produto>', methods=['POST'])
 def salvar_edicao_produto(id_produto):
@@ -2009,9 +2034,10 @@ def salvar_edicao_produto(id_produto):
     finally:
         cursor.close()
 
-# ===================================================
-# EXCLUIR PRODUTO
-# ===================================================
+
+# --------------------------------------------------
+# 29 - EXCLUIR PRODUTO
+# --------------------------------------------------
 
 @app.route('/excluir_produto/<int:id_produto>', methods=['POST'])
 def excluir_produto(id_produto):
@@ -2106,9 +2132,10 @@ def excluir_produto(id_produto):
     finally:
         cursor.close()
 
-#===================================================
-# UNIDADE DE MEDIDA
-#===================================================
+
+# --------------------------------------------------
+# 30 - UNIDADE DE MEDIDA
+# --------------------------------------------------
 
 @app.route('/unidade_medida', methods=['GET', 'POST'])
 def unidade_medida():
@@ -2173,9 +2200,11 @@ def unidade_medida():
     finally:
         cursor.close()
 
-# ===================================================
-# CATEGORIA
-# ===================================================
+
+# --------------------------------------------------
+# 31 - CATEGORIA
+# --------------------------------------------------
+
 @app.route('/categoria', methods=['GET', 'POST'])
 def categoria():
 
@@ -2236,10 +2265,10 @@ def categoria():
         cursor.close()
 
 
+# --------------------------------------------------
+# 32 - CONFIGURAÇÃO
+# --------------------------------------------------
 
-# ===================================================
-# CONFIGURAÇÃO
-# ===================================================
 @app.route('/configuracao')
 def configuracao():
 
@@ -2251,14 +2280,11 @@ def configuracao():
         usuario=session['nome']
     )
 
-# --------------------------------------------------
-#  INICIALIZAÇÃO DO SISTEMA
-# --------------------------------------------------
-
 
 # --------------------------------------------------
-# FOTO DO PRODUTO (modelo do PDF: arquivo pelo ID)
+# 33 - FOTO DO PRODUTO
 # --------------------------------------------------
+
 @app.route('/foto_produto/<int:id_produto>', methods=['GET', 'POST'])
 def foto_produto(id_produto):
     if 'id_usuario' not in session:
@@ -2286,9 +2312,11 @@ def foto_produto(id_produto):
     finally:
         cursor.close()
 
+
 # --------------------------------------------------
-# FOTO DE PERFIL (arquivo usuario<ID>.jpg; sem foto, usa o ícone padrão)
+# 34 - FOTO DE PERFIL
 # --------------------------------------------------
+
 @app.context_processor
 def injetar_foto_perfil():
     id_usuario = session.get('id_usuario')
@@ -2315,9 +2343,11 @@ def foto_perfil():
         return '', 404
     return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
 
+
 # --------------------------------------------------
-# RELATÓRIOS (FPDF e send_file, conforme o PDF da aula)
+# 35 - RELATÓRIOS
 # --------------------------------------------------
+
 @app.route('/relatorios')
 def relatorios():
     if 'id_usuario' not in session:
@@ -2338,12 +2368,144 @@ def relatorios():
     finally:
         cursor.close()
 
+
+# --------------------------------------------------
+# 36 - FUNÇÃO - INSUMOS UTILIZADOS NO PRODUTO
+# --------------------------------------------------
+
+def insumos_do_produto(cursor, id_produto):
+
+    cursor.execute("""
+        SELECT I.NOME, C.QUANTIDADE, U2.SIGLA, I.CUSTO, U1.SIGLA
+        FROM COMPOSICAO_PRODUTO C
+        JOIN INSUMO I ON C.ID_INSUMO = I.ID_INSUMO
+        JOIN UNIDADE_MEDIDA U1 ON I.ID_UNIDADE = U1.ID_UNIDADE
+        JOIN UNIDADE_MEDIDA U2 ON C.ID_UNIDADE = U2.ID_UNIDADE
+        WHERE C.ID_PRODUTO = ? AND COALESCE(I.ATIVO, 1) = 1
+        ORDER BY I.NOME
+    """, (id_produto,))
+
+    lista = []
+
+    for nome, quantidade, un_usada, custo, un_insumo in cursor.fetchall():
+        valor = calcular_custo_insumo(custo, quantidade, un_insumo, un_usada)
+        lista.append((nome, quantidade, un_usada, valor))
+
+    return lista
+
+
+# --------------------------------------------------
+# 37 - FUNÇÃO - MONTAR PDF DO RELATÓRIO
+# --------------------------------------------------
+
+# Paleta do sistema (verde-limão, preto e branco)
+COR_VERDE = (163, 198, 94)
+COR_VERDE_CLARO = (244, 248, 234)
+COR_TEXTO = (34, 34, 34)
+COR_CINZA = (120, 120, 120)
+COR_LINHA = (225, 225, 225)
+
+def montar_pdf(titulo, tipo, itens, usados):
+    if tipo == 'insumos':
+        colunas = [('ID', 20, 'C'), ('Insumo', 120, 'L'), ('Custo', 50, 'R')]
+    else:
+        colunas = [('ID', 15, 'C'), ('Produto', 85, 'L'), ('Custo', 30, 'R'),
+                   ('Valor', 30, 'R'), ('Margem', 30, 'R')]
+
+    def cabecalho_tabela():
+        pdf.set_fill_color(*COR_VERDE)
+        pdf.set_text_color(*COR_TEXTO)
+        pdf.set_font('Arial', style='B', size=9)
+        for nome, largura, alinhamento in colunas:
+            pdf.cell(largura, 8, nome, border=0, align=alinhamento, fill=True)
+        pdf.ln(8)
+
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=False)
+    pdf.add_page()
+
+    # Topo: nome do sistema, título e data
+    pdf.set_fill_color(*COR_VERDE)
+    pdf.rect(10, 10, 4, 16, 'F')
+    pdf.set_xy(17, 10)
+    pdf.set_font('Arial', style='B', size=16)
+    pdf.set_text_color(*COR_TEXTO)
+    pdf.cell(120, 8, 'Lucrafy', ln=True)
+    pdf.set_x(17)
+    pdf.set_font('Arial', size=10)
+    pdf.set_text_color(*COR_CINZA)
+    pdf.cell(120, 8, titulo, ln=True)
+    pdf.set_xy(10, 32)
+
+    cabecalho_tabela()
+
+    for posicao, item in enumerate(itens):
+        sub = usados.get(item[0], []) if tipo != 'insumos' else []
+        altura = 8
+        if tipo != 'insumos':
+            altura += 6 + 6 * max(len(sub), 1)
+
+        # Nova página se o bloco não couber
+        if pdf.get_y() + altura > 280:
+            pdf.add_page()
+            pdf.set_xy(10, 12)
+            cabecalho_tabela()
+
+        pdf.set_draw_color(*COR_LINHA)
+        pdf.set_text_color(*COR_TEXTO)
+        pdf.set_font('Arial', size=9)
+        if posicao % 2 == 1:
+            pdf.set_fill_color(*COR_VERDE_CLARO)
+        else:
+            pdf.set_fill_color(255, 255, 255)
+
+        if tipo == 'insumos':
+            valores = [str(item[0]), item[1][:60], f'R$ {item[2]:.2f}']
+        else:
+            valores = [str(item[0]), item[1][:45], f'R$ {item[2]:.2f}',
+                       f'R$ {item[3]:.2f}', f'{item[4]}%']
+
+        for (nome, largura, alinhamento), valor in zip(colunas, valores):
+            pdf.cell(largura, 8, valor, border='B', align=alinhamento, fill=True)
+        pdf.ln(8)
+
+        # Insumos utilizados no produto (linhas menores, logo abaixo)
+        if tipo != 'insumos':
+            pdf.set_font('Arial', style='B', size=8)
+            pdf.set_text_color(*COR_CINZA)
+            pdf.cell(15, 6, '', fill=True)
+            pdf.cell(175, 6, 'Insumos utilizados', fill=True, ln=True)
+            pdf.set_font('Arial', size=8)
+            if not sub:
+                pdf.cell(15, 6, '', fill=True)
+                pdf.cell(175, 6, 'Nenhum insumo vinculado.', border='B', fill=True, ln=True)
+            for nome, quantidade, sigla, valor in sub:
+                custo_txt = f'R$ {valor:.2f}' if valor is not None else '-'
+                pdf.cell(15, 6, '', fill=True)
+                pdf.cell(85, 6, '- ' + nome[:45], border='B', fill=True)
+                pdf.cell(30, 6, custo_txt, border='B', align='R', fill=True)
+                pdf.cell(60, 6, f'{float(quantidade):g} {sigla}', border='B', align='R', fill=True)
+                pdf.ln(6)
+
+    # Total
+    pdf.ln(4)
+    pdf.set_text_color(*COR_TEXTO)
+    pdf.set_font('Arial', style='B', size=10)
+    pdf.cell(190, 8, f'Total de registros: {len(itens)}', align='R')
+    return pdf
+
+
+# --------------------------------------------------
+# 38 - RELATÓRIO EM PDF
+# --------------------------------------------------
+
 @app.route('/relatorios/pdf')
 def relatorio_pdf():
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
     tipo = request.args.get('tipo', 'margem')
     cursor = con.cursor()
+    usados = {}
     try:
         if tipo == 'insumos':
             titulo = 'Insumos cadastrados'
@@ -2363,36 +2525,25 @@ def relatorio_pdf():
         else:
             return 'Tipo de relatório inválido.', 400
         itens = cursor.fetchall()
+
+        # Insumos utilizados em cada produto (com o cursor ainda aberto)
+        if tipo != 'insumos':
+            for item in itens:
+                usados[item[0]] = insumos_do_produto(cursor, item[0])
     finally:
         cursor.close()
     if not itens:
         flash('Não há registros para gerar o relatório.', 'error')
         return redirect(url_for('relatorios'))
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font('Arial', style='B', size=16)
-    pdf.cell(190, 10, titulo, ln=True, align='C')
-    pdf.ln(5)
-    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
-    pdf.ln(5)
-    for item in itens:
-        # Linhas separadas mantêm os nomes de até 100 caracteres dentro da página.
-        pdf.set_font('Arial', style='B', size=10)
-        pdf.cell(190, 8, f'ID: {item[0]}', ln=True)
-        pdf.set_font('Arial', size=9)
-        pdf.cell(190, 8, item[1][:50], ln=True)
-        if len(item[1]) > 50:
-            pdf.cell(190, 8, item[1][50:], ln=True)
-        pdf.cell(190, 8, f'Custo: R$ {item[2]:.2f}', ln=True)
-        if tipo != 'insumos':
-            pdf.cell(190, 8, f'Valor: R$ {item[3]:.2f} - Margem: {item[4]}%', ln=True)
-        pdf.ln(5)
-    pdf.set_font('Arial', style='B', size=12)
-    pdf.cell(190, 10, f'Total de registros: {len(itens)}', ln=True, align='C')
+    pdf = montar_pdf(titulo, tipo, itens, usados)
     pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], f'relatorio_{tipo}_{session["id_usuario"]}.pdf')
     pdf.output(pdf_path)
     return send_file(pdf_path, as_attachment=True, mimetype='application/pdf')
+
+
+# --------------------------------------------------
+# 39 - INICIALIZAÇÃO DO SISTEMA
+# --------------------------------------------------
 
 if __name__ == '__main__':
 
