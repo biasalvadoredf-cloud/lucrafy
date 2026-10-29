@@ -737,3 +737,40 @@
         height: 44px;
     }
 }
+
+/* Foto de perfil */
+.lu-app .lu-header .lu-perfil-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    border-radius: 12px;
+    background: #f7f6f7;
+    overflow: hidden;
+}
+.lu-app .lu-header .lu-perfil-mobile img.tem-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.foto-perfil { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.foto-perfil .lu-perfil-foto-grande { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: #f7f7f7; border: 1px solid #e5e5e5; padding: 0; box-sizing: border-box; }
+.foto-perfil label { font-size: 15px; font-weight: 500; }
+.foto-perfil input[type="file"] { max-width: 100%; font-family: inherit; font-size: 14px; }
+.foto-perfil input[type="file"]::file-selector-button,
+.foto-perfil button {
+    background-color: #a3c65e; color: #fff; border: none; border-radius: 6px;
+    padding: 10px 16px; font-family: inherit; font-size: 14px; line-height: 1.5; cursor: pointer;
+}
+.foto-perfil input[type="file"]::file-selector-button { margin-right: 12px; }
+.foto-perfil button:hover, .foto-perfil input[type="file"]::file-selector-button:hover { background-color: #91b44c; }
+
+/* Estados vazios e ilustrações */
+.estado-vazio { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 24px 12px; width: 100%; }
+.estado-vazio img { max-width: 100%; height: auto; }
+.estado-vazio h3 { margin: 8px 0 0; font-size: 18px; color: #242b25; }
+.estado-vazio p { margin: 0; color: #5b665d; font-size: 14px; }
+.config-ilustracao { display: block; margin: 0 auto 8px; height: auto; }

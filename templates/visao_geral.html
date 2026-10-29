@@ -12,13 +12,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/visao-geral.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
 </head>
 
 <body class="lu-site lu-app" data-section="visao">
-
-     
 
     <!-- CABEÇALHO -->
     <div class="cabecalho lu-header">
@@ -33,9 +30,14 @@
                 <a href="index.html">Benefícios</a>
             </div>
 
-        
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
-</div>
+            <a class="lu-perfil-mobile"
+                href="{{ url_for('configuracao') }}"
+                aria-label="Abrir configurações"
+                title="Configurações">
+                <img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt="">
+            </a>
+
+        </div>
     </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -73,28 +75,28 @@
 
         <!-- VISÃO GERAL -->
         <div class="geral lu-content">
-{% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
 
-                            <span class="flash-icone">
-                                {% if category == 'success' %}
-                                    ✓
-                                {% else %}
-                                    !
-                                {% endif %}
-                            </span>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
 
-                            <span class="flash-texto">{{ message }}</span>
+                                <span class="flash-icone">
+                                    {% if category == 'success' %}
+                                        ✓
+                                    {% else %}
+                                        !
+                                    {% endif %}
+                                </span>
 
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+                                <span class="flash-texto">{{ message }}</span>
 
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
             <div class="cabecalho-visao-geral">
                 <h1>Visão Geral</h1>
@@ -136,13 +138,26 @@
                 {% for produto in produtos_destaque %}
 
                 <div class="produto-destaque">
+
+                    <div class="foto-destaque">
+                        {% if produto[4] %}
+                            <img src="{{ url_for('foto_produto', id_produto=produto[3]) }}"
+                                alt="Foto de {{ produto[0] }}">
+                        {% endif %}
+                    </div>
+
                     <h3>{{ produto[0] }}</h3>
                     <p>Custo: R$ {{ produto[1] }}</p>
                     <p>Preço sugerido: R$ {{ produto[2] }}</p>
+
                 </div>
 
                 {% else %}
-                <p>Nenhum produto encontrado</p>
+                    <div class="estado-vazio">
+<img src="{{ url_for('static', filename='img/visao-vazio.png') }}" alt="" width="160">
+<h3>Vamos começar?</h3>
+<p>Cadastre seu primeiro produto para ver os destaques aqui.</p>
+</div>
                 {% endfor %}
             </div>
 
@@ -171,8 +186,8 @@
 
                     <div>
                         <img class="logo-rodape"
-                             src="{{ url_for('static', filename='img/logo.png') }}"
-                             alt="Lucrafy">
+                            src="{{ url_for('static', filename='img/logo.png') }}"
+                            alt="Lucrafy">
 
                         <p class="descricao-rodape">
                             O gerenciador financeiro simples, prático e 100%<br>
@@ -198,7 +213,10 @@
 
                 </div>
             </div>
+
         </div>
     </div>
+
 </body>
+
 </html>

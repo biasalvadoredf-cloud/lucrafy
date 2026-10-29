@@ -24,7 +24,7 @@
         </nav>
 
     
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
 </header>
 
     <div class="estrutura lu-layout">
@@ -132,7 +132,11 @@
 
                             <tr role="row">
                                 <td colspan="4" class="vazio" role="cell">
-                                    Nenhuma alteração de custo registrada.
+                                    <div class="estado-vazio">
+<img src="{{ url_for('static', filename='img/historico-vazio.png') }}" alt="" width="160">
+<h3>Nenhuma alteração ainda</h3>
+<p>Quando o custo de um insumo mudar, o histórico aparece aqui.</p>
+</div>
                                 </td>
                             </tr>
 

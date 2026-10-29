@@ -23,7 +23,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -121,11 +121,17 @@ def visao_geral():
         if margem_media is None:
             margem_media = 0
 
-        cursor.execute("""SELECT FIRST 3 NOME, CUSTO, PRECO_SUGERIDO FROM PRODUTO WHERE ID_USUARIO = ? 
+        cursor.execute("""SELECT FIRST 3 NOME, CUSTO, PRECO_SUGERIDO, ID_PRODUTO FROM PRODUTO WHERE ID_USUARIO = ? 
         ORDER BY margem_lucro DESC
         """, (id_usuario,))
 
-        produtos_destaque = cursor.fetchall()
+        produtos_destaque = [
+            (*produto, os.path.isfile(os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                f'produto{produto[3]}.jpg'
+            )))
+            for produto in cursor.fetchall()
+        ]
 
 
 
@@ -2275,10 +2281,39 @@ def foto_produto(id_produto):
                 flash('Foto salva com sucesso!', 'success')
             return redirect(url_for('editar_produto', id_produto=id_produto))
         if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)):
-            return send_from_directory(os.path.join(app.root_path, 'static', 'img'), 'elemento-produtos.svg')
+            return '', 404
         return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
     finally:
         cursor.close()
+
+# --------------------------------------------------
+# FOTO DE PERFIL (arquivo usuario<ID>.jpg; sem foto, usa o ícone padrão)
+# --------------------------------------------------
+@app.context_processor
+def injetar_foto_perfil():
+    id_usuario = session.get('id_usuario')
+    tem_foto = bool(id_usuario) and os.path.isfile(
+        os.path.join(app.config['UPLOAD_FOLDER'], f'usuario{id_usuario}.jpg'))
+    return {'tem_foto_perfil': tem_foto}
+
+@app.route('/foto_perfil', methods=['GET', 'POST'])
+def foto_perfil():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+    nome_arquivo = f"usuario{session['id_usuario']}.jpg"
+    if request.method == 'POST':
+        arquivo = request.files.get('arquivo')
+        if not arquivo or not arquivo.filename:
+            flash('Selecione uma imagem JPG.', 'error')
+        elif not arquivo.filename.lower().endswith(('.jpg', '.jpeg')):
+            flash('Envie uma imagem JPG.', 'error')
+        else:
+            arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo))
+            flash('Foto de perfil salva com sucesso!', 'success')
+        return redirect(url_for('configuracao'))
+    if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)):
+        return '', 404
+    return send_from_directory(app.config['UPLOAD_FOLDER'], nome_arquivo)
 
 # --------------------------------------------------
 # RELATÓRIOS (FPDF e send_file, conforme o PDF da aula)

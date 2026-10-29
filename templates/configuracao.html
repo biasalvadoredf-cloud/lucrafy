@@ -35,13 +35,7 @@
         <a href="{{ url_for('index') }}#beneficios">Benefícios</a>
       </div>
 
-      <!-- ACESSO -->
-      <div class="acesso">
-        <a class="sair" href="{{ url_for('login') }}">Sair</a>
-      </div>
-
-    
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+<a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
 </div>
 
   </div>
@@ -83,6 +77,13 @@
                 </div>
             {% endif %}
         {% endwith %}
+
+          <form action="{{ url_for('foto_perfil') }}" method="POST" enctype="multipart/form-data" class="campo foto-perfil">
+            <img class="lu-perfil-foto-grande" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" alt="Foto de perfil" width="72" height="72">
+            <label for="arquivo">Foto de perfil (JPG)</label>
+            <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg" required>
+            <button type="submit">Salvar foto</button>
+          </form>
 
           <div class="campo">
             <a href="{{ url_for('alterar_senha') }}" type="button" >Alterar Senha</a>
@@ -136,7 +137,7 @@
         <a class="lu-nav-item" data-section="visao" href="{{ url_for('visao_geral') }}"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">Visão geral</a>
         <a class="lu-nav-item" data-section="insumos" href="{{ url_for('insumo') }}"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">Insumos</a>
         <a class="lu-nav-item" data-section="produtos" href="{{ url_for('produtos_cadastrados') }}"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">Produtos</a>
-        <a class="lu-nav-item" data-section="relatorios" href="{{ url_for('relatorios') }}"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">Relatórios</a>
+        <a class="lu-nav-item" data-section="relatorios" href="#"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">Relatórios</a>
         <a class="lu-nav-item lu-current" data-section="configuracoes" href="{{ url_for('configuracao') }}" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">Configurações</a>
     </nav>
 </body>

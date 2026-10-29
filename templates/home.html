@@ -11,7 +11,7 @@
 </head>
 <body class="pagina-home lu-site lu-app" data-section="visao">
     <header class="cabecalho lu-header lu-mobile-only"><a class="marca" href="{{ url_for('visao_geral') }}"><img src="{{ url_for('static', filename='img/logo.png') }}" width="91" height="37" alt="Lucrafy"></a>
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
     </header>
 
 

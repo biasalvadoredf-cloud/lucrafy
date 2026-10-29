@@ -31,10 +31,12 @@
             <a href="{{ url_for('index') }}">Benefícios</a>
         </div>
 
-    
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
-</div>
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações"
+            title="Configurações">
+            <img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt="">
+        </a>
 
+    </div>
 
     <div class="lados lu-layout">
 
@@ -55,7 +57,8 @@
 
             <div class="opcoes lu-nav-item lu-current" data-section="produtos">
                 <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
-                <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos" aria-current="page">Produtos</a>
+                <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos"
+                    aria-current="page">Produtos</a>
             </div>
 
             <div class="opcoes lu-nav-item" data-section="relatorios">
@@ -70,33 +73,31 @@
 
         </div>
 
-
-
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="geral lu-content">
 
             <!-- MENSAGENS DO FLASK -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
 
-                            <span class="flash-icone">
-                                {% if category == 'success' %}
-                                    ✓
-                                {% else %}
-                                    !
-                                {% endif %}
-                            </span>
+                                <span class="flash-icone">
+                                    {% if category == 'success' %}
+                                        ✓
+                                    {% else %}
+                                        !
+                                    {% endif %}
+                                </span>
 
-                            <span class="flash-texto">{{ message }}</span>
+                                <span class="flash-texto">{{ message }}</span>
 
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
             <div class="cabecalho-geral">
 
@@ -106,16 +107,28 @@
 
             </div>
 
+            <!-- FOTO DO PRODUTO -->
+            <form action="{{ url_for('foto_produto', id_produto=produto[0]) }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="cartao foto-produto">
 
+                <img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" onerror="this.style.display='none'"
+                    alt="Foto de {{ produto[1] }}">
 
-            <!-- EDITAR DADOS DO PRODUTO -->
-            <form action="{{ url_for('foto_produto', id_produto=produto[0]) }}" method="POST" enctype="multipart/form-data" class="cartao">
-                <img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" alt="Foto de {{ produto[1] }}" width="120" height="120" style="object-fit: contain; max-width: 100%;">
                 <label for="arquivo">Foto do produto (JPG)</label>
-                <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg" required>
+
+                <input type="file"
+                    id="arquivo"
+                    name="arquivo"
+                    accept=".jpg,.jpeg"
+                    required>
+
                 <button type="submit">Salvar foto</button>
+
             </form>
 
+            <!-- EDITAR DADOS DO PRODUTO -->
             <form action="{{ url_for('salvar_edicao_produto', id_produto=produto[0]) }}" method="POST">
 
                 <div class="cartao dados-produto">
@@ -126,22 +139,18 @@
 
                     <input type="text" name="nome" value="{{ produto[1] }}" required>
 
-
                     <label>Descrição</label>
 
                     <textarea name="descricao">{{ produto[2] or '' }}</textarea>
-
 
                     <label>Tempo de produção (minutos)</label>
 
                     <input type="number" name="tempo" min="0" value="{{ produto[4] }}" required>
 
-
                     <label>Margem de lucro (%)</label>
 
-                    <input type="number" name="margem" min="0.01" max="99.99" step="0.01" value="{{ produto[3] }}"
-                        required>
-
+                    <input type="number" name="margem" min="0.01" max="99.99" step="0.01"
+                        value="{{ produto[3] }}" required>
 
                     <button type="submit" class="salvar-produto">
                         Salvar alterações
@@ -150,7 +159,6 @@
                 </div>
 
             </form>
-
 
             <div class="conteudo-produto">
 
@@ -162,7 +170,6 @@
                         <h2>Insumos utilizados</h2>
 
                     </div>
-
 
                     <!-- TABELA DE INSUMOS -->
                     <div class="tabela-responsiva lu-tabela-container">
@@ -188,22 +195,27 @@
 
                                     <td data-label="Insumo" role="cell">
                                         <span class="lu-nome-insumo">{{ item[1] }}</span>
-                                        {% if item[4] == 0 %}<span class="lu-status-insumo">Inativo · fora do custo</span>{% endif %}
+                                        {% if item[4] == 0 %}
+                                            <span class="lu-status-insumo">Inativo · fora do custo</span>
+                                        {% endif %}
                                     </td>
 
                                     <td data-label="Quantidade" role="cell">
                                         <form action="{{ url_for('editar_insumo_produto', id_composicao=item[0]) }}"
-                                              method="POST"
-                                              class="form-editar-insumo"
-                                              id="editar-insumo-{{ item[0] }}">
-                                            <input type="number" name="quantidade" value="{{ item[2] }}" min="0.001" step="0.001" equired>
+                                            method="POST"
+                                            class="form-editar-insumo"
+                                            id="editar-insumo-{{ item[0] }}">
+
+                                            <input type="number" name="quantidade" value="{{ item[2] }}"
+                                                min="0.001" step="0.001" equired>
+
                                         </form>
                                     </td>
 
                                     <td data-label="Unidade" role="cell">
                                         <select name="id_unidade"
-                                                form="editar-insumo-{{ item[0] }}"
-                                                required>
+                                            form="editar-insumo-{{ item[0] }}"
+                                            required>
 
                                             {% for unidade in unidades %}
 
@@ -217,8 +229,8 @@
                                         </select>
 
                                         <button type="submit"
-                                                form="editar-insumo-{{ item[0] }}"
-                                                class="botao-salvar-insumo">
+                                            form="editar-insumo-{{ item[0] }}"
+                                            class="botao-salvar-insumo">
                                             Salvar
                                         </button>
                                     </td>
@@ -236,7 +248,6 @@
                                             </button>
 
                                         </form>
-
 
                                     </td>
 
@@ -258,12 +269,11 @@
 
                     </div>
 
-
                     <!-- ADICIONAR INSUMO -->
-                    <form action="{{ url_for('adicionar_insumo_produto') }}" method="POST" class="formulario-insumo">
+                    <form action="{{ url_for('adicionar_insumo_produto') }}" method="POST"
+                        class="formulario-insumo">
 
                         <input type="hidden" name="id_produto" value="{{ produto[0] }}">
-
 
                         <label>Insumo</label>
 
@@ -283,11 +293,10 @@
 
                         </select>
 
-
                         <label>Quantidade utilizada</label>
 
-                        <input type="number" name="quantidade" min="0.001" step="0.001" placeholder="Ex: 200" required>
-
+                        <input type="number" name="quantidade" min="0.001" step="0.001"
+                            placeholder="Ex: 200" required>
 
                         <label>Unidade de medida</label>
 
@@ -307,7 +316,6 @@
 
                         </select>
 
-
                         <button type="submit" class="adicionar-insumo">
 
                             <span>+</span>
@@ -319,12 +327,10 @@
 
                 </div>
 
-
                 <!-- CUSTO DA PRODUÇÃO -->
                 <div class="cartao resumo-custo">
 
                     <h2>Custo da produção</h2>
-
 
                     <div class="valor-custo">
 
@@ -336,7 +342,6 @@
 
                     </div>
 
-
                     <div class="valor-custo destaque">
 
                         <span>Custo por unidade</span>
@@ -346,7 +351,6 @@
                         </strong>
 
                     </div>
-
 
                     <div class="valor-custo destaque">
 
@@ -362,7 +366,6 @@
 
             </div>
 
-
             <!-- VOLTAR -->
             <a href="{{ url_for('produtos_cadastrados') }}" class="botao-voltar">
 
@@ -373,7 +376,6 @@
         </div>
 
     </div>
-
 
     <!-- RODAPÉ -->
     <footer class="rodape lu-footer">
@@ -389,7 +391,6 @@
             </p>
 
         </div>
-
 
         <div class="rodape-base">
 

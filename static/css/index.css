@@ -345,10 +345,9 @@ p {
 
 .recorte-resumo img {
   display: block;
-  width: 800px;
-  max-width: none;
-  margin-top: -90px;
-  margin-left: -390px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .chamada {
@@ -773,8 +772,8 @@ p {
   }
 
   .recorte-resumo img {
-    width: 600px;
-    margin-left: -295px;
+    width: 100%;
+    margin-left: 0;
   }
 
   .chamada {

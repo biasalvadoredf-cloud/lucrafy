@@ -20,8 +20,8 @@
         <a href="{{ url_for('index') }}">Funcionalidades</a>
         <a href="{{ url_for('index') }}">Benefícios</a>
     
-        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img src="{{ url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
-    </header>
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</header>
 
     <div class="lados lu-layout">
 
@@ -97,7 +97,7 @@
                         <tbody role="rowgroup">
                             {% for produto in produtos %}
                             <tr role="row">
-                                <td data-label="Produto" role="cell"><img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" alt="" width="48" height="48" style="object-fit: contain; vertical-align: middle;"> {{ produto[1] }}</td>
+                                <td data-label="Produto" role="cell"><img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" onerror="this.style.display='none'" alt="" width="48" height="48" style="object-fit: contain; vertical-align: middle;"> {{ produto[1] }}</td>
                                 <td data-label="Custo" role="cell">R$ {{ "%.2f"|format(produto[2]) }}</td>
                                 <td data-label="Preço sugerido" role="cell">R$ {{ "%.2f"|format(produto[3]) }}</td>
                                 <td class="lu-campo-inteiro" data-label="Margem" role="cell">{{ produto[4] }}%</td>
@@ -117,7 +117,11 @@
                             {% else %}
                             <tr role="row">
                                 <td colspan="5" class="vazio" role="cell">
-                                    Nenhum produto cadastrado.
+                                    <div class="estado-vazio">
+                                        <img src="{{ url_for('static', filename='img/produtos-vazio.png') }}" alt="" width="180">
+                                        <h3>Você ainda não tem produtos</h3>
+                                        <p>Use o botão "+ Novo produto" acima para cadastrar o primeiro e calcular custo e preço sugerido.</p>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}

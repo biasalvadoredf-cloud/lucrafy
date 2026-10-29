@@ -202,3 +202,8 @@ th {
         padding: 15px;
     }
 }
+
+.estado-vazio { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 24px 12px; }
+.estado-vazio img { max-width: 100%; height: auto; }
+.estado-vazio h3 { margin: 8px 0 0; color: #242b25; font-size: 18px; }
+.estado-vazio p { margin: 0 0 8px; color: #5b665d; font-size: 14px; }

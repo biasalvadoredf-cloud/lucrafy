@@ -1146,3 +1146,18 @@ td.acoes img {
     outline: 2px solid #496801;
     outline-offset: 2px;
 }
+
+#arquivo::file-selector-button {
+    background-color: #a3c65e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+#arquivo::file-selector-button:hover {
+    background-color: #91b44c;
+}
+
