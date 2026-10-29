@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Produto - Lucrafy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_produto.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+</head>
+
+<body class="lu-site lu-app" data-section="produtos">
+
+    <!-- CABEÇALHO -->
+    <div class="cabecalho lu-header">
+
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy" width="91" height="37">
+        </div>
+
+        <div class="opcao-cabecalho">
+            <a href="{{ url_for('index') }}">Funcionalidades</a>
+        </div>
+
+        <div class="opcao-cabecalho">
+            <a href="{{ url_for('index') }}">Benefícios</a>
+        </div>
+
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações"
+            title="Configurações">
+            <img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt="">
+        </a>
+
+    </div>
+
+    <div class="lados lu-layout">
+
+        <!-- MENU LATERAL -->
+        <div class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
+
+            <h4>MENU PRINCIPAL</h4>
+
+            <div class="opcoes lu-nav-item" data-section="visao">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">
+                <a href="{{ url_for('visao_geral') }}" data-section="visao">Visão geral</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="insumos">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">
+                <a href="{{ url_for('insumo') }}" data-section="insumos">Insumos</a>
+            </div>
+
+            <div class="opcoes lu-nav-item lu-current" data-section="produtos">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">
+                <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos"
+                    aria-current="page">Produtos</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="relatorios">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">
+                <a href="{{ url_for('relatorios') }}" data-section="relatorios">Relatórios</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="configuracoes">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">
+                <a href="{{ url_for('configuracao') }}" data-section="configuracoes">Configurações</a>
+            </div>
+
+        </div>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div class="geral lu-content">
+
+            <!-- MENSAGENS DO FLASK -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+
+                                <span class="flash-icone">
+                                    {% if category == 'success' %}
+                                        ✓
+                                    {% else %}
+                                        !
+                                    {% endif %}
+                                </span>
+
+                                <span class="flash-texto">{{ message }}</span>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="cabecalho-geral">
+
+                <h1>{{ produto[1] }}</h1>
+
+                <p>Gerencie os insumos e os custos deste produto.</p>
+
+            </div>
+
+            <!-- FOTO DO PRODUTO -->
+            <form action="{{ url_for('foto_produto', id_produto=produto[0]) }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="cartao foto-produto">
+
+                <img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" onerror="this.style.display='none'"
+                    alt="Foto de {{ produto[1] }}">
+
+                <label for="arquivo">Foto do produto (JPG)</label>
+
+                <input type="file"
+                    id="arquivo"
+                    name="arquivo"
+                    accept=".jpg,.jpeg"
+                    required>
+
+                <button type="submit">Salvar foto</button>
+
+            </form>
+
+            <!-- EDITAR DADOS DO PRODUTO -->
+            <form action="{{ url_for('salvar_edicao_produto', id_produto=produto[0]) }}" method="POST">
+
+                <div class="cartao dados-produto">
+
+                    <h2>Dados do produto</h2>
+
+                    <label>Nome do produto</label>
+
+                    <input type="text" name="nome" value="{{ produto[1] }}" required>
+
+                    <label>Descrição</label>
+
+                    <textarea name="descricao">{{ produto[2] or '' }}</textarea>
+
+                    <label>Tempo de produção (minutos)</label>
+
+                    <input type="number" name="tempo" min="0" value="{{ produto[4] }}" required>
+
+                    <label>Margem de lucro (%)</label>
+
+                    <input type="number" name="margem" min="0.01" max="99.99" step="0.01"
+                        value="{{ produto[3] }}" required>
+
+                    <button type="submit" class="salvar-produto">
+                        Salvar alterações
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div class="conteudo-produto">
+
+                <!-- INSUMOS UTILIZADOS -->
+                <div class="cartao insumos-utilizados">
+
+                    <div class="titulo-cartao">
+
+                        <h2>Insumos utilizados</h2>
+
+                    </div>
+
+                    <!-- TABELA DE INSUMOS -->
+                    <div class="tabela-responsiva lu-tabela-container">
+
+                        <table class="lu-tabela-cards" role="table">
+
+                            <thead role="rowgroup">
+
+                                <tr role="row">
+                                    <th scope="col" role="columnheader">Insumo</th>
+                                    <th scope="col" role="columnheader">Quantidade</th>
+                                    <th scope="col" role="columnheader">Unidade</th>
+                                    <th scope="col" role="columnheader">Ações</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody role="rowgroup">
+
+                                {% for item in composicao %}
+
+                                <tr role="row"{% if item[4] == 0 %} class="lu-insumo-inativo"{% endif %}>
+
+                                    <td data-label="Insumo" role="cell">
+                                        <span class="lu-nome-insumo">{{ item[1] }}</span>
+                                        {% if item[4] == 0 %}
+                                            <span class="lu-status-insumo">Inativo · fora do custo</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td data-label="Quantidade" role="cell">
+                                        <form action="{{ url_for('editar_insumo_produto', id_composicao=item[0]) }}"
+                                            method="POST"
+                                            class="form-editar-insumo"
+                                            id="editar-insumo-{{ item[0] }}">
+
+                                            <input type="number" name="quantidade" value="{{ item[2] }}"
+                                                min="0.001" step="0.001" equired>
+
+                                        </form>
+                                    </td>
+
+                                    <td data-label="Unidade" role="cell">
+                                        <select name="id_unidade"
+                                            form="editar-insumo-{{ item[0] }}"
+                                            required>
+
+                                            {% for unidade in unidades %}
+
+                                            <option value="{{ unidade[0] }}"
+                                                {% if unidade[2] == item[3] %}selected{% endif %}>
+                                                {{ unidade[2] }}
+                                            </option>
+
+                                            {% endfor %}
+
+                                        </select>
+
+                                        <button type="submit"
+                                            form="editar-insumo-{{ item[0] }}"
+                                            class="botao-salvar-insumo">
+                                            Salvar
+                                        </button>
+                                    </td>
+
+                                    <td class="acoes lu-campo-inteiro" data-label="Ações" role="cell">
+
+                                        <form action="{{ url_for('excluir_insumo_produto', id_composicao=item[0]) }}"
+                                            method="POST">
+
+                                            <button type="submit" title="Excluir insumo">
+
+                                                <img src="{{ url_for('static', filename='img/icone-excluir.svg') }}"
+                                                    alt="Excluir">
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                                {% else %}
+
+                                <tr role="row">
+                                    <td colspan="4" role="cell">
+                                        Nenhum insumo adicionado.
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- ADICIONAR INSUMO -->
+                    <form action="{{ url_for('adicionar_insumo_produto') }}" method="POST"
+                        class="formulario-insumo">
+
+                        <input type="hidden" name="id_produto" value="{{ produto[0] }}">
+
+                        <label>Insumo</label>
+
+                        <select name="id_insumo" required>
+
+                            <option value="">
+                                Selecione um insumo...
+                            </option>
+
+                            {% for insumo in insumos %}
+
+                            <option value="{{ insumo[0] }}">
+                                {{ insumo[1] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                        <label>Quantidade utilizada</label>
+
+                        <input type="number" name="quantidade" min="0.001" step="0.001"
+                            placeholder="Ex: 200" required>
+
+                        <label>Unidade de medida</label>
+
+                        <select name="id_unidade" required>
+
+                            <option value="">
+                                Selecione a unidade...
+                            </option>
+
+                            {% for unidade in unidades %}
+
+                            <option value="{{ unidade[0] }}">
+                                {{ unidade[1] }} ({{ unidade[2] }})
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                        <button type="submit" class="adicionar-insumo">
+
+                            <span>+</span>
+                            Adicionar insumo
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <!-- CUSTO DA PRODUÇÃO -->
+                <div class="cartao resumo-custo">
+
+                    <h2>Custo da produção</h2>
+
+                    <div class="valor-custo">
+
+                        <span>Subtotal dos insumos</span>
+
+                        <strong>
+                            R$ {{ "%.2f"|format(produto[5]) }}
+                        </strong>
+
+                    </div>
+
+                    <div class="valor-custo destaque">
+
+                        <span>Custo por unidade</span>
+
+                        <strong>
+                            R$ {{ "%.2f"|format(produto[5]) }}
+                        </strong>
+
+                    </div>
+
+                    <div class="valor-custo destaque">
+
+                        <span>Preço sugerido</span>
+
+                        <strong>
+                            R$ {{ "%.2f"|format(produto[6]) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- VOLTAR -->
+            <a href="{{ url_for('produtos_cadastrados') }}" class="botao-voltar">
+
+                Voltar aos produtos
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape lu-footer">
+
+        <div class="rodape-conteudo">
+
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lucrafy" width="94">
+
+            <p class="descricao-rodape">
+                O gerenciador financeiro simples, prático e 100%<br>
+                gratuito para quem quer controlar gastos sem<br>
+                burocracia nem complicação.
+            </p>
+
+        </div>
+
+        <div class="rodape-base">
+
+            <p>
+                © 2026 Lucrafy. Todos os direitos reservados.
+                CNPJ: 00.000.000/0001-00
+            </p>
+
+            <div>
+                <span>Termos de Uso</span>
+                <span>Privacidade</span>
+                <span>Políticas de Segurança</span>
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

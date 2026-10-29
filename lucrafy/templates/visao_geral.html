@@ -1,0 +1,222 @@
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visão Geral | Lucrafy</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/visao-geral.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+</head>
+
+<body class="lu-site lu-app" data-section="visao">
+
+    <!-- CABEÇALHO -->
+    <div class="cabecalho lu-header">
+        <div class="largura cabecalho-conteudo">
+
+            <a class="marca" href="{{ url_for('visao_geral') }}">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Lucrafy">
+            </a>
+
+            <div class="navegacao">
+                <a href="index.html">Funcionalidades</a>
+                <a href="index.html">Benefícios</a>
+            </div>
+
+            <a class="lu-perfil-mobile"
+                href="{{ url_for('configuracao') }}"
+                aria-label="Abrir configurações"
+                title="Configurações">
+                <img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt="">
+            </a>
+
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="lados lu-layout">
+
+        <!-- MENU LATERAL -->
+        <div class="menu lu-menu" data-menu="principal" aria-label="Menu principal">
+            <h4>MENU PRINCIPAL</h4>
+
+            <div class="opcoes lu-nav-item lu-current" data-section="visao">
+                <img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="Elemento Visão Geral">
+                <a href="{{ url_for('visao_geral') }}" data-section="visao" aria-current="page">Visão Geral</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="insumos">
+                <img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="Elemento Insumos">
+                <a href="{{ url_for('insumo') }}" data-section="insumos">Insumos</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="produtos">
+                <img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="Elemento Produtos">
+                <a href="{{ url_for('produtos_cadastrados') }}" data-section="produtos">Produtos</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="relatorios">
+                <img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="Elemento Relatórios">
+                <a href="{{ url_for('relatorios') }}" data-section="relatorios">Relatórios</a>
+            </div>
+
+            <div class="opcoes lu-nav-item" data-section="configuracoes">
+                <img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="Elemento Configurações">
+                <a href="{{ url_for('configuracao') }}" data-section="configuracoes">Configurações</a>
+            </div>
+        </div>
+
+        <!-- VISÃO GERAL -->
+        <div class="geral lu-content">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+
+                                <span class="flash-icone">
+                                    {% if category == 'success' %}
+                                        ✓
+                                    {% else %}
+                                        !
+                                    {% endif %}
+                                </span>
+
+                                <span class="flash-texto">{{ message }}</span>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="cabecalho-visao-geral">
+                <h1>Visão Geral</h1>
+                <a href="{{ url_for('produto') }}">+ NOVO PRODUTO</a>
+            </div>
+
+            <!-- CARTÕES DE INDICADORES -->
+            <div class="cartoes-indicadores">
+
+                <div class="cartao-indicador">
+                    <h3>Produtos</h3>
+                    <p>{{ total_produtos }}</p>
+                </div>
+
+                <div class="cartao-indicador">
+                    <h3>Insumos</h3>
+                    <p>{{ total_insumos }}</p>
+                </div>
+
+                <div class="cartao-indicador">
+                    <h3>Custo Médio</h3>
+                    <p>R$ {{ custo_medio }}</p>
+                </div>
+
+                <div class="cartao-indicador">
+                    <h3>Margem Média</h3>
+                    <p>{{ margem_media }}%</p>
+                </div>
+
+            </div>
+
+            <!-- PRODUTOS EM DESTAQUE -->
+            <div class="produtos-destaque-textos">
+                <h2>Produtos em Destaque</h2>
+                <p>Seus Produtos com melhor margem de lucro.</p>
+            </div>
+
+            <div class="cartoes-produto-destaque">
+                {% for produto in produtos_destaque %}
+
+                <div class="produto-destaque">
+
+                    <div class="foto-destaque">
+                        {% if produto[4] %}
+                            <img src="{{ url_for('foto_produto', id_produto=produto[3]) }}"
+                                alt="Foto de {{ produto[0] }}">
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ produto[0] }}</h3>
+                    <p>Custo: R$ {{ produto[1] }}</p>
+                    <p>Preço sugerido: R$ {{ produto[2] }}</p>
+
+                </div>
+
+                {% else %}
+                    <div class="estado-vazio">
+<img src="{{ url_for('static', filename='img/visao-vazio.png') }}" alt="" width="160">
+<h3>Vamos começar?</h3>
+<p>Cadastre seu primeiro produto para ver os destaques aqui.</p>
+</div>
+                {% endfor %}
+            </div>
+
+            <div class="resumo-margem">
+
+                {% if margem_media >= 30 %}
+                    <p>Margem saudável! Seus produtos apresentam uma boa margem de lucro.</p>
+
+                {% elif margem_media >= 15 %}
+                    <p>Atenção! Sua margem de lucro pode melhorar.</p>
+
+                {% else %}
+                    <p>Margem baixa! Revise os custos e preços dos seus produtos.</p>
+
+                {% endif %}
+
+            </div>
+
+            <div class="botao-ver-todos">
+                <a href="{{ url_for('produtos_cadastrados') }}">Ver Todos</a>
+            </div>
+
+            <!-- RODAPÉ -->
+            <div class="rodape lu-footer" data-embedded="true">
+                <div class="largura rodape-conteudo">
+
+                    <div>
+                        <img class="logo-rodape"
+                            src="{{ url_for('static', filename='img/logo.png') }}"
+                            alt="Lucrafy">
+
+                        <p class="descricao-rodape">
+                            O gerenciador financeiro simples, prático e 100%<br>
+                            gratuito para quem quer controlar gastos sem<br>
+                            burocracia nem complicação.
+                        </p>
+                    </div>
+
+                    <div class="rodape-base">
+
+                        <p class="direitos">
+                            © 2026 Lucrafy. Todos os direitos reservados.
+                            CNPJ: 00.000.000/0001-00
+                        </p>
+
+                        <div class="textos-legais">
+                            <span>Termos de Uso</span>
+                            <span>Privacidade</span>
+                            <span>Políticas de Segurança</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,689 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* CONFIGURAÇÕES GERAIS */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f9f9f9;
+    color: #242b25;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 0 18px;
+    background: #ffffff;
+}
+
+.cabecalho .logo {
+    width: 91px;
+    height: auto;
+    margin-right: 5px;
+}
+
+.cabecalho a {
+    color: #303b31;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* ESTRUTURA */
+
+.lados {
+    display: flex;
+    min-height: 730px;
+}
+
+/* MENU LATERAL */
+
+.menu {
+    width: 15%;
+    min-width: 190px;
+    background: #fff;
+    padding: 24px;
+}
+
+.menu h4 {
+    margin: 0 0 24px;
+    font-size: 11px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: #303b31;
+    text-decoration: none;
+}
+
+.menu a img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.geral {
+    flex: 1;
+    min-width: 0;
+    padding: 24px 30px 50px;
+}
+
+.cabecalho-geral h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.cabecalho-geral p {
+    margin: 3px 0 0;
+    font-size: 14px;
+    color: #303b31;
+}
+
+/* MENSAGENS */
+
+.mensagens {
+    max-width: 930px;
+    margin: 20px auto 0;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: #edf4df;
+    font-size: 13px;
+}
+
+.mensagens p {
+    margin: 4px 0;
+}
+
+/* CARTÃO DE CADASTRO */
+
+.cadastrar-insumo {
+    max-width: 930px;
+    min-height: 315px;
+    margin: 30px auto 0;
+    padding: 26px 30px;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.cadastrar-insumo h2 {
+    margin: 0 0 23px;
+    font-size: 21px;
+}
+
+/* CAMPOS DO FORMULÁRIO */
+
+.campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 35px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    height: 43px;
+    padding: 0 13px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: #f9f9f9;
+    color: #242b25;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #a4c95f;
+}
+
+/* BOTÕES DO FORMULÁRIO */
+
+.botoes-formulario {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 24px;
+}
+
+.botoes-formulario button {
+    width: 248px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: #a4c95f;
+    color: #496801;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botoes-formulario button:hover {
+    background: #91b94c;
+}
+
+.ver-insumos {
+    color: #496801;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* FILTROS */
+
+.filtros {
+    max-width: 930px;
+    margin: 25px auto 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.filtros select {
+    width: 205px;
+    height: 40px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 10px;
+    background: #fff;
+    color: #303b31;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+/* CATEGORIAS */
+
+.linha-categorias {
+    max-width: 930px;
+    margin: 20px auto 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    font-size: 13px;
+}
+
+.linha-categorias span {
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #e2e2e2;
+    font-size: 12px;
+}
+
+.linha-categorias .ativo {
+    background: #d9e6d8;
+}
+
+/* ÁREA DE INSUMOS CADASTRADOS */
+
+.dados-insumos {
+    max-width: 930px;
+    margin: 25px auto 0;
+    padding: 22px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.titulo-tabela {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.titulo-tabela h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.titulo-tabela a {
+    font-size: 12px;
+    text-decoration: none;
+    color: #496801;
+    font-weight: 600;
+}
+
+.dados-insumos p {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* RODAPÉ */
+
+.rodape {
+    background: #fff;
+    padding: 30px 5%;
+}
+
+.rodape > img {
+    width: 94px;
+}
+
+.rodape > p {
+    max-width: 410px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.rodape-base {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: #64748b;
+    font-size: 10px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 800px) {
+    .menu {
+        min-width: 155px;
+        padding: 22px 12px;
+    }
+
+    .geral {
+        padding: 22px 15px;
+    }
+
+    .campos {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cabecalho {
+        gap: 15px;
+    }
+
+    .menu {
+        min-width: 110px;
+        width: 110px;
+    }
+
+    .menu a {
+        font-size: 11px;
+        gap: 6px;
+    }
+
+    .campos {
+        grid-template-columns: 1fr;
+    }
+
+    .cadastrar-insumo {
+        padding: 18px;
+    }
+
+    .botoes-formulario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .botoes-formulario button {
+        width: 100%;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros select {
+        width: 100%;
+    }
+
+    .rodape-base {
+        flex-direction: column;
+    }
+}
+
+
+
+@media (max-width: 700px) {
+    body {
+        padding-bottom: calc(84px + env(safe-area-inset-bottom));
+        background: #f7f6f7;
+    }
+
+
+    .cabecalho {
+        height: 72px;
+        padding: 0 20px;
+        background: #fff;
+    }
+
+
+    .cabecalho > img {
+        width: 91px;
+        height: auto;
+    }
+
+
+    .cabecalho > a {
+        display: none;
+    }
+
+
+    .lados {
+        display: block;
+        min-height: calc(100svh - 156px);
+    }
+
+
+    .lados > .menu {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+    }
+
+
+    .lados > .menu h4,
+    .lados > .menu > a:last-of-type {
+        display: none;
+    }
+
+
+    .lados > .menu > a {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 0;
+        min-height: 60px;
+        margin: 0;
+        padding: 8px 2px;
+        border-radius: 12px;
+        font-size: 9px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+
+    .lados > .menu > a:nth-of-type(2) {
+        background: #edf4dd;
+    }
+
+
+    .lados > .menu > a img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+    }
+
+
+    .geral {
+        width: 100%;
+        min-width: 0;
+        padding: 28px 20px 40px;
+    }
+
+
+    .cabecalho-geral h1 {
+        font-size: 27px;
+        line-height: 1.2;
+    }
+
+
+    .cabecalho-geral p {
+        margin-top: 10px;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+    .cadastrar-insumo {
+        width: 100%;
+        min-height: 0;
+        margin-top: 20px;
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+
+
+    .cadastrar-insumo h2 {
+        margin: 0 0 22px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+
+    .campos {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+
+    .campo {
+        min-width: 0;
+        gap: 6px;
+    }
+
+
+    .campo:has(#nome) {
+        order: 1;
+    }
+
+
+    .campo:has(#categoria) {
+        order: 2;
+    }
+
+
+    .campo:has(#unidade_medida) {
+        order: 3;
+    }
+
+
+    .campo:has(#custo) {
+        order: 4;
+    }
+
+
+    .campo:has(#estoque_atual) {
+        order: 5;
+    }
+
+
+    .campo label {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+
+    .campo input,
+    .campo select {
+        width: 100%;
+        min-width: 0;
+        height: 48px;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 10px;
+        background: #f7f6f7;
+        color: #303b31;
+        font-size: 16px;
+    }
+
+
+    .botoes-formulario {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+
+    .botoes-formulario button {
+        order: -1;
+        width: 100%;
+        height: 46px;
+        border-radius: 10px;
+        color: #303b31;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+
+    .ver-insumos {
+        font-size: 12px;
+        text-align: center;
+    }
+
+
+    .filtros {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+
+    .filtros select {
+        width: 100%;
+        min-width: 0;
+        height: 36px;
+        padding: 0 8px;
+        font-size: 10px;
+    }
+
+
+    .linha-categorias {
+        gap: 6px;
+        margin-top: 20px;
+    }
+
+
+    .linha-categorias strong {
+        flex-basis: 100%;
+        margin-bottom: 8px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+
+    .linha-categorias span {
+        padding: 9px 11px;
+        background: #fff;
+        font-size: 9px;
+    }
+
+
+    .linha-categorias .ativo {
+        background: #e6edd7;
+    }
+
+
+    .dados-insumos {
+        margin-top: 22px;
+        padding: 18px 16px;
+        border-radius: 16px;
+    }
+
+
+    .titulo-tabela {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+
+    .titulo-tabela h2 {
+        font-size: 16px;
+    }
+
+
+    .dados-insumos p {
+        line-height: 1.6;
+    }
+
+
+    .rodape {
+        display: none;
+    }
+
+
+    .flash-messages {
+        padding: 0 20px;
+    }
+
+
+    .flash {
+        padding: 12px;
+        border-radius: 10px;
+        overflow-wrap: anywhere;
+    }
+}
+
+.display-label {
+    display: flex;
+    justify-content: space-between;
+}
+    .cadastro-informacoes {
+    text-decoration: none;
+    color: #282e27;
+}
+
+.campo .display-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.campo .display-label label {
+    margin: 0;
+}
+
+.campo .cadastro-informacoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    color: #303b31;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    background-color: #a4c95f;
+    border-radius: 10px;
+}

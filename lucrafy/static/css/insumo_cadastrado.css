@@ -1,0 +1,629 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f9f9f9;
+    color: #242b25;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0 30px;
+    background: #ffffff;
+}
+
+.cabecalho img {
+    width: 85px;
+}
+
+.cabecalho a {
+    text-decoration: none;
+    color: #242b25;
+    font-size: 12px;
+}
+
+/* ESTRUTURA */
+
+.estrutura {
+    display: flex;
+    min-height: 560px;
+}
+
+/* MENU */
+
+.menu {
+    width: 200px;
+    flex-shrink: 0;
+    background: #fff;
+    padding: 30px 20px;
+}
+
+.menu h4 {
+    font-size: 11px;
+    margin-bottom: 25px;
+}
+
+.menu a {
+    display: block;
+    color: #242b25;
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+/* CONTEÚDO */
+
+.principal {
+    flex: 1;
+    padding: 35px 25px;
+    min-width: 0;
+}
+
+.principal h1 {
+    font-size: 27px;
+    margin: 0;
+}
+
+.principal > p {
+    font-size: 12px;
+    margin: 0 0 10px;
+}
+
+/* CARTÃO */
+
+.cartao {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 530px;
+}
+
+.titulo-cartao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.titulo-cartao h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.titulo-cartao span {
+    font-size: 9px;
+    font-weight: 600;
+}
+
+/* INSUMOS */
+
+.linha-insumo {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nome-insumo {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.editar,
+.excluir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.editar {
+    background: #f9f9f9;
+}
+
+.excluir {
+    background: #ffd8d5;
+}
+
+.editar img,
+.excluir img {
+    width: 15px;
+    height: 15px;
+}
+
+.linha-insumo form {
+    margin: 0;
+}
+
+/* ADICIONAR */
+
+.adicionar {
+    margin-top: 32px;
+    background: #f9f9f9;
+    height: 40px;
+    border-radius: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: #496801;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.adicionar span {
+    background: #a4c95f;
+    border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botao-historico {
+    display: inline-block;
+    margin: 15px 0 25px;
+    padding: 12px 20px;
+    background: #a4c95f;
+    color: #242b25;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.flash-messages {
+    width: 100%;
+    padding: 0 25px;
+    margin: 18px auto 0;
+}
+
+.flash-message {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 12px;
+    padding: 16px 20px;
+
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* ÍCONE */
+
+.flash-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* TEXTO */
+
+.flash-texto {
+    flex: 1;
+}
+
+/* SUCESSO */
+
+.flash-message.success {
+    background: #edf7e5;
+    color: #365b1c;
+    border: 1px solid #cce7b8;
+    border-left: 5px solid #80b845;
+}
+
+.flash-message.success .flash-icone {
+    background: #a4c95f;
+    color: #ffffff;
+}
+
+/* ERRO */
+
+.flash-message.error {
+    background: #fff1f0;
+    color: #a52a2a;
+    border: 1px solid #f5c9c5;
+    border-left: 5px solid #e15b52;
+}
+
+.flash-message.error .flash-icone {
+    background: #e15b52;
+    color: #ffffff;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 650px) {
+    .flash-messages {
+        padding: 0 12px;
+    }
+
+    .flash-message {
+        padding: 13px 15px;
+        font-size: 12px;
+    }
+}
+
+
+/* VOLTAR */
+
+.area-voltar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 45px;
+}
+
+.voltar {
+    background: #a4c95f;
+    color: #242b25;
+    text-decoration: none;
+    border-radius: 6px;
+    width: 170px;
+    padding: 12px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* RODAPÉ */
+
+footer {
+    background: #fff;
+    padding: 30px 40px;
+}
+
+footer img {
+    width: 90px;
+}
+
+footer p {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.rodape-final {
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: #64748b;
+    font-size: 10px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 650px) {
+    .menu {
+        width: 120px;
+        padding: 20px 10px;
+    }
+
+    .principal {
+        padding: 25px 12px;
+    }
+
+    .principal h1 {
+        font-size: 21px;
+    }
+
+    .titulo-cartao {
+        flex-wrap: wrap;
+    }
+
+    .rodape-final {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 700px) {
+    body:has(.estrutura) {
+        padding-bottom: calc(84px + env(safe-area-inset-bottom));
+        background: #f7f6f7;
+    }
+
+
+    body:has(.estrutura) .cabecalho {
+        height: 72px;
+        padding: 0 20px;
+        background: #fff;
+    }
+
+
+    body:has(.estrutura) .cabecalho > img {
+        width: 91px;
+        height: auto;
+    }
+
+
+    body:has(.estrutura) .cabecalho > a {
+        display: none;
+    }
+
+
+    .estrutura {
+        display: block;
+        min-height: calc(100svh - 156px);
+    }
+
+
+    .estrutura > .menu {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+    }
+
+
+    .estrutura > .menu h4,
+    .estrutura > .menu > a:last-of-type {
+        display: none;
+    }
+
+
+    .estrutura > .menu > a {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 0;
+        min-height: 60px;
+        margin: 0;
+        padding: 8px 2px;
+        border-radius: 12px;
+        color: #303b31;
+        font-size: 9px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+
+    .estrutura > .menu > a:nth-of-type(2) {
+        background: #edf4dd;
+    }
+
+
+    .estrutura > .menu > a::before {
+        content: "";
+        display: block;
+        width: 22px;
+        height: 22px;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+
+    .estrutura > .menu > a:nth-of-type(1)::before {
+        background-image: url("../img/elemento-visaogeral.png");
+    }
+
+
+    .estrutura > .menu > a:nth-of-type(2)::before {
+        background-image: url("../img/elemento-insumo.png");
+    }
+
+
+    .estrutura > .menu > a:nth-of-type(3)::before {
+        background-image: url("../img/elemento-produtos.png");
+    }
+
+
+    .estrutura > .menu > a:nth-of-type(4)::before {
+        background-image: url("../img/elemento-relatorios.png");
+    }
+
+
+    .estrutura .principal {
+        width: 100%;
+        min-width: 0;
+        padding: 44px 20px 30px;
+    }
+
+
+    .principal h1 {
+        font-size: 26px;
+        line-height: 1.25;
+    }
+
+
+    .principal > p {
+        margin: 12px 0 24px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+
+    .botao-historico {
+        margin: 0 0 28px;
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+
+    .estrutura .cartao {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+    }
+
+
+    .principal .titulo-cartao {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 28px;
+    }
+
+
+    .principal .titulo-cartao h2 {
+        font-size: 18px;
+    }
+
+
+    .principal .titulo-cartao span {
+        font-size: 9px;
+    }
+
+
+    .lista-insumos {
+        display: grid;
+        gap: 22px;
+    }
+
+
+    .linha-insumo {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 40px 40px;
+        align-items: center;
+        gap: 6px;
+        min-height: 42px;
+        margin: 0;
+        border-radius: 12px;
+        background: #fafafa;
+    }
+
+
+    .nome-insumo {
+        padding: 10px 12px;
+        background: transparent;
+        font-size: 14px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+
+    .linha-insumo .editar,
+    .linha-insumo .excluir {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+
+    .linha-insumo .editar {
+        background: transparent;
+    }
+
+
+    .linha-insumo .excluir {
+        background: #ffdad6;
+    }
+
+
+    .linha-insumo form {
+        margin: 0;
+    }
+
+
+    .linha-insumo .editar img,
+    .linha-insumo .excluir img {
+        width: 17px;
+        height: 17px;
+        object-fit: contain;
+    }
+
+
+    .principal .adicionar {
+        width: min(284px, 100%);
+        min-height: 48px;
+        margin: 36px auto 0;
+        border-radius: 12px;
+        background: #fafafa;
+        font-size: 14px;
+    }
+
+
+    .principal .adicionar span {
+        width: 24px;
+        height: 24px;
+        background: #a4c95f;
+    }
+
+
+    .area-voltar {
+        justify-content: center;
+        margin-top: 26px;
+    }
+
+
+    .area-voltar .voltar {
+        width: min(204px, 100%);
+        min-height: 44px;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+
+    body:has(.estrutura) > footer {
+        display: none;
+    }
+
+
+    body:has(.estrutura) .flash-messages {
+        padding: 0 20px;
+    }
+
+
+    .flash-message {
+        padding: 12px;
+        box-shadow: none;
+    }
+
+
+    .flash-texto {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}

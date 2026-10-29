@@ -1,0 +1,776 @@
+/* Ajustes compartilhados: cabeçalho, navegação e rodapé. */
+.lu-site {
+    --lu-menu-width: 200px;
+    --lu-content-padding: 24px;
+}
+.lu-perfil-mobile,
+.lu-mobile-only {
+    display: none;
+}
+.lu-app .lu-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    height: 64px;
+    min-height: 64px;
+    margin: 0;
+    padding: 0 24px;
+    background: #fff;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+.lu-app .lu-header.lu-mobile-only { display: none; }
+.lu-app .lu-header .cabecalho-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: none;
+    height: 64px;
+    margin: 0;
+    padding: 0;
+}
+.lu-app .lu-header .marca,
+.lu-app .lu-header .logo {
+    flex: 0 0 auto;
+    width: 91px;
+    margin: 0;
+}
+.lu-app .lu-header > img,
+.lu-app .lu-header .marca img,
+.lu-app .lu-header .logo img {
+    display: block;
+    width: 91px;
+    height: 37px;
+    object-fit: contain;
+}
+.lu-app .lu-header .opcao-cabecalho,
+.lu-app .lu-header .navegacao { margin: 0; }
+.lu-app .lu-header .navegacao,
+.lu-app .lu-header > nav:not(.lu-menu) { gap: 30px; }
+.lu-app .lu-header a:not(.lu-perfil-mobile) { font-size: 13px; }
+.lu-app .lu-layout {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: max(560px, calc(100svh - 309px));
+}
+.lu-app .lu-layout > .lu-content {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    margin: 0;
+    padding: 28px var(--lu-content-padding) 40px;
+    box-sizing: border-box;
+}
+.lu-app .lu-menu[data-menu] {
+    position: static;
+    display: flex;
+    flex: 0 0 var(--lu-menu-width);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    width: var(--lu-menu-width);
+    min-width: var(--lu-menu-width);
+    max-width: var(--lu-menu-width);
+    height: auto;
+    margin: 0;
+    padding: 24px 16px;
+    background: #fff;
+    box-sizing: border-box;
+    font-family: Poppins, Arial, sans-serif;
+}
+.lu-app .lu-menu[data-menu].lu-mobile-only { display: none; }
+.lu-app .lu-menu[data-menu] > h4 {
+    margin: 0 8px 20px;
+    padding: 0;
+    color: #303b31;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 18px;
+}
+.lu-app .lu-menu[data-menu] .lu-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+    gap: 14px;
+    width: 100%;
+    min-height: 38px;
+    margin: 0 0 7px;
+    padding: 7px 8px;
+    border-radius: 8px;
+    background: transparent;
+    color: #303b31;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.lu-app .lu-menu[data-menu] .lu-nav-item a {
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+}
+.lu-app .lu-menu[data-menu] .lu-nav-item a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+.lu-app .lu-menu[data-menu] .lu-nav-item img {
+    display: block;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    object-fit: contain;
+}
+.lu-app .lu-menu[data-menu] .lu-nav-item::before { display: none; }
+.lu-app .lu-menu[data-menu] .lu-current { color: #496801; }
+/* Mantém os rodapés existentes e uniformiza apenas suas medidas. */
+.lu-site .lu-footer {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 245px;
+    margin: 0;
+    padding: 28px 40px;
+    background: #fff;
+    box-sizing: border-box;
+    font-family: Poppins, Arial, sans-serif;
+}
+.lu-site .lu-footer .largura,
+.lu-site .lu-footer .largura-rodape-conteudo,
+.lu-site .lu-footer .rodape-conteudo {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+.lu-site .lu-footer img {
+    display: block;
+    width: 91px;
+    height: 37px;
+    margin: 0;
+    object-fit: contain;
+}
+.lu-site .lu-footer .descricao-rodape,
+.lu-site .lu-footer > p,
+.lu-site .lu-footer .rodape-conteudo > p {
+    width: auto;
+    max-width: 420px;
+    margin: 10px 0 0;
+    padding: 0;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 19px;
+}
+.lu-site .lu-footer .rodape-base,
+.lu-site .lu-footer .rodape-final {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 24px;
+    width: 100%;
+    height: auto;
+    margin: 32px 0 0;
+    padding: 0;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0;
+}
+.lu-site .lu-footer .rodape-base p,
+.lu-site .lu-footer .rodape-final p { margin: 0; font-size: inherit; line-height: inherit; }
+.lu-site .lu-footer .textos-legais,
+.lu-site .lu-footer .textos-rodape,
+.lu-site .lu-footer .rodape-base > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin: 0;
+    font-size: inherit;
+}
+/* O rodapé das duas versões de visão geral já está dentro do conteúdo. */
+.lu-app .lu-content > .lu-footer[data-embedded] {
+    position: relative;
+    width: calc(100% + var(--lu-menu-width) + 2 * var(--lu-content-padding));
+    margin: 40px calc(-1 * var(--lu-content-padding)) -40px calc(-1 * (var(--lu-menu-width) + var(--lu-content-padding)));
+}
+@media (max-width: 700px) {
+    .lu-app {
+        padding-bottom: calc(84px + env(safe-area-inset-bottom));
+    }
+    .lu-app .lu-header,
+    .lu-app .lu-header.lu-mobile-only {
+        display: flex;
+        height: 72px;
+        min-height: 72px;
+        gap: 12px;
+        padding: 0 20px;
+    }
+    .lu-app .lu-header .cabecalho-conteudo {
+        height: 72px;
+        gap: 12px;
+    }
+    .lu-app .lu-header .navegacao,
+    .lu-app .lu-header .opcao-cabecalho,
+    .lu-app .lu-header .acesso,
+    .lu-app .lu-header > a:not(.lu-perfil-mobile):not(.marca),
+    .lu-app .lu-header > nav:not(.lu-menu) { display: none; }
+    .lu-app .lu-header .lu-perfil-mobile {
+        display: flex;
+        flex: 0 0 44px;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-height: 44px;
+        margin: 0 0 0 auto;
+        padding: 0;
+        border-radius: 12px;
+        background: #f7f6f7;
+        color: #303b31;
+        text-decoration: none;
+    }
+    .lu-app .lu-header .lu-perfil-mobile img {
+        display: block;
+        width: 22px;
+        height: 22px;
+        margin: 0;
+    }
+    .lu-app .lu-layout {
+        display: block;
+        min-height: calc(100svh - 156px);
+    }
+    .lu-app .lu-layout > .lu-content {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 28px 20px 40px;
+    }
+    .lu-app .lu-menu[data-menu],
+    .lu-app .lu-menu[data-menu].lu-mobile-only {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 30;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        gap: 0;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        min-height: calc(84px + env(safe-area-inset-bottom));
+        height: auto;
+        margin: 0;
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+    }
+    .lu-app .lu-menu[data-menu] > h4,
+    .lu-app .lu-menu[data-menu] .lu-nav-item[data-section="configuracoes"] { display: none; }
+    .lu-app .lu-menu[data-menu] .lu-nav-item {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: auto;
+        min-width: 0;
+        max-width: 76px;
+        min-height: 60px;
+        height: auto;
+        margin: 0;
+        padding: 8px 3px;
+        border-radius: 12px;
+        background: transparent;
+        color: #303b31;
+        font-size: 9px;
+        font-weight: 400;
+        line-height: 14px;
+        text-align: center;
+    }
+    .lu-app .lu-menu[data-menu] .lu-nav-item a {
+        display: block;
+        margin: 0;
+        padding: 0;
+        color: inherit;
+        font-size: 9px;
+        font-weight: 400;
+        line-height: 14px;
+        text-align: center;
+    }
+    .lu-app .lu-menu[data-menu] .lu-nav-item img {
+        flex: 0 0 22px;
+        width: 22px;
+        height: 22px;
+    }
+    .lu-app .lu-menu[data-menu] .lu-nav-item.lu-current {
+        background: #edf4dd;
+        color: #496801;
+    }
+    .lu-site .lu-footer {
+        min-height: 0;
+        padding: 28px 20px;
+    }
+    .lu-site .lu-footer .rodape-base,
+    .lu-site .lu-footer .rodape-final {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        margin-top: 24px;
+    }
+    .lu-site .lu-footer p br { display: none; }
+    .lu-app .lu-footer,
+    .lu-app .lu-content > .lu-footer[data-embedded] { display: none; }
+    .lu-app.pagina-home { display: block; padding-top: 0; }
+    .lu-app.pagina-home .cartao-home { margin: 40px auto; max-width: calc(100% - 40px); }
+}
+.lu-app .lu-perfil-mobile:focus-visible,
+.lu-app .lu-menu .lu-nav-item:focus-visible,
+.lu-app .lu-menu .lu-nav-item a:focus-visible { outline: 2px solid #496801; outline-offset: 2px; }
+.lu-app .lu-menu[data-menu] > h4,
+.lu-app .lu-menu[data-menu] .lu-nav-item,
+.lu-app .lu-menu[data-menu] .lu-nav-item a { font-family: Poppins, Arial, sans-serif; }
+@media (max-width: 700px) {
+    .lu-app.pagina-home { padding-left: 0; padding-right: 0; }
+}
+
+/* Mensagens do Flask: mesmo padrão visual em todas as páginas. */
+.lu-site .flash-messages {
+    box-sizing: border-box;
+    width: calc(100% - 40px);
+    max-width: 700px;
+    margin: 18px auto;
+    padding: 0;
+}
+.lu-site :is(.lu-content, .caixa-formulario, .cadastro, .cartao-home, .modal, .modal-categoria-produto) .flash-messages {
+    width: 100%;
+    margin: 0 auto 18px;
+    padding: 0;
+}
+.lu-site .flash-messages :is(.flash-message, .flash) {
+    --flash-fundo: #eef4ff;
+    --flash-texto: #315174;
+    --flash-borda: #cfdef2;
+    --flash-destaque: #668fbd;
+    --flash-simbolo: "i";
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    max-width: 700px;
+    margin: 0 0 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--flash-borda);
+    border-left: 5px solid var(--flash-destaque);
+    border-radius: 12px;
+    background: var(--flash-fundo);
+    color: var(--flash-texto);
+    font-family: Poppins, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+.lu-site .flash-messages :is(.flash-message, .flash).success {
+    --flash-fundo: #edf7e5;
+    --flash-texto: #365b1c;
+    --flash-borda: #cce7b8;
+    --flash-destaque: #80b845;
+    --flash-icone: #a4c95f;
+    --flash-simbolo: "✓";
+}
+.lu-site .flash-messages :is(.flash-message, .flash):is(.error, .danger) {
+    --flash-fundo: #fff1f0;
+    --flash-texto: #a52a2a;
+    --flash-borda: #f5c9c5;
+    --flash-destaque: #e15b52;
+    --flash-simbolo: "!";
+}
+.lu-site .flash-messages :is(.flash-message, .flash):is(.warning, .alert) {
+    --flash-fundo: #fff8e7;
+    --flash-texto: #79551d;
+    --flash-borda: #efdeb6;
+    --flash-destaque: #c6973f;
+    --flash-simbolo: "!";
+}
+.lu-site .flash-messages :is(.flash-message, .flash) .flash-icone,
+.lu-site .flash-messages .flash:not(:has(.flash-icone))::before {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--flash-icone, var(--flash-destaque));
+    color: #fff;
+    font-size: 0;
+    font-weight: 700;
+    line-height: 1;
+}
+.lu-site .flash-messages .flash-icone::before,
+.lu-site .flash-messages .flash:not(:has(.flash-icone))::before {
+    content: var(--flash-simbolo);
+    font-size: 17px;
+}
+.lu-site .flash-messages .flash-texto {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+.lu-site .overlay .flash-messages,
+.lu-site .overlay-categoria-produto .flash-messages { width: 100%; margin: 0 0 16px; padding: 0; }
+@media (max-width: 700px) {
+    .lu-site .flash-messages :is(.flash-message, .flash) {
+        align-items: flex-start;
+        gap: 10px;
+        padding: 13px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Tabelas em cards no mobile; o desktop mantém as colunas originais. */
+@media (max-width: 700px) {
+    .lu-site .lu-tabela-container {
+        width: 100%;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    .lu-site table.lu-tabela-cards,
+    .lu-site .lu-tabela-cards tbody {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .lu-site table.lu-tabela-cards {
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .lu-site .lu-tabela-cards thead {
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .lu-site .lu-tabela-cards tbody tr {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 16px 12px;
+        margin: 0 0 14px;
+        padding: 16px;
+        border: 1px solid #e3e9db;
+        border-radius: 12px;
+        background: #fafbf8;
+    }
+
+    .lu-site .lu-tabela-cards tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .lu-site .lu-tabela-cards tbody td {
+        display: block;
+        width: auto;
+        min-width: 0;
+        max-width: 100%;
+        padding: 0;
+        border: 0;
+        color: #303b31;
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .lu-site .lu-tabela-cards td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        color: #61704f;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .lu-site .lu-tabela-cards td:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e3e9db;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .lu-site .lu-tabela-cards td.lu-campo-inteiro,
+    .lu-site .lu-tabela-cards td[colspan] {
+        grid-column: 1 / -1;
+    }
+
+    .lu-site .lu-tabela-cards td[colspan] {
+        padding: 8px 0;
+        border: 0;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .lu-site .lu-tabela-cards td.novo-custo {
+        color: #638a28;
+        font-weight: 700;
+    }
+
+    .lu-site .lu-tabela-cards .botao-editar {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .lu-site .lu-tabela-cards td input,
+    .lu-site .lu-tabela-cards td select {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .lu-site .lu-tabela-cards .form-editar-insumo {
+        display: block;
+        margin: 0;
+    }
+
+    .lu-site .lu-tabela-cards .botao-salvar-insumo {
+        width: 100%;
+        min-height: 44px;
+        margin: 8px 0 0;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes {
+        justify-self: stretch;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes form {
+        justify-content: flex-start;
+    }
+
+    .lu-site .lu-tabela-cards td.acoes button {
+        min-width: 44px;
+        min-height: 44px;
+        border: 1px solid #e3e9db;
+        border-radius: 8px;
+        background: #fff;
+    }
+}
+
+@media (max-width: 360px) {
+    .lu-site .lu-tabela-cards tbody tr {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* Ações de produto e status dos insumos. */
+.lu-site .lu-acoes-produto {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lu-site .lu-acoes-produto form {
+    margin: 0;
+}
+
+.lu-site .lu-excluir-produto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: #ffd8d5;
+    cursor: pointer;
+}
+
+.lu-site .lu-excluir-produto img {
+    width: 16px;
+    height: 16px;
+}
+
+.lu-site .lu-status-lista {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px auto 44px;
+    align-items: center;
+    gap: 8px;
+}
+
+.lu-site .lu-status-lista .nome-insumo {
+    overflow-wrap: anywhere;
+}
+
+.lu-site .lu-status-lista > .editar,
+.lu-site .lu-status-lista .excluir {
+    width: 44px;
+    height: 44px;
+}
+
+.lu-site .lu-status-lista form {
+    margin: 0;
+    min-width: 0;
+}
+
+.lu-site .lu-alterar-status {
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid #dbe5ce;
+    border-radius: 9px;
+    background: #edf4df;
+    color: #496801;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lu-site .lu-insumo-inativo .lu-nome-insumo {
+    color: #74796f;
+    text-decoration: line-through;
+}
+
+.lu-site .lu-insumo-inativo :is(input, select) {
+    color: #74796f;
+    text-decoration: line-through;
+}
+
+.lu-site .lu-status-insumo {
+    display: block;
+    margin-top: 4px;
+    color: #79551d;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.lu-site .lu-aviso-inativo {
+    padding: 12px 16px;
+    border: 1px solid #efdeb6;
+    border-radius: 9px;
+    background: #fff8e7;
+    color: #79551d;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .lu-site .lu-status-lista {
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .lu-site .lu-status-lista > .nome-insumo {
+        grid-column: 1 / -1;
+    }
+
+    .lu-site .lu-status-lista .lu-alterar-status {
+        width: 100%;
+    }
+
+    .lu-site .lu-acoes-produto {
+        flex-wrap: nowrap;
+    }
+
+    .lu-site .lu-acoes-produto .botao-editar {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .lu-site .lu-acoes-produto form {
+        flex: 0 0 44px;
+    }
+
+    .lu-site .lu-excluir-produto {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Foto de perfil */
+.lu-app .lu-header .lu-perfil-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    border-radius: 12px;
+    background: #f7f6f7;
+    overflow: hidden;
+}
+.lu-app .lu-header .lu-perfil-mobile img.tem-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.foto-perfil { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.foto-perfil .lu-perfil-foto-grande { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: #f7f7f7; border: 1px solid #e5e5e5; padding: 0; box-sizing: border-box; }
+.foto-perfil label { font-size: 15px; font-weight: 500; }
+.foto-perfil input[type="file"] { max-width: 100%; font-family: inherit; font-size: 14px; }
+.foto-perfil input[type="file"]::file-selector-button,
+.foto-perfil button {
+    background-color: #a3c65e; color: #fff; border: none; border-radius: 6px;
+    padding: 10px 16px; font-family: inherit; font-size: 14px; line-height: 1.5; cursor: pointer;
+}
+.foto-perfil input[type="file"]::file-selector-button { margin-right: 12px; }
+.foto-perfil button:hover, .foto-perfil input[type="file"]::file-selector-button:hover { background-color: #91b44c; }
+
+/* Estados vazios e ilustrações */
+.estado-vazio { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 24px 12px; width: 100%; }
+.estado-vazio img { max-width: 100%; height: auto; }
+.estado-vazio h3 { margin: 8px 0 0; font-size: 18px; color: #242b25; }
+.estado-vazio p { margin: 0; color: #5b665d; font-size: 14px; }
+.config-ilustracao { display: block; margin: 0 auto 8px; height: auto; }

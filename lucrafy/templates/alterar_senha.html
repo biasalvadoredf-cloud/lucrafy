@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Senha - Lucrafy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alterar_senha.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+</head>
+
+<body class="pagina-acesso pagina-alterar-senha lu-site lu-app" data-section="configuracoes">
+
+    <!-- CABEÇALHO -->
+    <div class="cabecalho lu-header">
+        <div class="largura cabecalho-conteudo">
+
+            <a class="marca" href="{{ url_for('visao_geral') }}">
+                <img
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy">
+            </a>
+
+            <div class="navegacao">
+                <a href="{{ url_for('index') }}#funcionalidades">
+                    Funcionalidades
+                </a>
+
+                <a href="{{ url_for('index') }}#beneficios">
+                    Benefícios
+                </a>
+            </div>
+
+            <div class="acesso">
+                <a class="botao botao-cabecalho" href="{{ url_for('logout') }}">
+                    Sair
+                </a>
+            </div>
+
+        
+        <a class="lu-perfil-mobile" href="{{ url_for('configuracao') }}" aria-label="Abrir configurações" title="Configurações"><img class="lu-perfil-foto{{ ' tem-foto' if tem_foto_perfil }}" src="{{ url_for('foto_perfil') if tem_foto_perfil else url_for('static', filename='img/perfil-mobile.svg') }}" width="22" height="22" alt=""></a>
+</div>
+    </div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="area-acesso">
+
+        <!-- IMAGEM ESQUERDA -->
+        <div class="ilustracao-acesso">
+            <img
+                src="{{ url_for('static', filename='img/ilustracao-acesso.png') }}"
+                alt="Ilustração financeira Lucrafy"
+            >
+        </div>
+
+        <!-- FORMULÁRIO DIREITA -->
+        <div class="area-formulario">
+
+            <div class="cadastro">
+
+                <h2>Alterar Senha</h2>
+
+                <!-- MENSAGENS DO FLASK -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+
+                            <span class="flash-icone">
+                                {% if category == 'success' %}
+                                    ✓
+                                {% else %}
+                                    !
+                                {% endif %}
+                            </span>
+
+                            <span class="flash-texto">{{ message }}</span>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+                <form action="{{ url_for('alterar_senha') }}" method="POST" class="form-alterar_senha">
+
+                    <label for="senha_atual">Senha atual</label>
+                    <input type="password" id="senha_atual" name="senha_atual" placeholder="Digite sua senha atual" required>
+
+                    <label for="nova_senha">Nova senha</label>
+                    <input type="password" id="nova_senha" name="nova_senha" placeholder="Digite sua nova senha" required>
+
+                    <label for="confirmar_senha">Confirmar nova senha</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua nova senha" required>
+
+                    <button type="submit">Salvar</button>
+
+                </form>
+
+                <a href="{{ url_for('configuracao') }}">Voltar</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="rodape lu-footer">
+
+        <div class="largura rodape-conteudo">
+
+            <div>
+                <img
+                    class="logo-rodape"
+                    src="{{ url_for('static', filename='img/logo.png') }}"
+                    alt="Lucrafy"
+                >
+
+                <p class="descricao-rodape">
+                    O gerenciador financeiro simples, prático e 100%
+                    <br>
+                    gratuito para quem quer controlar gastos sem
+                    <br>
+                    burocracia nem complicação.
+                </p>
+            </div>
+
+            <div class="rodape-base">
+
+                <p class="direitos">
+                    © 2026 Lucrafy. Todos os direitos reservados.
+                    CNPJ: 00.000.000/0001-01
+                </p>
+
+                <div class="textos-legais">
+                    <span>Termos de Uso</span>
+                    <span>Privacidade</span>
+                    <span>Políticas de Segurança</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="lu-menu lu-mobile-only" data-menu="principal" aria-label="Menu principal">
+        <a class="lu-nav-item" data-section="visao" href="{{ url_for('visao_geral') }}"><img src="{{ url_for('static', filename='img/elemento-visaogeral.svg') }}" alt="">Visão geral</a>
+        <a class="lu-nav-item" data-section="insumos" href="{{ url_for('insumo') }}"><img src="{{ url_for('static', filename='img/elemento-insumo.svg') }}" alt="">Insumos</a>
+        <a class="lu-nav-item" data-section="produtos" href="{{ url_for('produtos_cadastrados') }}"><img src="{{ url_for('static', filename='img/elemento-produtos.svg') }}" alt="">Produtos</a>
+        <a class="lu-nav-item" data-section="relatorios" href="#"><img src="{{ url_for('static', filename='img/elemento-relatorios.svg') }}" alt="">Relatórios</a>
+        <a class="lu-nav-item lu-current" data-section="configuracoes" href="{{ url_for('configuracao') }}" aria-current="page"><img src="{{ url_for('static', filename='img/elemento-configuracao.svg') }}" alt="">Configurações</a>
+    </nav>
+</body>
+</html>

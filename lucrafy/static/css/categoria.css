@@ -1,0 +1,897 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+
+}
+
+/* BIBLIOTECA DE CORES */
+:root{
+
+    /* fundo pagina */
+    --fundo-pagina-1:#F7F6F7;
+    --fundo-pagina-2:#F9F9F9;
+    --fundo-pagina-3:#FFFFFF;
+
+    /* textos */
+    --texto-secundario:#303B31;
+    --texto-de-destaque: #496801;
+    --texto-principal: #242B25;
+    --texto-auxiliar: #64748B;
+
+    /* botões */
+    --botao-principal: #A4C95F;
+    --botao-principal-4:#a4c95f59;
+
+    /* cores */
+
+    --branco:#FFFFFF;
+    --verde-alternativo:#D9E6D8;
+    --cinza-medio: #E2E2E2;
+
+}
+ /*                   CABEÇLHO  */
+.cabecalho{
+    display: flex;
+    height: 64px;
+    background: #ffffff;
+    align-items: center;
+}
+
+.opcao-cabecalho{
+    margin-left: 32px;
+}
+
+.cabecalho a{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 13px;
+
+}
+
+.cabecalho a:hover{
+    color: var(--texto-de-destaque);
+    font-size: 14px;
+
+}
+.logo{
+    margin-left: 10px;
+}
+
+
+/* estrutura */
+.lados{
+    display: flex;
+}
+
+/*                        MENU             */
+.menu{
+    height: 697px;
+    width: 15%;
+    background-color: var(--fundo-pagina-3);
+}
+
+.menu h4{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    margin-top: 25px;
+    margin-left: 28px;
+}
+
+.opcoes{
+    margin-left: 28px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.opcoes a{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.opcoes a:hover{
+    color: var(--texto-de-destaque);
+    font-size: 15px;
+}
+
+/*                      GERAL                    */
+
+.geral{
+    background-color: var(--fundo-pagina-2);
+    width: 85%;
+
+
+}
+
+/* cabeçalho */
+
+.cabecalho-geral{
+    margin-left: 25px;
+    margin-top: 20px;
+}
+
+.cabecalho-geral h1{
+    font-family: 'Poppins', Courier, monospace;
+    font-weight: bold;
+    font-size: 32px;
+    color: var(--texto-principal);
+
+}
+
+.cabecalho-geral p{
+    font-family: 'Poppins', Courier, monospace;
+    font-weight: normal;
+    font-size: 14px;
+    color: var(--texto-secundario);
+
+    margin-top: 4px;
+}
+
+.cadastrar-insumo{
+    width: 932px;
+    height: 338px;
+    background-color: var(--fundo-pagina-3);
+    border-radius: 12px;
+    margin-left: 70px;
+    margin-top: 32px;
+    display: flex;
+}
+
+.cadastrar-insumo h3{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--texto-principal);
+    padding-top: 28px;
+    padding-left: 28px;
+}
+
+.display{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.display-label{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cadastro-informacoes{
+    color: var(--texto-principal);
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.cadastro-informacoes:hover{
+    color: var(--texto-de-destaque);
+    font-size: 15px;
+
+}
+
+/* parte de cima do form */
+.form-cima{
+    display: flex;
+    margin-top: 30px;
+
+}
+
+.titulos-cadastro-insumo{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 12px;
+    font-weight: bolder;
+    color: var(--texto-principal);
+    margin-left: 30px;
+}
+.titulos-cadastro-insumo-select{
+    font-family: 'Poppins', Courier, monospace;
+    font-size: 12px;
+    font-weight: bolder;
+    color: var(--texto-principal);
+    margin-left: 80px;
+
+}
+.form-baixo{
+    display: flex;
+
+}
+
+
+/* INPUTS */
+input{
+    border: 0cap;
+    background-color: var(--fundo-pagina-2);
+    margin-left: 20px;
+    width: 330px;
+
+}
+
+.custo-insumo-input{
+    width: 300px;
+}
+
+select{
+    border: 0cap;
+    background-color: var(--fundo-pagina-2);
+    margin-left: 20px;
+    width: 340px;
+    color: var(--texto-auxiliar);
+    font-family: 'Poppins', Courier, monospace;
+
+}
+
+.input-insumo-nome{
+    border: 0cap;
+    width: 372px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--fundo-pagina-2);
+    margin-bottom: 10px;
+    display: flex;
+    margin-left: 30px;
+}
+
+.input-insumo-categoria{
+    border: 0cap;
+    width: 372px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--fundo-pagina-2);
+    margin-bottom: 10px;
+    display: flex;
+    margin-left: 70px;
+
+}
+
+.input-insumo-custo{
+    border: 0cap;
+    width: 372px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--fundo-pagina-2);
+    margin-bottom: 10px;
+    display: flex;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.input-insumo-custo h4{
+    font-family: 'Poppins', Courier, monospace;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 12px;
+    margin-left: 14px;
+}
+.input-insumo-unidade-medida{
+    border: 0cap;
+    width: 372px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--fundo-pagina-2);
+    margin-bottom: 10px;
+    display: flex;
+    margin-left: 70px;
+    margin-top: 10px;
+}
+
+/* --- */
+
+.botao-cadastrar-insumo{
+
+    width: 248px;
+    height: 44px;
+    background-color: var(--botao-principal);
+    border-radius: 12px;
+    border: 0;
+    margin-right: 71px;
+
+    color: var(--texto-de-destaque);
+    font-family: 'Poppins', Courier, monospace;
+    font-weight: bolder;
+
+}
+
+.botao-cadastrar-insumo:hover{
+    background-color: var(--botao-principal-4);
+    color: var(--texto-secundario);
+}
+
+.botao-cadastrar{
+    margin-left: -250px;
+    margin-top: 100px;
+}
+
+/* ------------------------------ */
+
+/* escolhas */
+
+.todas-escolhas{
+    width: 200px;
+    height: 40px;
+    background-color: var(--fundo-pagina-3);
+    border-radius: 12px;
+    margin-top: 30px;
+    margin-left: 790px;
+
+
+}
+
+.select-todas-escolhas{
+    border: 0cap;
+    background-color: var(--fundo-pagina-3);
+    margin-left: 20px;
+    width: 180px;
+    color: var(--texto-principal);
+    font-family: 'Poppins', Courier, monospace;
+    margin-top: 10px;
+}
+
+/* ----------- */
+/* linha categorias */
+
+.linha-categorias {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Poppins", sans-serif;
+    margin-left: 95px;
+}
+
+.linha-categorias span {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.linha-categorias button {
+    border: 0;
+    border-radius: 20px;
+    padding: 6px 14px;
+    background-color: var(--cinza-medio);
+    color: var(--texto-secundario);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.linha-categorias button.ativo {
+    background-color: var(--verde-alternativo);
+}
+
+.linha-categorias button:hover {
+    background-color: var(--verde-alternativo);
+}
+
+/* ----- */
+
+/* dados insumos */
+
+
+
+/* Quadrado branco que envolve a tabela */
+.dados-insumos {
+    width: 100%;
+    max-width: 920px;
+    height: 302px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+    border-radius: 12px;
+    font-family: "Poppins", sans-serif;
+    color: #303631;
+
+    overflow: auto;
+
+    margin-top: 30px;
+    margin-left: 75px;
+    margin-bottom: 30px;
+
+
+}
+
+/* Tabela */
+.dados-insumos table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+    font-size: 13px;
+}
+
+/* Cabeçalho */
+.dados-insumos thead th {
+    height: 43px;
+    padding: 0 12px;
+    background-color: #f8f8f8;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dados-insumos thead th:first-child {
+    border-radius: 12px 0 0 12px;
+    text-align: left;
+}
+
+.dados-insumos thead th:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+/* Linhas da tabela */
+.dados-insumos tbody td {
+    height: 59px;
+    padding: 0 12px;
+    text-align: center;
+    border-bottom: 1px solid #f3f3f3;
+    white-space: nowrap;
+}
+
+.dados-insumos tbody td:first-child {
+    text-align: left;
+}
+
+.dados-insumos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Valores */
+.dados-insumos .custo {
+    font-weight: 700;
+}
+
+/* Etiquetas de classificação */
+.dados-insumos .categorias-tabela {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    line-height: 1.1;
+}
+
+.dados-insumos .ingredientes {
+    color: #526d18;
+    background-color: #edf4df;
+}
+
+.dados-insumos .embalagens {
+    color: #393d39;
+    background-color: #e4e4e4;
+}
+
+/* Botões de ação */
+.dados-insumos .acoes {
+    white-space: nowrap;
+}
+
+.dados-insumos .btn-editar,
+.dados-insumos .btn-excluir {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0 3px;
+    border: none;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.dados-insumos .btn-editar {
+    background-color: #f8f9f8;
+}
+
+.dados-insumos .btn-excluir {
+    background-color: #ffdad7;
+}
+
+.dados-insumos .btn-editar img,
+.dados-insumos .btn-excluir img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+/* Telas pequenas */
+@media (max-width: 600px) {
+    .dados-insumos {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .dados-insumos table {
+        font-size: 12px;
+    }
+
+    .dados-insumos thead th,
+    .dados-insumos tbody td {
+        padding: 0 8px;
+    }
+}
+* RODAPÉ */
+
+
+
+.rodape {
+  height: 245px;
+  background-color:#A4C95F;
+}
+
+
+.largura-rodape-conteudo {
+    padding-top: 23px;
+    margin-left: 48px;
+
+}
+
+/* Aqui ficam os estilos para o texto sobre a Lucrafy no rodapé. */
+.descricao-rodape {
+    font-family: 'Poppins', Courier, monospace;
+    margin-top: 10px;
+    color: var(--texto-auxiliar);
+    font-size: 15px;
+    line-height: 22.5px; /* Define o espaço que cada linha de texto ocupa. */
+}
+
+
+.rodape-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Deixa espaço entre os itens, com um em cada ponta. */
+  margin-top: 38px;
+  color: var(--texto-auxiliar);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.44px; /* Ajusta o espaço entre as letras. */
+}
+
+
+.rodape-base .direitos {
+  margin-bottom: 0;
+}
+
+
+.textos-rodape{
+  display: flex;
+  gap: 24px; /* Cria espaço entre os itens do grupo. */
+}
+
+.overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.30);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+/* Caixa que aparece na frente */
+    .modal {
+      width: 320px;
+      padding: 24px;
+      background: var(--verde-alternativo);
+      border-radius: 10px;
+
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 22px;
+      font-family: 'Poppins', Courier, monospace;
+      color:var(--texto-principal);
+    }
+
+    .modal label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 7px;
+      margin-bottom: 20px;
+      margin-left: 2px;
+    }
+
+    .modal button {
+      width: 100%;
+      padding: 12px;
+      background:var(--botao-principal);
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .modal button:hover{
+        background-color: var(--botao-principal-4);
+    }
+
+    body {
+    overflow: hidden;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.overlay .modal {
+    position: relative;
+    box-sizing: border-box;
+    width: 420px;
+    max-width: 100%;
+    max-height: calc(100dvh - 48px);
+    padding: 34px 28px 28px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: #d9e6d8;
+    color: #242b25;
+    font-family: inherit;
+}
+
+.overlay .modal h2 {
+    margin: 0 0 22px;
+    padding: 0 10px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.overlay .modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+}
+
+.overlay .modal label {
+    display: block;
+    margin: 0 0 -10px;
+    font-size: 13px;
+}
+
+.overlay .modal input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #f9f9f9;
+    color: #303b31;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.overlay .modal button {
+    width: 100%;
+    min-height: 46px;
+    margin: 4px 0 0;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #a4c95f;
+    color: #242b25;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.overlay .fechar-modal {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #303b31;
+    font-size: 24px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.overlay .modal input:focus-visible,
+.overlay .modal button:focus-visible,
+.overlay .fechar-modal:focus-visible {
+    outline: 2px solid #496801;
+    outline-offset: 2px;
+}
+
+.mensagens-modal {
+    margin-bottom: 16px;
+}
+
+.mensagens-modal .flash {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.mensagens-modal .error {
+    background: #ffe4df;
+    color: #8a3028;
+}
+
+.mensagens-modal .success {
+    background: #edf4dd;
+    color: #496801;
+}
+
+@media (max-width: 700px) {
+    .overlay {
+        padding: 20px;
+    }
+
+    .overlay .modal {
+        width: 350px;
+        max-height: calc(100dvh - 40px);
+        padding: 34px 22px 24px;
+    }
+
+    .overlay .modal h2 {
+        font-size: 22px;
+    }
+
+    .overlay .modal input {
+        font-size: 16px;
+    }
+}
+
+.fundo-insumos {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.fundo-insumos .lados {
+    display: flex;
+}
+
+
+.fundo-insumos .geral {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+}
+
+
+.fundo-insumos .cadastrar-insumo {
+    display: block;
+    width: 100%;
+    max-width: 930px;
+    height: auto;
+    min-height: 0;
+    margin: 30px auto 0;
+    padding: 26px 30px;
+}
+
+
+.fundo-insumos .cadastrar-insumo > form {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+
+.fundo-insumos .cadastrar-insumo h2 {
+    margin: 0 0 23px;
+    padding: 0;
+}
+
+
+.fundo-insumos .campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 35px;
+}
+
+
+.fundo-insumos .campo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+}
+
+
+.fundo-insumos .campo input,
+.fundo-insumos .campo select {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+
+.fundo-insumos .botoes-formulario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-top: 24px;
+}
+
+
+@media (max-width: 700px) {
+    .fundo-insumos .lados {
+        display: block;
+    }
+
+
+    .fundo-insumos .cadastrar-insumo {
+        margin-top: 20px;
+        padding: 20px 16px;
+    }
+
+
+    .fundo-insumos .campos {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+
+    .fundo-insumos .botoes-formulario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (min-width: 701px) {
+    .fundo-insumos .cabecalho-geral {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .cabecalho-geral h1 {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .cabecalho-geral p {
+        margin: 4px 0 0;
+        padding: 0;
+    }
+
+
+    .fundo-insumos .menu h4 {
+        margin: 0 0 24px;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+}

@@ -1,0 +1,582 @@
+/* --------------------------------------------------
+   Cores
+   -------------------------------------------------- */
+
+:root {
+    --fundo-pagina-1: #F7F6F7;
+    --fundo-pagina-2: #F9F9F9;
+    --fundo-pagina-3: #FFFFFF;
+    --texto-secundario: #303B31;
+    --texto-de-destaque: #496801;
+    --texto-principal: #242B25;
+    --texto-auxiliar: #64748B;
+    --botao-principal: #A4C95F;
+    --botao-principal-4: #a4c95f59;
+    --branco: #FFFFFF;
+    --verde-alternativo: #D9E6D8;
+}
+
+/* Base seguindo a fonte e as cores do projeto. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: var(--texto-principal);
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.navegacao {
+    display: flex;
+    align-items: center;
+}
+
+.filtro-relatorio,
+.cartao-indicador {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.cabecalho-relatorios {
+    gap: 20px;
+}
+
+.baixar-relatorio {
+    flex-shrink: 0;
+}
+
+.linha-desempenho > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------
+   RELATÓRIOS - ESTRUTURA
+   -------------------------------------------------- */
+
+.pagina-relatorios {
+    background-color: var(--fundo-pagina-2);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --------------------------------------------------
+   CABEÇALHO DOS RELATÓRIOS
+   -------------------------------------------------- */
+
+.cabecalho-relatorios {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+}
+
+.textos-relatorios h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--texto-principal);
+    margin-bottom: 4px;
+}
+
+.textos-relatorios p {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.baixar-relatorio button {
+    display: inline-block;
+    background-color: var(--botao-principal);
+    color: var(--texto-principal);
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.baixar-relatorio button:hover {
+    background-color: #91b44c;
+}
+
+/* --------------------------------------------------
+   FILTROS
+   -------------------------------------------------- */
+
+.filtros-relatorios {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.filtro-relatorio {
+    background-color: var(--branco);
+    width: 33.33%;
+    padding: 14px;
+    border-radius: 12px;
+}
+
+.filtro-relatorio h4 {
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.opcoes-filtro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--fundo-pagina-2);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.opcoes-filtro p {
+    font-size: 11px;
+    margin: 0;
+}
+
+.opcoes-filtro a {
+    font-size: 18px;
+    color: var(--texto-principal);
+}
+
+/* --------------------------------------------------
+   CARTÕES INDICADORES
+   -------------------------------------------------- */
+
+.pagina-relatorios .cartoes-indicadores {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.pagina-relatorios .cartao-indicador {
+    width: 33.33%;
+    height: 175px;
+    margin: 0;
+    padding: 22px 18px;
+    background-color: var(--branco);
+    border: none;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.pagina-relatorios .cartao-indicador h3 {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--texto-principal);
+    margin: 0 0 25px;
+}
+
+.informacoes-indicador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.pagina-relatorios .informacoes-indicador > p {
+    font-size: clamp(18px, 2vw, 28px);
+    font-weight: 700;
+    margin: 0;
+}
+
+.icone-indicador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: var(--botao-principal-4);
+    color: var(--texto-de-destaque);
+}
+
+.icone-indicador p {
+    margin: 0;
+    font-size: 17px;
+}
+
+/* --------------------------------------------------
+   DESEMPENHO DOS PRODUTOS
+   -------------------------------------------------- */
+
+.desempenho-produtos {
+    background-color: var(--branco);
+    padding: 25px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.desempenho-produtos h2,
+.lucro-categorias h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--texto-principal);
+}
+
+.cabecalho-desempenho,
+.linha-desempenho {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 0.8fr 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+}
+
+.cabecalho-desempenho {
+    background-color: var(--fundo-pagina-2);
+    border-radius: 8px;
+}
+
+.cabecalho-desempenho h4 {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.linha-desempenho p {
+    font-size: 12px;
+    margin: 0;
+}
+
+.coluna-produto p,
+.coluna-lucro p {
+    font-weight: 600;
+}
+
+.margem-produto {
+    display: inline-block;
+    background-color: var(--botao-principal-4);
+    color: var(--texto-de-destaque);
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------
+   LUCRO POR CATEGORIA
+   -------------------------------------------------- */
+
+.lucro-categorias {
+    background-color: var(--branco);
+    padding: 25px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.categoria-lucro {
+    margin-bottom: 22px;
+}
+
+.informacoes-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.informacoes-categoria h4,
+.informacoes-categoria p {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.barra-categoria {
+    width: 100%;
+    height: 8px;
+    border-radius: 20px;
+    background-color: var(--fundo-pagina-2);
+    overflow: hidden;
+}
+
+.progresso-categoria {
+    height: 100%;
+    background-color: var(--botao-principal);
+    border-radius: 20px;
+}
+
+.bolos {
+    width: 38%;
+}
+
+.doces {
+    width: 31%;
+}
+
+.salgados {
+    width: 22%;
+}
+
+.porcentagem-categoria {
+    text-align: right;
+    margin-top: 5px;
+}
+
+.porcentagem-categoria p {
+    font-size: 11px;
+    margin: 0;
+}
+
+.total-apurado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: var(--fundo-pagina-2);
+}
+
+.total-apurado h4,
+.total-apurado p {
+    font-size: 11px;
+    margin: 0;
+}
+
+.total-apurado p {
+    color: var(--texto-de-destaque);
+    font-weight: 700;
+}
+
+/* --------------------------------------------------
+   RESPONSIVO - TABLET
+   -------------------------------------------------- */
+
+@media (max-width: 1000px) {
+
+    .pagina-relatorios .cartao-indicador {
+        height: 145px;
+        padding: 18px 12px;
+    }
+
+    .pagina-relatorios .informacoes-indicador > p {
+        font-size: 18px;
+    }
+
+    .icone-indicador {
+        width: 28px;
+        height: 28px;
+    }
+
+}
+
+/* --------------------------------------------------
+   RESPONSIVO - CELULAR
+   -------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .pagina-relatorios {
+        padding-bottom: 75px;
+    }
+
+    .cabecalho-relatorios {
+        display: block;
+        margin-bottom: 18px;
+    }
+
+    .textos-relatorios h1 {
+        font-size: 22px;
+    }
+
+    .textos-relatorios p {
+        font-size: 10px;
+    }
+
+    .baixar-relatorio {
+        text-align: center;
+        margin-top: 16px;
+    }
+
+    .baixar-relatorio button {
+        min-width: 180px;
+        text-align: center;
+        border-radius: 9px;
+    }
+
+    /* Filtros */
+
+    .filtros-relatorios {
+        display: block;
+        padding: 12px;
+        background-color: var(--branco);
+        border-radius: 12px;
+    }
+
+    .filtro-relatorio {
+        width: 100%;
+        padding: 6px 0;
+    }
+
+    .filtro-relatorio h4 {
+        font-size: 10px;
+    }
+
+    .opcoes-filtro p {
+        font-size: 11px;
+    }
+
+    /* Indicadores */
+
+    .pagina-relatorios .cartoes-indicadores {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .pagina-relatorios .cartao-indicador {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 80px;
+        padding: 14px;
+    }
+
+    .pagina-relatorios .cartao-indicador h3 {
+        font-size: 11px;
+        margin: 0 0 8px;
+    }
+
+    .pagina-relatorios .informacoes-indicador > p {
+        font-size: 20px;
+    }
+
+    .icone-indicador {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 9px;
+        height: 9px;
+        background-color: var(--botao-principal);
+    }
+
+    .icone-indicador p {
+        display: none;
+    }
+
+    /* Ordem dos blocos */
+
+    .lucro-categorias {
+        order: 1;
+    }
+
+    .desempenho-produtos {
+        order: 2;
+    }
+
+    /* Lucro por categoria */
+
+    .lucro-categorias {
+        padding: 15px;
+    }
+
+    .lucro-categorias h2,
+    .desempenho-produtos h2 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .barra-categoria {
+        height: 5px;
+    }
+
+    .informacoes-categoria h4,
+    .informacoes-categoria p {
+        font-size: 10px;
+    }
+
+    .total-apurado {
+        width: 100%;
+        margin: 0;
+        padding: 12px 0 0;
+        background-color: transparent;
+    }
+
+    /* Produtos em cartões */
+
+    .desempenho-produtos {
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .cabecalho-desempenho {
+        display: none;
+    }
+
+    .linha-desempenho {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        background-color: var(--branco);
+        padding: 15px 12px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .linha-desempenho .coluna-produto,
+    .linha-desempenho .coluna-margem {
+        grid-column: 1 / -1;
+    }
+
+    .linha-desempenho .coluna-produto p {
+        font-size: 13px;
+    }
+
+    .linha-desempenho p {
+        font-size: 11px;
+    }
+
+    .linha-desempenho .coluna-custo::before,
+    .linha-desempenho .coluna-preco::before,
+    .linha-desempenho .coluna-lucro::before {
+        display: block;
+        font-size: 9px;
+        color: var(--texto-auxiliar);
+        margin-bottom: 5px;
+    }
+
+    .linha-desempenho .coluna-custo::before {
+        content: "Custo unit.";
+    }
+
+    .linha-desempenho .coluna-preco::before {
+        content: "Preço venda";
+    }
+
+    .linha-desempenho .coluna-lucro::before {
+        content: "Lucro unit.";
+    }
+
+
+}
+
+@media (max-width: 370px) {
+    .linha-desempenho {
+        padding: 12px 9px;
+        gap: 7px;
+    }
+
+    .linha-desempenho p {
+        font-size: 10px;
+    }
+}
+
+.baixar-relatorio button { border: none; font-family: inherit; cursor: pointer; }
+.filtro-relatorio label { display: block; margin-bottom: 8px; font-size: 12px; }
+select.opcoes-filtro { width: 100%; border: none; font: inherit; font-size: 12px; color: inherit; }
+.icone-indicador img { width: 20px; height: 20px; object-fit: contain; }
+@media (max-width: 700px) {
+    .icone-indicador { position: static; width: 32px; height: 32px; background: var(--botao-principal-4); }
+}
