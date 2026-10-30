@@ -30,7 +30,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\lucrafy\banco_lucrafay\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -880,10 +880,12 @@ def insumos_cadastrados():
     try:
         # Buscar os insumos do usuário
         cursor.execute("""
-            SELECT ID_INSUMO, NOME, COALESCE(ATIVO, 1)
-            FROM INSUMO
-            WHERE ID_USUARIO = ?
-            ORDER BY NOME
+            SELECT I.ID_INSUMO, I.NOME, COALESCE(I.ATIVO, 1),
+                   I.CUSTO, I.ESTOQUE_ATUAL, U.SIGLA
+            FROM INSUMO I
+            LEFT JOIN UNIDADE_MEDIDA U ON U.ID_UNIDADE = I.ID_UNIDADE
+            WHERE I.ID_USUARIO = ?
+            ORDER BY I.NOME
         """, (session['id_usuario'],))
 
         insumos = cursor.fetchall()
@@ -1018,10 +1020,12 @@ def editar_insumo(id):
 
         # Buscar insumos cadastrados
         cursor.execute("""
-            SELECT ID_INSUMO, NOME, COALESCE(ATIVO, 1)
-            FROM INSUMO
-            WHERE ID_USUARIO = ?
-            ORDER BY NOME
+            SELECT I.ID_INSUMO, I.NOME, COALESCE(I.ATIVO, 1),
+                   I.CUSTO, I.ESTOQUE_ATUAL, U.SIGLA
+            FROM INSUMO I
+            LEFT JOIN UNIDADE_MEDIDA U ON U.ID_UNIDADE = I.ID_UNIDADE
+            WHERE I.ID_USUARIO = ?
+            ORDER BY I.NOME
         """, (session['id_usuario'],))
 
         insumos = cursor.fetchall()

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}?v=4">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}?v=9">
 </head>
 
 <body class="lu-site lu-app" data-section="produtos">
@@ -110,7 +110,7 @@
                 <!-- FOTO DO PRODUTO (salva antes do cadastro, igual às configurações) -->
                 <form action="{{ url_for('foto_produto_novo') }}" method="POST" enctype="multipart/form-data" class="cartao foto-produto-novo">
                     {% if tem_foto_nova %}
-                        <img class="foto-produto-previa" src="{{ url_for('foto_produto_novo') }}?t={{ range(1, 100000) | random }}" alt="Foto do produto">
+                        <img class="foto-produto-previa lu-foto-produto" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='" src="{{ url_for('foto_produto_novo') }}?t={{ range(1, 100000) | random }}" alt="Foto do produto">
                     {% endif %}
                     <label for="arquivo">Foto do produto (JPG)</label>
                     <input type="file" id="arquivo" name="arquivo" accept=".jpg,.jpeg" required>

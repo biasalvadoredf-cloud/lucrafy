@@ -11,7 +11,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/relatorios.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}?v=8">
 </head>
 
 <body class="pagina-relatorios lu-site lu-app" data-section="relatorios">
@@ -146,6 +146,8 @@
 
                 <h2>Desempenho dos produtos</h2>
 
+                <div class="lu-tabela-container">
+
                 <!-- CABEÇALHO DA TABELA -->
                 <div class="cabecalho-desempenho">
 
@@ -186,6 +188,7 @@
 <p>Cadastre produtos para ver custo, margem e lucro.</p>
 </div>
                 {% endfor %}
+                </div>
             </div>
 
         </main>

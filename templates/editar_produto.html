@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/produto.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_produto.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}?v=9">
 </head>
 
 <body class="lu-site lu-app" data-section="produtos">
@@ -113,7 +113,7 @@
                 enctype="multipart/form-data"
                 class="cartao foto-produto">
 
-                <img src="{{ url_for('foto_produto', id_produto=produto[0]) }}" onerror="this.style.display='none'"
+                <img class="lu-foto-produto" src="{{ url_for('foto_produto', id_produto=produto[0]) }}" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"
                     alt="Foto de {{ produto[1] }}">
 
                 <label for="arquivo">Foto do produto (JPG)</label>

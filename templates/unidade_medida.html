@@ -7,7 +7,7 @@
     <title>Cadastrar Unidade - Lucrafy</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/insumo.css') }}?v=3">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/unidade_medida.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
@@ -79,15 +79,20 @@
 
                     <div class="campos">
 
-                        <div class="campo">
+                        <div class="campo campo-largo">
                             <label for="nome">Nome do insumo</label>
                             <input id="nome" type="text" name="nome" placeholder="Ex.: Farinha de trigo" required>
                         </div>
 
                         <div class="campo">
                             <label for="custo">Custo unitário (R$)</label>
-                            <input id="custo" type="number" name="custo"  placeholder="0,00"
+                            <input id="custo" type="number" name="custo"  placeholder="0,00" step="0.01"
                                 required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="estoque_atual">Estoque atual</label>
+                            <input id="estoque_atual" type="number" name="estoque_atual" min="0" step="0.001" placeholder="Ex.: 5" required>
                         </div>
 
                         <div class="campo">
@@ -109,11 +114,6 @@
                                     </option>
                                 {% endfor %}
                             </select>
-                        </div>
-
-                        <div class="campo">
-                            <label for="estoque_atual">Estoque atual</label>
-                            <input id="estoque_atual" type="number" name="estoque_atual" min="0" step="0.001" placeholder="Ex.: 5" required>
                         </div>
 
                         <div class="campo">

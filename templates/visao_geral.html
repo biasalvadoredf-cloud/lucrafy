@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/visao-geral.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navegacao-compartilhada.css') }}?v=10">
 </head>
 
 <body class="lu-site lu-app" data-section="visao">
@@ -140,10 +140,8 @@
                 <div class="produto-destaque">
 
                     <div class="foto-destaque">
-                        {% if produto[4] %}
-                            <img src="{{ url_for('foto_produto', id_produto=produto[3]) }}"
+                        <img class="lu-foto-produto" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='" src="{{ url_for('foto_produto', id_produto=produto[3]) }}"
                                 alt="Foto de {{ produto[0] }}">
-                        {% endif %}
                     </div>
 
                     <h3>{{ produto[0] }}</h3>
@@ -161,7 +159,7 @@
                 {% endfor %}
             </div>
 
-            <div class="resumo-margem">
+            <div class="resumo-margem {% if margem_media >= 30 %}margem_alta{% elif margem_media >= 15 %}margem_media{% else %}margem_baixa{% endif %}">
 
                 {% if margem_media >= 30 %}
                     <p>Margem saudável! Seus produtos apresentam uma boa margem de lucro.</p>

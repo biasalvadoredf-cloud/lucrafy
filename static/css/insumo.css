@@ -687,3 +687,15 @@ body {
     background-color: #a4c95f;
     border-radius: 10px;
 }
+/* Alinha os campos: rótulos sem botão "+" ficam com a mesma altura dos que têm */
+.campo > label,
+.campo .display-label {
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+}
+
+/* Nome ocupa as duas colunas */
+.campo-largo {
+    grid-column: 1 / -1;
+}

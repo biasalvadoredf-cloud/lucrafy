@@ -641,7 +641,7 @@
 
 .lu-site .lu-status-lista {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 44px auto 44px;
+    grid-template-columns: minmax(0, 1fr) 92px 44px 44px;
     align-items: center;
     gap: 8px;
 }
@@ -662,6 +662,7 @@
 }
 
 .lu-site .lu-alterar-status {
+    width: 100%;
     min-height: 44px;
     padding: 8px 12px;
     border: 1px solid #dbe5ce;
@@ -706,7 +707,7 @@
 
 @media (max-width: 700px) {
     .lu-site .lu-status-lista {
-        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        grid-template-columns: minmax(0, 1fr) 44px 44px;
         gap: 8px;
         margin-bottom: 20px;
     }
@@ -774,3 +775,218 @@
 .estado-vazio h3 { margin: 8px 0 0; font-size: 18px; color: #242b25; }
 .estado-vazio p { margin: 0; color: #5b665d; font-size: 14px; }
 .config-ilustracao { display: block; margin: 0 auto 8px; height: auto; }
+
+/* Tabelas no desktop: quando passam da largura da tela, ativa a rolagem horizontal */
+@media (min-width: 701px) {
+    .lu-site .lu-tabela-container {
+        width: 100%;
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: #a4c95f #edf4df;
+    }
+
+    .lu-site .lu-tabela-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .lu-site .lu-tabela-container::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background: #edf4df;
+    }
+
+    .lu-site .lu-tabela-container::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background: #a4c95f;
+    }
+
+    .lu-site .lu-tabela-container thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #edf4df;
+        box-shadow: 0 8px 0 #fff;
+    }
+
+    .lu-site .lu-tabela-container .cabecalho-desempenho {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+}
+
+/* Tablet: botões de ação quebram linha em vez de estourar o cartão */
+@media (min-width: 701px) and (max-width: 1000px) {
+    .lu-site .lu-tabela-cards .lu-acoes-produto .botao-editar {
+        white-space: normal;
+        text-align: center;
+        max-width: 130px;
+        line-height: 1.3;
+    }
+
+    .lu-site .lu-tabela-cards td:not(:first-child):not(:last-child) {
+        white-space: nowrap;
+    }
+
+    .lu-site .lu-tabela-cards th,
+    .lu-site .lu-tabela-cards td {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+/* Lista de insumos: rolagem vertical quando passa do limite da tela */
+@media (min-width: 701px) {
+    .lu-site .lista-insumos {
+        max-height: 60vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #a4c95f #edf4df;
+    }
+
+    .lu-site .lista-insumos::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .lu-site .lista-insumos::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background: #edf4df;
+    }
+
+    .lu-site .lista-insumos::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background: #a4c95f;
+    }
+}
+
+/* Topo das páginas de insumos: título à esquerda, botão do histórico à direita */
+.lu-site .lu-topo-insumos {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 28px;
+}
+
+.lu-site .lu-topo-insumos .subtitulo {
+    margin: 6px 0 0;
+    font-size: 12px;
+}
+
+.lu-site .lu-topo-insumos .botao-historico {
+    display: inline-block;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 12px 20px;
+    background: #a4c95f;
+    color: #242b25;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.lu-site .lu-conteudo-insumos {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 13px;
+    align-items: start;
+}
+
+.lu-site .lu-conteudo-insumos > .cartao {
+    max-width: none;
+}
+
+@media (max-width: 1100px) {
+    .lu-site .lu-conteudo-insumos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .lu-site .lu-topo-insumos {
+        flex-direction: column;
+        gap: 14px;
+    }
+}
+
+/* Ícones embutidos (sem piscar na troca de página) */
+.lu-app .lu-menu[data-menu] .lu-nav-item svg {
+    display: block;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+.lu-app .lu-header .lu-perfil-mobile svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Afasta a barra de rolagem do conteúdo */
+@media (min-width: 701px) {
+    .lu-site .lista-insumos,
+    .lu-site .lu-tabela-container {
+        padding-right: 14px;
+    }
+}
+
+/* Fotos de produto: sempre redondas e do mesmo jeito em todo o site */
+.lu-site .lu-foto-produto,
+.lu-site .foto-produto img,
+.lu-site .foto-produto-novo .foto-produto-previa,
+.lu-site .foto-destaque img {
+    display: block;
+    width: 96px;
+    height: 96px;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    background: #f7f7f7;
+    object-fit: cover;
+}
+
+.lu-site .foto-destaque {
+    height: 96px;
+}
+
+.lu-site img.lu-foto-mini {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Resumo de margem: verde (saudável), amarelo (atenção) e vermelho (baixa) */
+.lu-site .resumo-margem.margem_alta {
+    background: #e3f1c8;
+    border-left: 6px solid #6fa12a;
+}
+
+.lu-site .resumo-margem.margem_alta p {
+    color: #3d5a05;
+}
+
+.lu-site .resumo-margem.margem_media {
+    background: #fff4cc;
+    border-left: 6px solid #e0a800;
+}
+
+.lu-site .resumo-margem.margem_media p {
+    color: #7a5600;
+}
+
+.lu-site .resumo-margem.margem_baixa {
+    background: #ffdcdc;
+    border-left: 6px solid #d64545;
+}
+
+.lu-site .resumo-margem.margem_baixa p {
+    color: #9b2222;
+}

@@ -204,7 +204,7 @@ body {
 .flash-message {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 6px;
 
     width: 100%;
     max-width: 700px;
@@ -626,4 +626,55 @@ footer p {
         min-width: 0;
         overflow-wrap: anywhere;
     }
+}
+
+/* Preço e estoque ao lado do nome (estilo tabela) */
+.nome-insumo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    background: transparent;
+}
+
+.nome-insumo .nome-texto {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 11px 4px;
+    background: transparent;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.dados-insumo {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 6px;
+}
+
+.dado-insumo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    color: #496801;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.dado-insumo small {
+    color: #74796f;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.lu-insumo-inativo .dado-insumo {
+    color: #74796f;
 }
