@@ -8,6 +8,7 @@ from flask_bcrypt import Bcrypt
 from decimal import Decimal
 from fpdf import FPDF
 import os
+from datetime import datetime
 
 
 # --------------------------------------------------
@@ -29,7 +30,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\lucrafy\banco_lucrafay\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -1962,6 +1963,7 @@ def editar_produto(id_produto):
 # 28 - SALVAR EDIÇÃO DE PRODUTO
 # --------------------------------------------------
 
+
 @app.route('/salvar_edicao_produto/<int:id_produto>', methods=['POST'])
 def salvar_edicao_produto(id_produto):
 
@@ -2007,14 +2009,7 @@ def salvar_edicao_produto(id_produto):
             id_produto, session['id_usuario']
         ))
 
-        # Recalcular os produtos vinculados antes de confirmar a edição.
-        cursor.execute("""
-            SELECT DISTINCT C.ID_PRODUTO
-            FROM COMPOSICAO_PRODUTO C
-            JOIN PRODUTO P ON P.ID_PRODUTO = C.ID_PRODUTO
-            WHERE C.ID_INSUMO = ? AND P.ID_USUARIO = ?
-        """, (id, session['id_usuario']))
-
+        # Recalcular custo e preço sugerido
         if not atualizar_custo_produto(id_produto):
             raise ValueError('Não foi possível recalcular o produto.')
 
@@ -2443,18 +2438,27 @@ def montar_pdf(titulo, tipo, itens, usados):
     pdf.set_auto_page_break(auto=False)
     pdf.add_page()
 
-    # Topo: nome do sistema, título e data
+    # Cabeçalho do relatório
     pdf.set_fill_color(*COR_VERDE)
     pdf.rect(10, 10, 4, 16, 'F')
-    pdf.set_xy(17, 10)
-    pdf.set_font('Arial', style='B', size=16)
+
+    # Nome Lucrafy centralizado
+    pdf.set_xy(10, 10)
+    pdf.set_font('Arial', 'B', 16)
     pdf.set_text_color(*COR_TEXTO)
-    pdf.cell(120, 8, 'Lucrafy', ln=True)
-    pdf.set_x(17)
-    pdf.set_font('Arial', size=10)
+    pdf.cell(190, 8, 'Lucrafy', ln=True, align='C')
+
+    # Título centralizado
+    pdf.set_x(10)
+    pdf.set_font('Arial', '', 10)
     pdf.set_text_color(*COR_CINZA)
-    pdf.cell(120, 8, titulo, ln=True)
+    pdf.cell(190, 8, titulo, ln=True, align='C')
+
+    # Data de emissão
     pdf.set_xy(10, 32)
+    data_atual = datetime.now().strftime('%d/%m/%Y')
+    pdf.set_font('Arial', '', 10)
+    pdf.cell(190, 10, f'Data de emissão: {data_atual}', ln=True, align='R')
 
     cabecalho_tabela()
 
