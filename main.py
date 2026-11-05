@@ -30,7 +30,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\lucrafy\banco_lucrafay\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -2410,7 +2410,6 @@ def insumos_do_produto(cursor, id_produto):
         lista.append((nome, quantidade, un_usada, valor))
 
     return lista
-
 
 # --------------------------------------------------
 # 37 - FUNÇÃO - MONTAR PDF DO RELATÓRIO

@@ -175,6 +175,8 @@ p {
   margin-top: 80px;
   border-radius: 20px;
   background-color: var(--branco);
+  margin-bottom: 85px;
+
 }
 
 .caixa-formulario h1 {
@@ -593,7 +595,6 @@ button {
 
 .caixa-formulario>a:last-child {
   position: absolute;
-  bottom: 30px;
   left: 25%;
   width: 50%;
   padding: 10px;
