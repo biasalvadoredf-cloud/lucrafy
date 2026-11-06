@@ -802,10 +802,17 @@ def cadastro_insumo():
 
     try:
         nome = request.form['nome'].strip()
-        custo = Decimal(request.form['custo'])
         unidade = request.form['unidade_medida']
         categoria = request.form['categoria']
+
+        # Preço total pago pela compra
+        custo_compra = Decimal(request.form['custo'])
+
+        # Quantidade comprada
         estoque = Decimal(request.form['estoque_atual'])
+
+        # Calcular o custo de uma unidade do insumo
+        custo = custo_compra / estoque
 
         # Verificar campos obrigatórios
         if not nome or not unidade or not categoria:
@@ -1276,6 +1283,12 @@ def adicionar_insumo_produto():
         elif unidade_escolhida == 'L' and unidade_estoque == 'mL':
             quantidade_necessaria = quantidade * 1000
 
+        elif unidade_escolhida == 'm' and unidade_estoque == 'cm':
+            quantidade_necessaria = quantidade * 100
+
+        elif unidade_escolhida == 'cm' and unidade_estoque == 'm':
+            quantidade_necessaria = quantidade / 100
+
         elif unidade_escolhida != unidade_estoque:
             flash('Unidades incompatíveis!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
@@ -1396,6 +1409,12 @@ def excluir_insumo_produto(id_composicao):
 
         elif unidade_usada == 'L' and unidade_estoque == 'mL':
             devolver = quantidade * 1000
+
+        elif unidade_usada == 'm' and unidade_estoque == 'cm':
+            devolver = quantidade * 100
+
+        elif unidade_usada == 'cm' and unidade_estoque == 'm':
+            devolver = quantidade / 100
 
         elif unidade_usada != unidade_estoque:
             flash('Unidades incompatíveis!', 'error')
@@ -1523,6 +1542,12 @@ def editar_insumo_produto(id_composicao):
             quantidade_anterior = quantidade_antiga / 1000
         elif unidade_anterior == 'L' and unidade_estoque == 'mL':
             quantidade_anterior = quantidade_antiga * 1000
+        elif unidade_anterior == 'm' and unidade_estoque == 'cm':
+            quantidade_anterior = quantidade_antiga * 100
+        elif unidade_anterior == 'cm' and unidade_estoque == 'm':
+            quantidade_anterior = quantidade_antiga / 100
+
+
         elif unidade_anterior != unidade_estoque:
             flash('Unidades incompatíveis!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
@@ -1538,6 +1563,11 @@ def editar_insumo_produto(id_composicao):
             quantidade_nova = quantidade / 1000
         elif unidade_nova == 'L' and unidade_estoque == 'mL':
             quantidade_nova = quantidade * 1000
+        elif unidade_nova == 'm' and unidade_estoque == 'cm':
+            quantidade_nova = quantidade * 100
+        elif unidade_nova == 'cm' and unidade_estoque == 'm':
+            quantidade_nova = quantidade / 100
+
         elif unidade_nova != unidade_estoque:
             flash('Unidades incompatíveis!', 'error')
             return redirect(url_for('editar_produto', id_produto=id_produto))
@@ -1644,25 +1674,40 @@ def calcular_preco_sugerido(custo, margem):
 
 def calcular_custo_insumo(custo, quantidade, unidade_insumo, unidade_usada):
 
-    if unidade_insumo == unidade_usada:
+        custo = Decimal(str(custo))
+        quantidade = Decimal(str(quantidade))
+
+        if unidade_insumo == unidade_usada:
+            return custo * quantidade
+
+        if unidade_insumo == 'Kg' and unidade_usada == 'g':
+            quantidade = quantidade / 1000
+
+        elif unidade_insumo == 'g' and unidade_usada == 'Kg':
+            quantidade = quantidade * 1000
+
+        elif unidade_insumo == 'L' and unidade_usada == 'mL':
+            quantidade = quantidade / 1000
+
+        elif unidade_insumo == 'mL' and unidade_usada == 'L':
+            quantidade = quantidade * 1000
+
+        elif unidade_insumo == 'm' and unidade_usada == 'cm':
+            quantidade = quantidade / 100
+
+        elif unidade_insumo == 'cm' and unidade_usada == 'm':
+            quantidade = quantidade * 100
+
+        else:
+            return None
+
+        print("CUSTO:", custo)
+        print("QUANTIDADE:", quantidade)
+        print("UNIDADE DO ESTOQUE:", unidade_insumo)
+        print("UNIDADE UTILIZADA:", unidade_usada)
+
+
         return custo * quantidade
-
-    if unidade_insumo == 'Kg' and unidade_usada == 'g':
-        quantidade = quantidade / 1000
-
-    elif unidade_insumo == 'g' and unidade_usada == 'Kg':
-        quantidade = quantidade * 1000
-
-    elif unidade_insumo == 'L' and unidade_usada == 'mL':
-        quantidade = quantidade / 1000
-
-    elif unidade_insumo == 'mL' and unidade_usada == 'L':
-        quantidade = quantidade * 1000
-
-    else:
-        return None
-
-    return custo * quantidade
 
 
 # --------------------------------------------------
@@ -1670,7 +1715,6 @@ def calcular_custo_insumo(custo, quantidade, unidade_insumo, unidade_usada):
 # --------------------------------------------------
 
 def atualizar_custo_produto(id_produto):
-
     cursor = con.cursor()
 
     try:
@@ -1729,7 +1773,6 @@ def atualizar_custo_produto(id_produto):
 
 @app.route('/produto', methods=['GET', 'POST'])
 def produto():
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -1851,7 +1894,6 @@ def produto():
 
 @app.route('/produtos_cadastrados')
 def produtos_cadastrados():
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -1888,7 +1930,6 @@ def produtos_cadastrados():
 
 @app.route('/editar_produto/<int:id_produto>')
 def editar_produto(id_produto):
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -1970,7 +2011,6 @@ def editar_produto(id_produto):
 
 @app.route('/salvar_edicao_produto/<int:id_produto>', methods=['POST'])
 def salvar_edicao_produto(id_produto):
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -2037,7 +2077,6 @@ def salvar_edicao_produto(id_produto):
 
 @app.route('/excluir_produto/<int:id_produto>', methods=['POST'])
 def excluir_produto(id_produto):
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -2090,6 +2129,12 @@ def excluir_produto(id_produto):
             elif unidade_usada == 'L' and unidade_estoque == 'mL':
                 devolver = quantidade * 1000
 
+            elif unidade_usada == 'm' and unidade_estoque == 'cm':
+                devolver = quantidade * 100
+
+            elif unidade_usada == 'cm' and unidade_estoque == 'm':
+                devolver = quantidade / 100
+
             elif unidade_usada != unidade_estoque:
                 con.rollback()
                 flash('Unidades incompatíveis!', 'error')
@@ -2135,7 +2180,6 @@ def excluir_produto(id_produto):
 
 @app.route('/unidade_medida', methods=['GET', 'POST'])
 def unidade_medida():
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -2161,8 +2205,6 @@ def unidade_medida():
             if cursor.fetchone():
                 flash('Unidade já cadastrada!', 'error')
                 return redirect(url_for('unidade_medida'))
-
-
 
             cursor.execute("""
                 INSERT INTO UNIDADE_MEDIDA (NOME, SIGLA)
@@ -2203,7 +2245,6 @@ def unidade_medida():
 
 @app.route('/categoria', methods=['GET', 'POST'])
 def categoria():
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -2249,8 +2290,8 @@ def categoria():
         categorias = cursor.fetchall()
 
         return render_template('categoria.html',
-            usuario=session['nome'],
-            categorias=categorias )
+                               usuario=session['nome'],
+                               categorias=categorias)
 
     except Exception as e:
         con.rollback()
@@ -2267,7 +2308,6 @@ def categoria():
 
 @app.route('/configuracao')
 def configuracao():
-
     if 'id_usuario' not in session:
         return redirect(url_for('login'))
 
@@ -2321,6 +2361,7 @@ def injetar_foto_perfil():
     tem_foto_nova = bool(id_usuario) and os.path.isfile(
         os.path.join(app.config['UPLOAD_FOLDER'], f'produto_novo{id_usuario}.jpg'))
     return {'tem_foto_perfil': tem_foto, 'tem_foto_nova': tem_foto_nova}
+
 
 @app.route('/foto_perfil', methods=['GET', 'POST'])
 def foto_perfil():
@@ -2382,7 +2423,7 @@ def relatorios():
             custo_total += item[2] or 0
             receita += item[3] or 0
         return render_template('relatorios.html', produtos=produtos,
-                               custo_total=custo_total, receita=receita, lucro=receita-custo_total)
+                               custo_total=custo_total, receita=receita, lucro=receita - custo_total)
     finally:
         cursor.close()
 
@@ -2392,7 +2433,6 @@ def relatorios():
 # --------------------------------------------------
 
 def insumos_do_produto(cursor, id_produto):
-
     cursor.execute("""
         SELECT I.NOME, C.QUANTIDADE, U2.SIGLA, I.CUSTO, U1.SIGLA
         FROM COMPOSICAO_PRODUTO C
@@ -2411,6 +2451,7 @@ def insumos_do_produto(cursor, id_produto):
 
     return lista
 
+
 # --------------------------------------------------
 # 37 - FUNÇÃO - MONTAR PDF DO RELATÓRIO
 # --------------------------------------------------
@@ -2421,6 +2462,7 @@ COR_VERDE_CLARO = (244, 248, 234)
 COR_TEXTO = (34, 34, 34)
 COR_CINZA = (120, 120, 120)
 COR_LINHA = (225, 225, 225)
+
 
 def montar_pdf(titulo, tipo, itens, usados):
     if tipo == 'insumos':
@@ -2572,5 +2614,4 @@ def relatorio_pdf():
 # --------------------------------------------------
 
 if __name__ == '__main__':
-
     app.run(debug=True)
