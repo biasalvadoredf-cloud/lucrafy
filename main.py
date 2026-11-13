@@ -30,7 +30,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # --------------------------------------------------
 
 host = 'localhost'
-database = (r'C:\Users\Aluno\Downloads\lucrafy\banco_lucrafay\banco_lucrafay\BANCO.FDB')
+database = (r'C:\Users\Aluno\Downloads\banco_lucrafay\BANCO.FDB')
 user = 'sysdba'
 password = 'sysdba'
 
@@ -186,7 +186,7 @@ def cadastro():
         email = request.form['email'].strip().lower()
         senha = request.form['senha']
         confirmar_senha = request.form['confirmar_senha']
-        mao_de_obra = float(request.form['mao_de_obra'])
+        mao_de_obra = Decimal(request.form['mao_de_obra'])
 
         # --------------------------------------------------
         # VERIFICAR CAMPOS OBRIGATÓRIOS
@@ -488,7 +488,7 @@ def editar(id):
 
             nome = request.form['nome'].strip()
             email = request.form['email'].strip().lower()
-            mao_de_obra = float(request.form['mao_de_obra'])
+            mao_de_obra = Decimal(request.form['mao_de_obra'])
 
             # --------------------------------------------------
             # Verificar nome em branco e mào de obra negativa
@@ -801,33 +801,33 @@ def cadastro_insumo():
     cursor = con.cursor()
 
     try:
+        # Dados do insumo
         nome = request.form['nome'].strip()
         unidade = request.form['unidade_medida']
         categoria = request.form['categoria']
 
-        # Preço total pago pela compra
-        custo_compra = Decimal(request.form['custo'])
+        # Preço informado pelo usuário (sem divisão)
+        custo = Decimal(request.form['custo'])
 
-        # Quantidade comprada
+        # Quantidade disponível no estoque
         estoque = Decimal(request.form['estoque_atual'])
-
-        # Calcular o custo de uma unidade do insumo
-        custo = custo_compra / estoque
 
         # Verificar campos obrigatórios
         if not nome or not unidade or not categoria:
             flash('Preencha todos os campos!', 'error')
             return redirect(url_for('insumo'))
 
-        # Verificar custo
+        # Verificar preço
         if custo <= 0:
             flash('O custo deve ser maior que zero!', 'error')
             return redirect(url_for('insumo'))
 
         # Verificar estoque
-        if estoque < 0:
-            flash('O estoque não pode ser negativo!', 'error')
+        if estoque <= 0:
+            flash('A quantidade em estoque deve ser maior que zero!', 'error')
             return redirect(url_for('insumo'))
+
+
 
         # Verificar nome duplicado
         cursor.execute("""
@@ -938,10 +938,18 @@ def editar_insumo(id):
         if request.method == 'POST':
 
             nome = request.form['nome'].strip()
-            custo = Decimal(request.form['custo'])
+
+            custo_compra = Decimal(request.form['custo'])
             estoque = Decimal(request.form['estoque_atual'])
+
             unidade = request.form['unidade_medida']
             categoria = request.form['categoria']
+
+            if custo_compra <= 0 or estoque <= 0:
+                flash('Informe um custo e uma quantidade maiores que zero!', 'error')
+                return redirect(url_for('editar_insumo', id=id))
+
+            custo = custo_compra / estoque
 
             # Verificar campos obrigatórios
             if not nome or not unidade or not categoria:
@@ -1586,7 +1594,18 @@ def editar_insumo_produto(id_composicao):
             SET ESTOQUE_ATUAL = ESTOQUE_ATUAL - ?
             WHERE ID_INSUMO = ?
             AND ID_USUARIO = ?
-        """, (diferenca, id_insumo, session['id_usuario']))
+            AND ESTOQUE_ATUAL >= ?
+        """, (
+            diferenca,
+            id_insumo,
+            session['id_usuario'],
+            diferenca
+        ))
+
+        if diferenca > 0 and cursor.rowcount == 0:
+            con.rollback()
+            flash('Estoque insuficiente!', 'error')
+            return redirect(url_for('editar_produto', id_produto=id_produto))
 
         # Atualizar quantidade e unidade
         cursor.execute("""
@@ -1658,12 +1677,14 @@ def historico_custos():
 # 22 - FUNÇÃO - CALCULAR PREÇO SUGERIDO
 # --------------------------------------------------
 
-def calcular_preco_sugerido(custo, margem):
+def calcular_preco_sugerido(custo, margem, mao_de_obra):
 
     if margem < 0:
         return None
 
-    preco = custo + (custo * margem / 100)
+    custo_total = custo + mao_de_obra
+
+    preco = custo_total + (custo_total * margem / 100)
 
     return round(preco, 2)
 
@@ -1750,7 +1771,15 @@ def atualizar_custo_produto(id_produto):
 
         margem = cursor.fetchone()[0]
 
-        preco = calcular_preco_sugerido(custo_total, margem)
+        cursor.execute("""
+            select mao_de_obra
+            from usuario
+            where id_usuario = ?
+        """, (session['id_usuario'],))
+
+        mao_de_obra = cursor.fetchone()[0]
+
+        preco = calcular_preco_sugerido(custo_total, margem, mao_de_obra)
 
         if preco is None:
             return False
@@ -2207,9 +2236,9 @@ def unidade_medida():
                 return redirect(url_for('unidade_medida'))
 
             cursor.execute("""
-                INSERT INTO UNIDADE_MEDIDA (NOME, SIGLA)
-                VALUES (?, ?)
-            """, (nome, sigla))
+                INSERT INTO UNIDADE_MEDIDA (NOME, SIGLA, ID_USUARIO)
+                VALUES (?, ?, ?)
+            """, (nome, sigla, session['id_usuario']))
 
             con.commit()
 
