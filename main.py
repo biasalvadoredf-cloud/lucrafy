@@ -2495,7 +2495,7 @@ COR_LINHA = (225, 225, 225)
 
 def montar_pdf(titulo, tipo, itens, usados):
     if tipo == 'insumos':
-        colunas = [('ID', 20, 'C'), ('Insumo', 120, 'L'), ('Custo', 50, 'R')]
+        colunas = [('ID', 15, 'C'), ('Insumo', 95, 'L'), ('Estoque', 35, 'C'),('Custo', 45, 'R')]
     else:
         colunas = [('ID', 15, 'C'), ('Produto', 85, 'L'), ('Custo', 30, 'R'),
                    ('Valor', 30, 'R'), ('Margem', 30, 'R')]
@@ -2557,7 +2557,7 @@ def montar_pdf(titulo, tipo, itens, usados):
             pdf.set_fill_color(255, 255, 255)
 
         if tipo == 'insumos':
-            valores = [str(item[0]), item[1][:60], f'R$ {item[2]:.2f}']
+            valores = [str(item[0]),item[1][:35],f'{float(item[3]):g}',f'R$ {item[2]:.2f}']
         else:
             valores = [str(item[0]), item[1][:45], f'R$ {item[2]:.2f}',
                        f'R$ {item[3]:.2f}', f'{item[4]}%']
@@ -2606,7 +2606,7 @@ def relatorio_pdf():
     try:
         if tipo == 'insumos':
             titulo = 'Insumos cadastrados'
-            cursor.execute("""SELECT ID_INSUMO, NOME, CUSTO FROM INSUMO
+            cursor.execute("""SELECT ID_INSUMO, NOME, CUSTO, ESTOQUE_ATUAL FROM INSUMO
                               WHERE ID_USUARIO = ? AND COALESCE(ATIVO, 1) = 1 ORDER BY NOME""",
                            (session['id_usuario'],))
         elif tipo == 'valor':
